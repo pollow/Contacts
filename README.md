@@ -1,3 +1,3 @@
 ## Introduction
 
-This is a online Contacts for MSTC in ZJU
+This is an online Contacts for MSTC in ZJU
