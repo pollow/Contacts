@@ -1,8 +1,13 @@
+var userPage = require('./userPage.js');
+var indexPage = require('./indexPage.js');
 
-/*
- * GET home page.
- */
+module.exports = function(app) {
+  // user
+  app.post('/login',userPage.login);
+  
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
-};
+  // index
+  app.get('/', indexPage.index);
+
+}
+
