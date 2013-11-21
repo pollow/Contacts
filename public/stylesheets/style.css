@@ -1,8 +1,47 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #eee;
 }
 
 a {
   color: #00B7FF;
+}
+
+.logo {
+	width: 200px;
+	height: 100px;
+	margin: auto;
+}
+
+.Wrap {
+	width: 800px;
+	margin: auto;
+}
+
+.leftWrap {
+	width: 280px;
+	height: 200px;
+	float: left;
+}
+
+.rightWrap {
+	width: 280px;
+	height: 200px;
+	float: right;
+}
+
+.formCtrl {
+	width: 100%;
+	height: 35px;
+	margin: 10px;
+}
+
+.subButton {
+	position: relative;
+	float: right;
+	margin-right: 10px 0;
+	width: 80px;
+	height: 25px;
+	background-color: #eee;
 }
