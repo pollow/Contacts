@@ -7,6 +7,7 @@ var express = require('express');
 var routes = require('./routes/index');
 var http = require('http');
 var path = require('path');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -27,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
+
+// mongoDB conntection
+mongoose.connect('mongodb://localhost/mstc');
 
 routes(app);
 
