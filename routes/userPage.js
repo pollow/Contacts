@@ -1,10 +1,11 @@
 var request = require('request');
 
 var inspect = require('util').inspect;
+
 exports.login = function(req, res) {
   var authData = {
-  	"username": req.body['user'],
-  	"password": req.body['password']
+    "username": req.body.user,
+    "password": req.body.password
   };
 
   console.log(req.body);
@@ -12,23 +13,23 @@ exports.login = function(req, res) {
 
     var person = JSON.parse(body); // transform the string to json 
 
-  	if (err) {
-  	  console.log(err);
-  	  console.track(err);
+    if (err) {
+      console.log(err);
+      console.track(err);
       return ; // does it need something to return ?
-  	}
+    }
 
     // use the responese code to decide
-  	if (response.statusCode == 200) { 
-    		if (person['success']) {
-    			res.send('login success. Welcome you [' + person['name'] + ']' );
-    		} else {
-    			res.send('login failure.');
-    		}
+    if (response.statusCode == 200) { 
+      if (person.success) {
+        res.send('login success. Welcome you [' + person.name + ']' );
+      } else {
+        res.send('login failure.');
+      }
     } else {
-  		console.log('Requested error');
-      res.send('login failure.')
-  	}
+      console.log('Requested error');
+      res.send('login failure.');
+    }
   });
   
-}
+};
