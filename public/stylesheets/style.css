@@ -23,6 +23,7 @@ a {
 	width: 280px;
 	height: 200px;
 	float: left;
+	font: ;
 }
 
 .rightWrap {
@@ -32,7 +33,7 @@ a {
 }
 
 .formCtrl {
-	width: 100%;
+	width: 264px;
 	height: 35px;
 	margin: 10px;
 }
@@ -44,4 +45,5 @@ a {
 	width: 80px;
 	height: 25px;
 	background-color: #eee;
+	border-radius: 10px;
 }
