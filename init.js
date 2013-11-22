@@ -12,7 +12,8 @@ var contactSchema = new Schema({
   contact: String,
   email: String,
   QQ: String,
-  name: String
+  name: String,
+  spam: {type: Boolean, default: false}
 });
 
 var contactModel = db.model('Contact', contactSchema);
