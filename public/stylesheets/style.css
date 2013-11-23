@@ -5,7 +5,11 @@ body {
 	-moz-background-size: 100% 100%;
 	-webkit-background-size: 100% 100%;
 	background-size: 100% 100%;
+<<<<<<< HEAD
 	height: 600px;
+=======
+	height: 700px;
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 }
 
 a {
@@ -19,11 +23,16 @@ a {
 }
 
 .Wrap {
+<<<<<<< HEAD
 	width: 800px;
+=======
+	width: 900px;
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 	margin: auto;
 }
 
 .leftWrap {
+<<<<<<< HEAD
 	width: 280px;
 	height: 200px;
 	float: left;
@@ -34,12 +43,44 @@ a {
 	width: 280px;
 	height: 200px;
 	float: right;
+=======
+	width: 400px;
+	height: 400px;
+	vertical-align: middle;
+	float: left;
+	background: url(../images/left.png);
+	-moz-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;
+	color: #920A04;
+}
+
+.rightWrap {
+	width: 400px;
+	height: 400px;
+	float: right;
+	background: url(../images/right.png);
+	-moz-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;
+	color: #920A04;
+}
+
+.rightWrap h2 {
+	text-align: center;
+	margin: 80px 0 0 0;
+}
+
+.loginBox {
+	margin: 0px auto auto 45px;
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 }
 
 .formCtrl {
 	width: 264px;
 	height: 35px;
 	margin: 10px;
+<<<<<<< HEAD
 }
 
 .subButton {
@@ -50,4 +91,26 @@ a {
 	height: 25px;
 	background-color: #eee;
 	border-radius: 10px;
+=======
+	visibility: none;
+}
+
+.subButton {
+	width: 80px;
+	height: 25px;
+	background-color: #eee;
+	border-radius: 6px;
+	margin: 10px auto;
+}
+
+.pageWrap {
+	width: 1100px;
+	background-color: #FFF;
+	height: 500px;
+	margin: 50px auto;
+	border-radius: 10px;
+	-webkit-box-shadow: 0 0 30px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 0 30px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 30px rgba(0, 0, 0, .3);
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 }
