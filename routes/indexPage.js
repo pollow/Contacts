@@ -22,6 +22,10 @@ exports.list = function(req, res) {
   
 };
 
+exports.test = function(req, res) {
+  console.log(req.cookies);
+}
+
 exports.log = function(req, res) {
 
 };
