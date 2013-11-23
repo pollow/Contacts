@@ -25,4 +25,3 @@ var logSchema = new Schema({
 });
 
 exports.logModel = mongoose.model('log', logSchema);
-

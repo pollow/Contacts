@@ -5,7 +5,11 @@ body {
 	-moz-background-size: 100% 100%;
 	-webkit-background-size: 100% 100%;
 	background-size: 100% 100%;
+<<<<<<< HEAD
+	height: 600px;
+=======
 	height: 700px;
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 }
 
 a {
@@ -19,11 +23,27 @@ a {
 }
 
 .Wrap {
+<<<<<<< HEAD
+	width: 800px;
+=======
 	width: 900px;
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 	margin: auto;
 }
 
 .leftWrap {
+<<<<<<< HEAD
+	width: 280px;
+	height: 200px;
+	float: left;
+	font: ;
+}
+
+.rightWrap {
+	width: 280px;
+	height: 200px;
+	float: right;
+=======
 	width: 400px;
 	height: 400px;
 	vertical-align: middle;
@@ -53,12 +73,25 @@ a {
 
 .loginBox {
 	margin: 0px auto auto 45px;
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 }
 
 .formCtrl {
 	width: 264px;
 	height: 35px;
 	margin: 10px;
+<<<<<<< HEAD
+}
+
+.subButton {
+	position: relative;
+	float: right;
+	margin-right: 10px 0;
+	width: 80px;
+	height: 25px;
+	background-color: #eee;
+	border-radius: 10px;
+=======
 	visibility: none;
 }
 
@@ -79,4 +112,5 @@ a {
 	-webkit-box-shadow: 0 0 30px rgba(0, 0, 0, .3);
 	-moz-box-shadow: 0 0 30px rgba(0, 0, 0, .3);
 	box-shadow: 0 0 30px rgba(0, 0, 0, .3);
+>>>>>>> cad7d4b2e2edba0a48dd424cb49fb40ea5673396
 }
