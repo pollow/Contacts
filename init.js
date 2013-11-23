@@ -13,7 +13,8 @@ var contactSchema = new Schema({
   email: String,
   QQ: String,
   name: String,
-  spam: {type: Boolean, default: false}
+  spam: {type: Boolean, default: false},
+  updated: {type: Date, default: Date.now}
 });
 
 var contactModel = db.model('Contact', contactSchema);
@@ -47,26 +48,8 @@ db.once('open', function() {
         QQ: json_[7],
         name: json_[0]
       };
-      // console.log(json_);
-      // var small = new contactModel({ // 姓名,性别,专业,Group,常用ID,联系方式,邮箱,QQ
-      //   sex: json_[1],
-      //   major: json_[2],
-      //   group: json_[3],
-      //   id: json_[4],
-      //   contact: json_[5],
-      //   email: json_[6],
-      //   QQ: json_[7],
-      //   name: json_[0]
-      // });
-      // small.save(function (err) {
-      //   if(!err) {
-      //     console.log("successed!");
-      //   }
-      //   console.log(err);
-      //   
-      // });
     }
-    console.log(contactsArray);
+    // console.log(contactsArray);
     contactModel.create(contactsArray,function (err) {
       if(err) console.log(err);
       else console.log("success!");
