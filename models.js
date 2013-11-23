@@ -11,8 +11,18 @@ var contactSchema = new Schema({
   contact: String,
   email: String,
   QQ: String,
-  spam: {type: Boolean, default: false}
+  spam: {type: Boolean, default: false},
+  updated: {type:Date, default: Date.now}
 });
 
 
-exports.contactModel = mongoose.model('Contact', contactSchema);
+exports.contactModel = mongoose.model('contact', contactSchema);
+
+var logSchema = new Schema({
+  // 姓名,[{unixtimestamp, log},...]
+  name: String,
+  logs: [contactSchema]
+});
+
+exports.logModel = mongoose.model('log', logSchema);
+
