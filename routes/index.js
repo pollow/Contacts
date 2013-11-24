@@ -9,6 +9,7 @@ module.exports = function(app) {
   // index
   app.get('/', indexPage.index);
   app.get('/list', indexPage.list);
+  app.get('/test', indexPage.test);
 
 };
 

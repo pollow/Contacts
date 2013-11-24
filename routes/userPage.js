@@ -1,6 +1,6 @@
 var request = require('request');
-var contactModel = require('./models').contactModel;
-// var logModel = require('./models').logModel;
+var contactModel = require('../models').contactModel;
+// var logModel = require('../models').logModel;
 
 // var inspect = require('util').inspect;
 
