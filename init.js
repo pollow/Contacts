@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 var db = mongoose.createConnection('localhost','mstc');
+var logModel = require('./models').logsModel;
 
 var Schema = mongoose.Schema;
 
@@ -14,10 +16,18 @@ var contactSchema = new Schema({
   QQ: String,
   name: String,
   spam: {type: Boolean, default: false},
-  updated: {type: Date, default: Date.now}
+  updated: {type:String, default: moment().format('MMMM Do YYYY, HH:mm:ss')}
 });
 
 var contactModel = db.model('Contact', contactSchema);
+
+var logSchema = new Schema({
+  // 姓名,[{unixtimestamp, log},...]
+  name: String,
+  logs: [contactSchema]
+});
+
+logModel = db.model('log', logSchema);
 
 db.on('error',console.error.bind(console,'Connection Error:'));
 
@@ -51,6 +61,16 @@ db.once('open', function() {
     }
     // console.log(contactsArray);
     contactModel.create(contactsArray,function (err) {
+      if(err) console.log(err);
+      else console.log("success!");
+      db.close();
+    });
+    var logsArray = Array();
+    contactsArray.forEach(function(item) {
+      logsArray.push({name: item.name, logs:[item]});
+    });
+    console.log(logsArray[0]);
+    logModel.create(logsArray, function(err) {
       if(err) console.log(err);
       else console.log("success!");
       db.close();

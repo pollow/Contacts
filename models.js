@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
+var request = require('request');
 var Schema = mongoose.Schema;
+var moment = require('moment');
 
 var contactSchema = new Schema({
   // 姓名,性别,专业,Group,常用ID,联系方式,邮箱,QQ,spam
@@ -12,7 +14,7 @@ var contactSchema = new Schema({
   email: String,
   QQ: String,
   spam: {type: Boolean, default: false},
-  updated: {type:Date, default: Date.now}
+  updated: {type:String, default: moment().format('MMMM Do YYYY, hh:mm:ss')}
 });
 
 
@@ -26,3 +28,33 @@ var logSchema = new Schema({
 
 exports.logModel = mongoose.model('log', logSchema);
 
+exports.auth = function(username, password) {
+  var authData = {
+    "username": username,
+    "password": password
+  };
+
+  console.log(username+'  '+password);
+  request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
+
+    var person = JSON.parse(body); // transform the string to json 
+
+    if (err) {
+      console.log(err);
+      console.track(err);
+      return false; // does it need something to return ?
+    }
+
+    // use the responese code to decide
+    if (response.statusCode == 200) { 
+      if (person.success) {
+        return person;
+      } else {
+        return false;
+      }
+    } else {
+      console.log('Requested error');
+    }
+  });
+  
+};
