@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var moment = require('moment');
 var db = mongoose.createConnection('localhost','mstc');
 var logModel = require('./models').logsModel;
 
@@ -16,7 +15,7 @@ var contactSchema = new Schema({
   QQ: String,
   name: String,
   spam: {type: Boolean, default: false},
-  updated: {type:String, default: moment().format('MMMM Do YYYY, HH:mm:ss')}
+  updated: {type:Number, default: Date.now()}
 });
 
 var contactModel = db.model('Contact', contactSchema);

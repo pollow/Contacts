@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var request = require('request');
 var Schema = mongoose.Schema;
-var moment = require('moment');
 
 var contactSchema = new Schema({
   // 姓名,性别,专业,Group,常用ID,联系方式,邮箱,QQ,spam
@@ -14,7 +13,7 @@ var contactSchema = new Schema({
   email: String,
   QQ: String,
   spam: {type: Boolean, default: false},
-  updated: {type:String, default: moment().format('MMMM Do YYYY, hh:mm:ss')}
+  updated: {type:Number, default: Date.now()}
 });
 
 
