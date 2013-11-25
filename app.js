@@ -31,7 +31,7 @@ if ('development' == app.get('env')) {
 }
 
 // mongoDB conntection
-mongoose.connect('mongodb://localhost/mstc');
+mongoose.connect('mongodb://10.13.122.223/mstc');
 
 routes(app);
 

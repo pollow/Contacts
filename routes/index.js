@@ -11,6 +11,7 @@ module.exports = function(app) {
   app.get('/list', indexPage.list);
   app.get('/test', indexPage.test);
   app.get('/loginsuccess', indexPage.loginsuccess);
+  app.get('/log', indexPage.log);
 
 };
 

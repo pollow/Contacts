@@ -1,4 +1,5 @@
 var contactModel = require('../models').contactModel; 
+var logModel = require('../models').logModel;
 
 exports.index= function(req, res) {
   if(req.session.name) {
@@ -16,7 +17,7 @@ exports.list = function(req, res) {
     return ;
   }
   // find
-  contactModel.find(function(err, doc) {
+  contactModel.find({}, "_id sex major group id contact email QQ name updated", function(err, doc) {
     console.log('Start pulling contacts.');
     if(err) {
       console.log("[Database Error] Failed to find:");
@@ -50,5 +51,23 @@ exports.loginsuccess = function(req, res) {
 };
 
 exports.log = function(req, res) {
-
+  console.log(req.session);
+  
+  if(!req.session.name) {
+    res.redirect('/');
+    res.json({error: 'auth failed'});
+  }
+  
+  logModel.findOne({name: req.query.name}, "name logs _id", function(err, doc) {
+    console.log('Start pulling logs.');
+    if(err) {
+      console.log("[Database Error] Failed to find:");
+      console.log(err);
+      console.track(err);
+      return ;
+    }
+    
+    console.log('[Database Read] Success to find log');
+    res.json(doc);
+  });
 };
