@@ -1,6 +1,10 @@
 var contactModel = require('../models').contactModel; 
 var logModel = require('../models').logModel;
 
+exports.main = function(req, res) {
+  res.render('main');
+};
+
 exports.index= function(req, res) {
   if(req.session.name) {
     res.redirect('/list');
