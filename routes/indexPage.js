@@ -11,7 +11,7 @@ exports.main = function(req, res) {
 
 exports.index= function(req, res) {
   if(req.session.name) {
-    res.redirect('/list');
+    res.redirect('/main');
   } else {
     res.render('index');
   }

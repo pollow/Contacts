@@ -30,7 +30,7 @@ exports.login = function(req, res) {
         req.session.cookie.expires = false;
         req.session.cookie.maxAge = 1000*60*30;
         // res.send('login success. Welcome you [' + person.name + ']' );
-        res.redirect('/list');
+        res.redirect('/main');
       } else {
         console.log(body);
         res.send('login failure.');
