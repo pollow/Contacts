@@ -1,24 +1,21 @@
 body {
-	padding: 0px;
-	font: 14px "Lucida Grande", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-	background-color: #c3c3c8;
+	padding: 50px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background: url(../images/background.jpg) no-repeat;
 	-moz-background-size: 100% 100%;
 	-webkit-background-size: 100% 100%;
 	background-size: 100% 100%;
-	margin: 0;
-	height: 600px;
+	height: 700px;
 }
 
 a {
 	color: #00B7FF;
 }
 
-/*index*/
-
 .logo {
 	width: 200px;
 	height: 100px;
-	margin: auto;
+	margin: 60px auto;
 }
 
 .Wrap {
@@ -46,48 +43,31 @@ a {
 	-moz-background-size: 100% 100%;
 	-webkit-background-size: 100% 100%;
 	background-size: 100% 100%;
-	color: #FFF;
+	color: #920A04;
 }
 
 .rightWrap h2 {
 	text-align: center;
-	font-weight: 100;
+	margin: 80px 0 0 0;
 }
 
 .loginBox {
-	margin: 80px auto;
-	text-align: center;
+	margin: 0px auto auto 45px;
 }
 
 .formCtrl {
-	width: 240px;
-	height: 30px;
-	border-style: none none solid none;
-	border-width: 3px;
-	border-color: #73674f;
-	background-color: #b8af9e;
-	text-align: center;
-	color: #73674f;
-	font-size: 20px;
-}
-
-.formCtrl:focus {
-	background-color: #FFF;
-	border-style: none solid solid none;
-	border-width: 4px;
-	border-right-color: #9a907e;
-	border-bottom-color: #814e2f;
-	outline: none;
+	width: 264px;
+	height: 35px;
+	margin: 10px;
+	visibility: none;
 }
 
 .subButton {
 	width: 80px;
 	height: 25px;
-	background-color: #920A04;
-	margin: 30px auto;
-	display: block;
-	color: #FFF;
-	border-style: none;
+	background-color: #eee;
+	border-radius: 6px;
+	margin: 10px auto;
 }
 
 .pageWrap {

@@ -7,8 +7,9 @@ module.exports = function(app) {
   app.post('/alert', userPage.alert);
   
   // index
+  app.get('/main', indexPage.main);
   app.get('/', indexPage.index);
-  app.get('/list', indexPage.list);
+  app.get('/api/list', indexPage.list);
   app.get('/test', indexPage.test);
   app.get('/loginsuccess', indexPage.loginsuccess);
   app.get('/log', indexPage.log);

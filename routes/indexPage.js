@@ -1,6 +1,14 @@
 var contactModel = require('../models').contactModel; 
 var logModel = require('../models').logModel;
 
+exports.main = function(req, res) {
+  if(!req.session.name) {
+    res.redirect('/');
+    return ;
+  }
+  res.render('main');
+};
+
 exports.index= function(req, res) {
   if(req.session.name) {
     res.redirect('/list');
@@ -13,7 +21,7 @@ exports.list = function(req, res) {
   // auth here
   console.log(req.session);
   if(!req.session.name) {
-    res.redirect('/');
+    res.json({success: 'error'});
     return ;
   }
   // find
