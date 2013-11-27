@@ -8,7 +8,7 @@ var routes = require('./routes/index');
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
-
+var db = require('./db.js');
 var app = express();
 
 // all environments
@@ -31,7 +31,7 @@ if ('development' == app.get('env')) {
 }
 
 // mongoDB conntection
-mongoose.connect('mongodb://10.13.122.223/mstc');
+mongoose.connect('mongodb://' + db.user + ':' + db.password + '@10.13.122.223/mstc');
 
 routes(app);
 
