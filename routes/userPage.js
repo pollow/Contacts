@@ -10,8 +10,6 @@ exports.login = function(req, res) {
     "password": req.body.Password
   };
 
-  console.log(req.body);
-  console.log(authData);
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
 
     var person = JSON.parse(body); // transform the string to json 
@@ -20,6 +18,7 @@ exports.login = function(req, res) {
     if (err) {
       console.log(err);
       console.track(err);
+      res.redirect('/');
       return ; // does it need something to return ?
     }
 
