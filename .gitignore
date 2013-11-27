@@ -2,3 +2,5 @@
 /node_modules/
 Contacts.csv
 *.swp
+db.js
+
