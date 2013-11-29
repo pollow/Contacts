@@ -69,9 +69,17 @@ $(document).ready(function() {
         var str = JSON.stringify(item).replace(/\"/g, '');
         return str.match(reg);
       });
+      var result_id = Array();
+      console.log(typeof result_id);
+      result.forEach(function(item) { result_id.push(item._id); });
+      console.log(typeof result_id);
+      $(".maleNameWrap, .femaleNameWrap").each( function() {
+        if ( result_id.indexOf( $(this).attr('id') ) != -1 ) $(this).slideDown();
+        else $(this).slideUp();
+      });
 
-      $(".maleNameWrap, .femaleNameWrap").remove(); // clean all
-      listContacts(result);
-    }
+    } else $(".maleNameWrap, .femaleNameWrap").each( function() {
+        $(this).slideDown();
+      });
   });
 });
