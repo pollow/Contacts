@@ -1,3 +1,4 @@
+/* jshint jquery: true, browser: true */
 var DOMGenerator = function(item) {
   var ax = $("<div />", {
     id : item._id,
@@ -46,14 +47,31 @@ var DOMGenerator = function(item) {
   });
 
   ax.prepend([nameTag, leftInfo, rightInfo, group]);
-  console.log(ax)
 
   $("body").append(ax);
 };
 
+var listContacts = function( contacts ) {
+  contacts.forEach(DOMGenerator);
+};
+
 $(document).ready(function() {
+  var c;
   $.getJSON("/api/list", function(data) {
-    console.log(data);
-    data.forEach(DOMGenerator);
+    listContacts(data);
+    c = data;
+  });
+  $("input.search").keyup(function() {
+    if( $(this).val() !== null ) {
+
+      var reg = new RegExp($(this).val(),'i');
+      var result = $.grep(c, function(item) {
+        var str = JSON.stringify(item).replace(/\"/g, '');
+        return str.match(reg);
+      });
+
+      $(".maleNameWrap, .femaleNameWrap").remove(); // clean all
+      listContacts(result);
+    }
   });
 });
