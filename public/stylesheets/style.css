@@ -106,6 +106,7 @@ a {
 .topWrap {
 	position: relative;
 	width: 100%;
+	min-width: 1180px
 	background-color: #3c3b3b;
 	opacity: 0.4;
 	height: 35px;
@@ -115,6 +116,46 @@ a {
 	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .5);
 	-moz-box-shadow: 0 0 20px rgba(0, 0, 0, .5);
 	box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+}
+
+.searchWrap {
+	position: relative;
+	width: 290px;
+	height: 36px;
+	float: right;
+}
+
+.search {
+	width: 250px;
+	height: 36px;
+	font-size: 20px;
+	text-indent: 1em;
+	font-weight: 100;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: inline-block;
+	position: relative;
+	float: left;
+}
+
+.searchButton {
+	width: 34px;
+	height: 34px;
+	background: url(/images/search.png);
+	-moz-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: inline-block;
+	position: relative;
+	float: right;
+}
+
+.search:focus {
+	outline: 0;
 }
 
 .titleWrap {
@@ -138,7 +179,7 @@ a {
 }
 
 .maleNameWrap {
-	background: url(../images/male.png);
+	background: url(/images/male.png);
 	-moz-background-size: 100% 100%;
 	-webkit-background-size: 100% 100%;
 	background-size: 100% 100%;
@@ -149,7 +190,7 @@ a {
 }
 
 .femaleNameWrap {
-	background: url(../images/female.png);
+	background: url(/images/female.png);
 	-moz-background-size: 100% 100%;
 	-webkit-background-size: 100% 100%;
 	background-size: 100% 100%;
