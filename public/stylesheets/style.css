@@ -9,7 +9,10 @@ body {
 	height: 600px;
 }
 
-html { overflow-x: scroll; }
+html {
+	overflow-x: scroll;
+	overflow:-moz-scrollbars-vertical;
+}
 
 a {
 	color: #00B7FF;
