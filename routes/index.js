@@ -14,5 +14,9 @@ module.exports = function(app) {
   app.get('/loginsuccess', indexPage.loginsuccess);
   app.get('/log', indexPage.log);
 
+  // deal with 404 page by redirecting to '/'
+  app.all('/:empty', function(req, res) {
+    res.redirect('/');
+  })
 };
 
