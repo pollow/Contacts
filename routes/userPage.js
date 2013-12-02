@@ -1,8 +1,7 @@
 var request = require('request');
 var contactModel = require('../models').contactModel;
 var logModel = require('../models').logModel;
-
-// var inspect = require('util').inspect;
+var logger = require('../log').logger('userIndex');
 
 exports.login = function(req, res) {
   var authData = {
@@ -13,11 +12,11 @@ exports.login = function(req, res) {
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
 
     var person = JSON.parse(body); // transform the string to json 
-    console.log(person);
+    var loginFlag = false;
 
     if (err) {
-      console.log(err);
-      console.track(err);
+      logger.error(err);
+      logger.trace(err);
       res.redirect('/');
       return ; // does it need something to return ?
     }
@@ -28,14 +27,22 @@ exports.login = function(req, res) {
         req.session.name = person.name;
         req.session.cookie.expires = false;
         req.session.cookie.maxAge = 1000*60*30;
+        logger.debug(req.session);
         // res.send('login success. Welcome you [' + person.name + ']' );
-        res.redirect('/main');
+        loginFlag = true;
+        
       } else {
-        console.log(body);
-        res.send('login failure.');
+        logger.warn('Username or password invalid');
+        loginFlag = false;  
       }
     } else {
-      console.log('Requested error');
+      logger.warn('Error occured at auth server');
+      loginFlag = false;
+    }
+
+    if (loginFlag) {
+      res.redirect('/main');
+    } else {
       res.send('login failure.');
     }
   });

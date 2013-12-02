@@ -10,12 +10,13 @@ var mongoose = require('mongoose');
 var db = require('./db.js');
 var app = express();
 var log4js = require('log4js');
+var log = require('./log.js');
 
 /*
   configuration of log4js
 */
 
-log4js.configure({
+/*log4js.configure({
   appenders: [
     { type: 'console' },
   ],
@@ -27,13 +28,13 @@ exports.logger = function(name){
   logger.setLevel('TRACE');
   return logger;
 }
-
+*/
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon(path.join(__dirname,'public/images/favicon.ico')));
-app.use(log4js.connectLogger(this.logger('journal'), {level: 'auto',
+app.use(log4js.connectLogger(log.logger('journal'), {level: 'INFO',
   format:':remote-addr :method :user-agent'}));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
