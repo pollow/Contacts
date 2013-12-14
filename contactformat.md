@@ -1,6 +1,10 @@
-## Format
+# Contact Format
+
+## Introduction
 
 This file contains the standard format of information of MSTC members.
+
+It can be used to import/export to excel file
 
 ## detail
 
@@ -17,6 +21,7 @@ var format = {
   major: "专业",
   group: "部门",
   title: "职位", // used to distinguish the leader and common memeber
+  studentType: "学业类别",
   enrollTime: "入学时间",
   blog: "个人主页",
   employer: "就业去向"
