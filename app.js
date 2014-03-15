@@ -32,7 +32,7 @@ exports.logger = function(name){
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
 app.use(express.favicon(path.join(__dirname,'public/images/favicon.ico')));
 app.use(log4js.connectLogger(log.logger('journal'), {level: 'INFO',
   format:':remote-addr :method :user-agent'}));
