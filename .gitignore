@@ -3,4 +3,5 @@
 Contacts.csv
 *.swp
 db.js
+*.sublime-workspace
 
