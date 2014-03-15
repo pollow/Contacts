@@ -1,0 +1,120 @@
+doctype html
+html(lang = 'zh')
+    include includes/head
+    body#main
+        include includes/nav
+        .jumbotron
+            h1 内部通讯录
+            h2 通过筛选器选择过滤条件，通过搜索栏直接搜索（支持正则表达式）
+            .row
+                .col-md-offset-9.col-md-3
+                    .input-group
+                        input.form-control(type = 'text')
+                        span.input-group-btn
+                            button.btn.btn-default(type = 'button') 搜索
+
+        .container
+            aside
+                ul.nav.nav-pills-nav-stacked
+                    li.active MSTC ZJU Contact 筛选器
+                    li
+                        a(href = '#') 全部
+                    li.dropdown
+                        a.dropdown-toggle(href = '#', data-toggle = 'dropdown') 性别
+                        ul.dropdown-menu
+                            li
+                                label
+                                    input#male(type = 'radio', name = 'genderRadios', value = 'male')
+                                    |  男
+                            li
+                                label
+                                    input#female(type = 'radio', name = 'genderRadios', value = 'female')
+                                    |  女
+                    li.dropdown
+                        a.dropdown-toggle(href = '#', data-toggle = 'dropdown') 年级
+                        ul.dropdown-menu
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'one')
+                                    |  大一
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'two')
+                                    |  大二
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'three')
+                                    |  大三
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'four')
+                                    |  大四
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'master')
+                                    |  研究生
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'work')
+                                    |  工作
+                    li.dropdown
+                        a.dropdown-toggle(href = '#', data-toggle = 'dropdown') Group
+                        ul.dropdown-menu
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'TG')
+                                    |  TG
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'OG')
+                                    |  OG
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'CG')
+                                    |  CG
+                    li.dropdown
+                        a.dropdown-toggle(href = '#', data-toggle = 'dropdown') 所在校区
+                        ul.dropdown-menu
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'zijingang')
+                                    |  紫金港
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'yuquan')
+                                    |  玉泉
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'xixi')
+                                    |  西溪
+                            li
+                                label
+                                    input(type = 'checkbox', value = 'huajiachi')
+                                    |  华家池
+            .row
+                .col-md-offset-3.col-md-9
+                    .table-responsive
+                        table.table.table-striped
+                            tr
+                                th #
+                                th 姓名
+                                th 常用ID
+                                th 联系方式
+                            tr
+                                td 1
+                                td 仝昕钢
+                                td MForever78
+                                td 15700011111
+                            tr
+                                td 2
+                                td 弓得力
+                                td Gnnng
+                                td 18868122222
+                            tr
+                                td 3
+                                td 邢畅
+                                td Pollow
+                                td 18868133333
+
+        include includes/footer
+        include includes/js

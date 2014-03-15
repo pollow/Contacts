@@ -3,20 +3,8 @@ doctype html
 html(lang = 'zh')
     include includes/head
 
-    body
-        nav(class = 'navbar navbar-default navbar-fixed-top', role = 'navigatioin')
-            .container-fluid
-                .navbar-header
-                    a.navbar-brand(href = '#') MSTC ZJU Contact
-                .collapse.navbar-collapse
-                    ul.nav.navbar-nav
-                        li.active
-                            a(href = '#')首页
-                        li
-                            a(href = '#')邮箱
-                        li
-                            a(href = '#')关于
-
+    body#index
+        include includes/nav
         .jumbotron
             .container
                 .row
@@ -54,5 +42,4 @@ html(lang = 'zh')
                         |proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
         include includes/footer
-        script(src = '../public/js/jQuery.js')
-        script(src = '../public/js/bootstrap.js')
+        include includes/js

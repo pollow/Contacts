@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MSTC ZJU Contact</title>
+    <link href="../public/css/bootstrap.css" rel="stylesheet">
+    <link href="../public/css/custom.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="../public/js/html5shiv.js"></script>
+    <script src="../public/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body id="main">
+    <nav role="navigatioin" class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header"><a href="#" class="navbar-brand">MSTC ZJU Contact</a></div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">首页</a></li>
+            <li><a href="#">邮箱</a></li>
+            <li><a href="#">关于</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron">
+      <h1>内部通讯录</h1>
+      <h2>通过筛选器选择过滤条件，通过搜索栏直接搜索（支持正则表达式）</h2>
+      <div class="row">
+        <div class="col-md-offset-9 col-md-3">
+          <div class="input-group">
+            <input type="text" class="form-control"><span class="input-group-btn">
+              <button type="button" class="btn btn-default">搜索</button></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <aside>
+        <ul class="nav nav-pills-nav-stacked">
+          <li class="active">MSTC ZJU Contact 筛选器</li>
+          <li><a href="#">全部</a></li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">性别</a>
+            <ul class="dropdown-menu">
+              <li>
+                <label>
+                  <input id="male" type="radio" name="genderRadios" value="male"> 男
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input id="female" type="radio" name="genderRadios" value="female"> 女
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">年级</a>
+            <ul class="dropdown-menu">
+              <li>
+                <label>
+                  <input type="checkbox" value="one"> 大一
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="two"> 大二
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="three"> 大三
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="four"> 大四
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="master"> 研究生
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="work"> 工作
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Group</a>
+            <ul class="dropdown-menu">
+              <li>
+                <label>
+                  <input type="checkbox" value="TG"> TG
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="OG"> OG
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="CG"> CG
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">所在校区</a>
+            <ul class="dropdown-menu">
+              <li>
+                <label>
+                  <input type="checkbox" value="zijingang"> 紫金港
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="yuquan"> 玉泉
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="xixi"> 西溪
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="huajiachi"> 华家池
+                </label>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </aside>
+      <div class="row">
+        <div class="col-md-offset-3 col-md-9">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <tr>
+                <th>#</th>
+                <th>姓名</th>
+                <th>常用ID</th>
+                <th>联系方式</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>仝昕钢</td>
+                <td>MForever78</td>
+                <td>15700011111</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>弓得力</td>
+                <td>Gnnng</td>
+                <td>18868122222</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>邢畅</td>
+                <td>Pollow</td>
+                <td>18868133333</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container">
+        <p class="small text-center">Copyright MSTC ZJU. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="../public/js/jQuery.js"></script>
+    <script src="../public/js/bootstrap.js"></script>
+  </body>
+</html>
