@@ -5,15 +5,29 @@ This is a Custom stylesheet
 //Varibles
 
 @navbar-height:                 50px;
+@filterbox-bg:                  #fff;
+@filterbox-border:              #ddd;
 
 //Colors
 
 //Aside
 
-#main aside .nav {
+#main aside .list-group {
     position: fixed;
     top: 370px;
     left: 70px;
+
+    .filterbox {
+        padding: 0 15px;
+        background-color: @filterbox-bg;
+        border: 1px solid @filterbox-border;
+    }
+}
+
+//Table
+
+#main table tr td:nth-child(3)::before{
+    content: '@';
 }
 
 //body padding

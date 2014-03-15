@@ -39,106 +39,102 @@
     </div>
     <div class="container">
       <aside>
-        <ul class="nav nav-pills-nav-stacked">
-          <li class="active">MSTC ZJU Contact 筛选器</li>
-          <li><a href="#">全部</a></li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">性别</a>
-            <ul class="dropdown-menu">
-              <li>
-                <label>
-                  <input id="male" type="radio" name="genderRadios" value="male"> 男
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input id="female" type="radio" name="genderRadios" value="female"> 女
-                </label>
-              </li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">年级</a>
-            <ul class="dropdown-menu">
-              <li>
-                <label>
-                  <input type="checkbox" value="one"> 大一
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="two"> 大二
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="three"> 大三
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="four"> 大四
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="master"> 研究生
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="work"> 工作
-                </label>
-              </li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Group</a>
-            <ul class="dropdown-menu">
-              <li>
-                <label>
-                  <input type="checkbox" value="TG"> TG
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="OG"> OG
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="CG"> CG
-                </label>
-              </li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">所在校区</a>
-            <ul class="dropdown-menu">
-              <li>
-                <label>
-                  <input type="checkbox" value="zijingang"> 紫金港
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="yuquan"> 玉泉
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="xixi"> 西溪
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" value="huajiachi"> 华家池
-                </label>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <div class="list-group col-md-2">
+          <div class="list-group-item">MSTC ZJU Contact 筛选器</div><a href="#" class="list-group-item active">全部</a><a data-toggle="collapse" data-target="#gender" class="list-group-item">性别</a>
+          <div id="gender" class="collapse filterbox">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="male"> 男
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="female"> 女
+              </label>
+            </div>
+          </div><a data-toggle="collapse" data-target="#grade" class="list-group-item">年级</a>
+          <div id="grade" class="collapse filterbox">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="one"> 大一
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="two"> 大二
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="three"> 大三
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="four"> 大四
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="master"> 研究生
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="work"> 工作
+              </label>
+            </div>
+          </div><a data-toggle="collapse" data-target="#group" class="list-group-item">Group</a>
+          <div id="group" class="collapse filterbox">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="TG"> TG
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="OG"> OG
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="CG"> CG
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="PG"> PG
+              </label>
+            </div>
+          </div><a data-toggle="collapse" data-target="#campus" class="list-group-item">所在校区</a>
+          <div id="campus" class="collapse filterbox">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="zijingang"> 紫金港
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="yuquan"> 玉泉
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="xixi"> 西溪
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="huajiachi"> 华家池
+              </label>
+            </div>
+          </div>
+        </div>
       </aside>
       <div class="row">
         <div class="col-md-offset-3 col-md-9">
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped table-hover">
               <tr>
                 <th>#</th>
                 <th>姓名</th>
