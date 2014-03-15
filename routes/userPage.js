@@ -4,9 +4,10 @@ var logModel = require('../models').logModel;
 var logger = require('../log').logger('userIndex');
 
 exports.login = function(req, res) {
+  console.log(req.body.inputEmail);
   var authData = {
-    "username": req.body.Username,
-    "password": req.body.Password
+    "username": req.body.username,
+    "password": req.body.password
   };
 
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
