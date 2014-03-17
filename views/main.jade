@@ -16,7 +16,7 @@ html(lang = 'zh')
         .container
             aside
                 .list-group.col-md-2
-                    .list-group-item MSTC ZJU Contact 筛选器
+                    a.list-group-item.list-group-brand MSTC ZJU Contact 筛选器
                     a.list-group-item.active(href = '#') 全部
                     a.list-group-item(data-toggle = 'collapse', data-target = '#gender') 性别
                     #gender.collapse.filterbox
@@ -99,57 +99,23 @@ html(lang = 'zh')
                                 th 姓名
                                 th 常用ID
                                 th 联系方式
-                            //- tr(data-toggle = 'modal', data-target = '#1')
-                            //-     td 1
-                            //-     td 仝昕钢
-                            //-     td MForever78
-                            //-     td 15700011111
-                            //- tr(data-toggle = 'modal', data-target = '#2')
-                            //-     td 2
-                            //-     td 弓得力
-                            //-     td Gnnng
-                            //-     td 18868122222
-                            //- tr(data-toggle = 'modal', data-target = '#3')
-                            //-     td 3
-                            //-     td 邢畅
-                            //-     td Pollow
-                            //-     td 18868133333
                             each person, index in people
-                                tr(data-toggle = 'modal', data-target = '#' + (index + 1))
-                                td= index + 1
-                                td= person.name
-                                td= person.id
-                                td= person.longNumber
-            #1.modal.fade(aria-hidden = 'true', role = 'dialog', aria-labeledby = 'Lable1')
-                .modal-dialog
-                    .modal-content
-                        .modal-header
-                            button.close(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') &times;
-                            h4#Label1.modal-title 仝昕钢
-                        .modal-body
-                            | 啦啦啦
-                        .modal-footer
-                            button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
-            #2.modal.fade(aria-hidden = 'true', role = 'dialog', aria-labeledby = 'Lable2')
-                .modal-dialog
-                    .modal-content
-                        .modal-header
-                            button.close(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') &times;
-                            h4#Label2.modal-title 弓得力
-                        .modal-body
-                            | 啦啦啦
-                        .modal-footer
-                            button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
-            #3.modal.fade(aria-hidden = 'true', role = 'dialog', aria-labeledby = 'Lable3')
-                .modal-dialog
-                    .modal-content
-                        .modal-header
-                            button.close(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') &times;
-                            h4#Label3.modal-title 邢畅
-                        .modal-body
-                            | 啦啦啦
-                        .modal-footer
-                            button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
+                                tr(data-toggle = 'modal', data-target = '#' + index)
+                                    td= index
+                                    td= person.name
+                                    td= person.id
+                                    td= person.longNumber
+            each person, index in people
+                div.modal.fade(id = index, role = 'dialog', aria-labeledby = 'Lable' + index)
+                    .modal-dialog
+                        .modal-content
+                            .modal-header
+                                button.close(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') &times;
+                                h4.modal-title(id = 'Label' + index)= person.name
+                            .modal-body
+                                | 啦啦啦
+                            .modal-footer
+                                button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
 
         include includes/footer
         include includes/js
