@@ -1,5 +1,6 @@
 var contactModel = require('../models').contactModel; 
 var logModel = require('../models').logModel;
+var logger = require('logger').logger('indexPage');
 
 exports.main = function(req, res) {
   // if(!req.session.name) {
@@ -20,13 +21,13 @@ exports.main = function(req, res) {
     var people = [];
     for (i in doc) {
       var person = {};
-      // console.log(doc[i]);
+      // logger.debug(doc[i]);
       person.name = doc[i].name;
       person.id = doc[i].id;
       person.longNumber = doc[i].contact;
       people.push(person);
     }
-    // console.log(people);
+    // logger.debug(people);
     res.render('main', {people: people});
   });
 };
@@ -64,8 +65,8 @@ exports.list = function(req, res) {
 };
 
 exports.test = function(req, res) {
-  console.log(req.cookies);
-  console.log(req.session);
+  logger.debug(req.cookies);
+  logger.debug(req.session);
   res.send();
 };
 

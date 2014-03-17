@@ -1,7 +1,7 @@
 var request = require('request');
 var contactModel = require('../models').contactModel;
 var logModel = require('../models').logModel;
-var logger = require('../log').logger('userIndex');
+var logger = require('logger').logger('userPage');
 
 exports.login = function(req, res) {
   console.log(req.body.inputEmail);

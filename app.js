@@ -10,31 +10,14 @@ var mongoose = require('mongoose');
 var db = require('./db.js');
 var app = express();
 var log4js = require('log4js');
-var log = require('./log.js');
+var logger = require('logger');
 
-/*
-  configuration of log4js
-*/
-
-/*log4js.configure({
-  appenders: [
-    { type: 'console' },
-  ],
-  replaceConsole: true
-});
-
-exports.logger = function(name){
-  var logger = log4js.getLogger(name);
-  logger.setLevel('TRACE');
-  return logger;
-}
-*/
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon(path.join(__dirname,'public/images/favicon.ico')));
-app.use(log4js.connectLogger(log.logger('journal'), {level: 'INFO',
+app.use(log4js.connectLogger(logger.logger('journal'), {level: 'INFO',
   format:':remote-addr :method :user-agent'}));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -45,6 +28,7 @@ app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+// logger.logger('app.js').debug(app.get('env'));
 
 // development only
 if ('development' == app.get('env')) {

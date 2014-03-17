@@ -1,5 +1,6 @@
 var userPage = require('./userPage.js');
 var indexPage = require('./indexPage.js');
+var logger = require('logger').logger('index');
 
 module.exports = function(app) {
   // user
@@ -16,6 +17,7 @@ module.exports = function(app) {
 
   // deal with 404 page by redirecting to '/'
   app.all('/:empty', function(req, res) {
+    logger.error('404 Error');
     res.redirect('/');
   })
 };
