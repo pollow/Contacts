@@ -13,6 +13,7 @@
 //Heights & Widths
 
 @navbar-height:                 50px;
+@nav-lg-size:                   130px;
 
 //Colors
 
@@ -27,6 +28,33 @@
 @light-gray:                    #f7f6fa;
 @filterbox-bg:                  #fff;
 @filterbox-border:              #ddd;
+
+//Size
+
+@list-group-radius:             8px;
+
+/*
+    mixin
+*/
+
+
+//Single side border-radius
+.border-top-radius(@radius) {
+  border-top-right-radius: @radius;
+   border-top-left-radius: @radius;
+}
+.border-right-radius(@radius) {
+  border-bottom-right-radius: @radius;
+     border-top-right-radius: @radius;
+}
+.border-bottom-radius(@radius) {
+  border-bottom-right-radius: @radius;
+   border-bottom-left-radius: @radius;
+}
+.border-left-radius(@radius) {
+  border-bottom-left-radius: @radius;
+     border-top-left-radius: @radius;
+}
 
 /*
     Global Settings
@@ -80,6 +108,15 @@ body {
     }
 }
 
+//Size
+
+.nav {
+    > li {
+        width: @nav-lg-size;
+        text-align: center;
+    }
+}
+
 /*
     Jumbotron
 */
@@ -96,6 +133,14 @@ body {
     }
 }
 
+//Size
+
+.jumbotron {
+    h1 {
+        font-weight: bold;
+    }
+}
+
 /*
     Buttons
 */
@@ -109,6 +154,9 @@ body {
 /*
     Aside
 */
+
+
+//Colors
 
 .list-group-item {
     &.list-group-brand {
@@ -127,15 +175,60 @@ a.list-group-item {
     }
 }
 
-#main aside .list-group {
-    position: fixed;
-    top: 370px;
-    left: 70px;
+//Styles
+
+.list-group-item {
+    &:first-child {
+        .border-top-radius(@list-group-radius);
+    }
+    &:last-child {
+        .border-bottom-radius(@list-group-radius);
+    }
+}
+
+//Position
+
+.list-group {
+    // position: fixed;
+    // top: 370px;
+    // left: 70px;
 
     .filterbox {
         padding: 0 15px;
         background-color: @filterbox-bg;
         border: 1px solid @filterbox-border;
+    }
+}
+
+.affix-top {
+    position: absolute;
+    top: 370px;
+    left: 70px;
+}
+
+.affix {
+    position: fixed;
+    top: 60px;
+    left: 70px;
+}
+
+.list-group-item {
+    padding: 6px 20px;
+
+    &.list-group-brand {
+        padding: 15px 20px;
+    }
+}
+
+//Heights & Widths
+
+
+
+//Size
+
+.list-group-item {
+    &.list-group-brand {
+        font-weight: bold;
     }
 }
 

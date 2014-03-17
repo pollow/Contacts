@@ -8,27 +8,27 @@ html(lang = 'zh')
         .jumbotron
             .container
                 .row
-                    .col-sm-7
+                    .col-sm-8
                         h1 MSTC ZJU Contact
                         h2 浙江大学微软技术俱乐部</br>内部通讯录
-                    .col-sm-5
-                        form.formhorizontal(role = 'form', action = 'login', method = 'post')
+                    .col-sm-4
+                        form.form-horizontal(role = 'form', action = 'login', method = 'post')
                             .form-group
-                                label.col-sm-2.control-label(for = 'inputEmail') 用户名
-                                .col-sm-10
+                                label.col-sm-3.control-label(for = 'inputEmail') 用户名
+                                .col-sm-9
                                     input.form-control#inputEmail(name = 'username', type = 'text', placeholder = 'First name.Last name')
                             .form-group
-                                label.col-sm-2.control-label(for = 'inputPassword') 密码
-                                .col-sm-10
+                                label.col-sm-3.control-label(for = 'inputPassword') 密码
+                                .col-sm-9
                                     input.form-control#inputPassword(name = 'password', type = 'password', placeholder = 'Password')
                             .form-group
-                                .col-sm-offset-2.col-sm-10
+                                .col-sm-offset-3.col-sm-9
                                     .checkbox
                                         label
                                             input(type = 'checkbox')
                                             span 记住我
                             .form-group
-                                .col-sm-offset-2.col-sm-10
+                                .col-sm-offset-3.col-sm-9
                                     button.btn.btn-default(type = 'submit') 登陆
         .container
             .row
