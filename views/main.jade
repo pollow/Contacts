@@ -99,21 +99,27 @@ html(lang = 'zh')
                                 th 姓名
                                 th 常用ID
                                 th 联系方式
-                            tr(data-toggle = 'modal', data-target = '#1')
-                                td 1
-                                td 仝昕钢
-                                td MForever78
-                                td 15700011111
-                            tr(data-toggle = 'modal', data-target = '#2')
-                                td 2
-                                td 弓得力
-                                td Gnnng
-                                td 18868122222
-                            tr(data-toggle = 'modal', data-target = '#3')
-                                td 3
-                                td 邢畅
-                                td Pollow
-                                td 18868133333
+                            //- tr(data-toggle = 'modal', data-target = '#1')
+                            //-     td 1
+                            //-     td 仝昕钢
+                            //-     td MForever78
+                            //-     td 15700011111
+                            //- tr(data-toggle = 'modal', data-target = '#2')
+                            //-     td 2
+                            //-     td 弓得力
+                            //-     td Gnnng
+                            //-     td 18868122222
+                            //- tr(data-toggle = 'modal', data-target = '#3')
+                            //-     td 3
+                            //-     td 邢畅
+                            //-     td Pollow
+                            //-     td 18868133333
+                            each person, index in people
+                                tr(data-toggle = 'modal', data-target = '#' + (index + 1))
+                                td= index + 1
+                                td= person.name
+                                td= person.id
+                                td= person.longNumber
             #1.modal.fade(aria-hidden = 'true', role = 'dialog', aria-labeledby = 'Lable1')
                 .modal-dialog
                     .modal-content

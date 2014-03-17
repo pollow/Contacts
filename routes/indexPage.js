@@ -2,11 +2,11 @@ var contactModel = require('../models').contactModel;
 var logModel = require('../models').logModel;
 
 exports.main = function(req, res) {
-  if(!req.session.name) {
-    res.redirect('/');
-    return ;
-  }
-  contactModel.find({}, "_id id contact", function(err, doc) {
+  // if(!req.session.name) {
+  //   res.redirect('/');
+  //   return ;
+  // }
+  contactModel.find({}, "_id name id contact", function(err, doc) {
     console.log('Start pulling contacts.');
     if(err) {
       console.log("[Database Error] Failed to find:");
@@ -27,7 +27,7 @@ exports.main = function(req, res) {
       people.push(person);
     }
     // console.log(people);
-    res.render('main', people);
+    res.render('main', {people: people});
   });
 };
 
