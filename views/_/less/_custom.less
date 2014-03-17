@@ -133,6 +133,12 @@ body {
     }
 }
 
+//Style
+
+// .jumbotron {
+//     background: url(img/index-jumbotron-bg.png) repeat-y;
+// }
+
 //Size
 
 .jumbotron {
@@ -189,10 +195,6 @@ a.list-group-item {
 //Position
 
 .list-group {
-    // position: fixed;
-    // top: 370px;
-    // left: 70px;
-
     .filterbox {
         padding: 0 15px;
         background-color: @filterbox-bg;
@@ -236,8 +238,45 @@ a.list-group-item {
     Table
 */
 
+//Colors
+
+.table-hover {
+  > tbody > tr:hover {
+    > td,
+    > th {
+      background-color: lighten(@light-blue, 10%);
+    }
+  }
+}
+
 #main table tr td:nth-child(3)::before{
     content: '@';
+}
+
+/*
+    Game
+*/
+
+.game {
+    text-align: center;
+}
+
+/*
+    Footer
+*/
+
+//Colors
+
+footer {
+    p {
+        color: @gray;
+    }
+}
+
+//Position
+
+footer {
+    padding: 10px 15px;
 }
 
 //body padding

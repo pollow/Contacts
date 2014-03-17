@@ -37,6 +37,10 @@ exports.index= function(req, res) {
   } else {
     res.render('index');
   }
+
+  // game
+  var game = 'game/2048/index.html'
+  res.render('index', {game: game});
 };
 
 exports.list = function(req, res) {
