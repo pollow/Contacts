@@ -1,7 +1,7 @@
 # dependencies
-/node_modules/
+node_modules/*
 Contacts.csv
 *.swp
 db.js
 *.sublime-workspace
-
+!node_modules/logger/
