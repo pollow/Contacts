@@ -1,16 +1,131 @@
 /*
-This is a Custom stylesheet
+    This is a Custom stylesheet
 */
 
-//Varibles
+/*
+    Varibles
+*/
+
+//Fonts
+
+@font:                          "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+
+//Heights & Widths
 
 @navbar-height:                 50px;
-@filterbox-bg:                  #fff;
-@filterbox-border:              #ddd;
 
 //Colors
 
-//Aside
+@white:                         #FFF;
+@blue:                          #3498db;
+@dark-blue:                     #2980b9;
+@light-blue:                    #b1d8f2;
+@gray-blue:                     #b6d4e9;
+@dark-gray-blue:                #5a6b7a;
+@gray:                          #6e6e6e;
+@dark-gray:                     #e3e5e9;
+@light-gray:                    #f7f6fa;
+@filterbox-bg:                  #fff;
+@filterbox-border:              #ddd;
+
+/*
+    Global Settings
+*/
+
+body {
+    font-family: @font;
+}
+
+/*
+    Navbar
+*/
+
+//Colors
+
+.navbar {
+    border-bottom: 1px solid @dark-blue;
+}
+
+.navbar-default {
+    background-color: @blue;
+    color: @white;
+
+    .navbar-brand{
+        color: @white;
+        &:hover,
+        &:focus {
+            color: @white;
+            background-color: @blue;
+        }
+    }
+    
+    .navbar-nav {
+        > li > a {
+            color: @gray-blue;
+
+            &:hover,
+            &:focus {
+                color: @white;
+                background-color: @dark-blue;
+            }
+        }
+        > .active > a {
+            &,
+            &:hover,
+            &:focus {
+                color: @white;
+                background-color: @dark-blue;
+            }
+        }
+    }
+}
+
+/*
+    Jumbotron
+*/
+
+//Colors
+
+.jumbotron {
+    background-color: @blue;
+    color: @white;
+    border-top: 2px solid #43a2df;
+
+    h2 {
+        color: @light-blue;
+    }
+}
+
+/*
+    Buttons
+*/
+
+//Colors
+
+.btn-default {
+    color: @gray;
+}
+
+/*
+    Aside
+*/
+
+.list-group-item {
+    &.list-group-brand {
+        color: @blue;
+    }
+    background-color: @light-gray;
+    border: 0px;
+}
+
+a.list-group-item {
+    color: @dark-gray-blue;
+    &:hover, 
+    &:focus {
+        color: @dark-gray-blue;
+        background-color: @dark-gray;
+    }
+}
 
 #main aside .list-group {
     position: fixed;
@@ -24,7 +139,9 @@ This is a Custom stylesheet
     }
 }
 
-//Table
+/*
+    Table
+*/
 
 #main table tr td:nth-child(3)::before{
     content: '@';
