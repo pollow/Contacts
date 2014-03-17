@@ -7,7 +7,7 @@ html(lang = 'zh')
             h1 内部通讯录
             h2 通过筛选器选择过滤条件，通过搜索栏直接搜索（支持正则表达式）
             .row
-                .col-md-offset-9.col-md-3
+                .col-md-offset-8.col-md-3
                     .input-group
                         input.form-control(type = 'text')
                         span.input-group-btn
@@ -15,7 +15,7 @@ html(lang = 'zh')
 
         .container
             aside
-                .list-group.col-md-2
+                .list-group.col-md-2(data-spy = 'affix', data-offset-top = '300')
                     a.list-group-item.list-group-brand MSTC ZJU Contact 筛选器
                     a.list-group-item.active(href = '#') 全部
                     a.list-group-item(data-toggle = 'collapse', data-target = '#gender') 性别
