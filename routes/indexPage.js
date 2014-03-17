@@ -6,7 +6,29 @@ exports.main = function(req, res) {
     res.redirect('/');
     return ;
   }
-  res.render('main');
+  contactModel.find({}, "_id id contact", function(err, doc) {
+    console.log('Start pulling contacts.');
+    if(err) {
+      console.log("[Database Error] Failed to find:");
+      console.log(err);
+      console.track(err);
+      return ;
+    }
+
+    console.log('[Database Read] Success to find');
+
+    var people = [];
+    for (i in doc) {
+      var person = {};
+      // console.log(doc[i]);
+      person.name = doc[i].name;
+      person.id = doc[i].id;
+      person.longNumber = doc[i].contact;
+      people.push(person);
+    }
+    // console.log(people);
+    res.render('main', people);
+  });
 };
 
 exports.index= function(req, res) {

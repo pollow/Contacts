@@ -16,7 +16,7 @@ var format = {
   shortNumber: "短号",
   email: "邮箱",
   qq: "QQ",
-  commonID: "常用ID",
+  id: "常用ID",
   campus: "校区",
   major: "专业",
   group: "部门",
