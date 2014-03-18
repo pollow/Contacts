@@ -45,6 +45,21 @@ The console will print
 
 Now you know that all these lines are printed by `user.js`
 
+## 2. Contact format
+
+Whenever you do anything with the contact (e.g. database, locals), just remeber to follow the format standard listed in the file `contactformat.md`. Or if you want to make some changes about the format strings, you can update this file first and then update the other code.
+
+## 3. Personal private information
+
+Check all the files you commit and make sure no private information is commited and pushed.
+
+In addition, pay attention to vital adminstrator username and password.
+
+## 4. Before you push
+
+Please make sure your code is ready to run before you make a push on GitHub.
+
+**It's quite important**
 
 
 
