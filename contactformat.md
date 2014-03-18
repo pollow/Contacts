@@ -11,12 +11,12 @@ It can be used to import/export to excel file
 ```javascript
 var format = {
   name: "姓名",
-  sex: "性别", // or "gender", which is better?
+  sex: "性别",
   longNumber: "长号",
   shortNumber: "短号",
   email: "邮箱",
   qq: "QQ",
-  id: "常用ID",
+  nickname: "常用ID",
   campus: "校区",
   major: "专业",
   group: "部门",

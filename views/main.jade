@@ -98,13 +98,15 @@ html(lang = 'zh')
                                 th #
                                 th 姓名
                                 th 常用ID
-                                th 联系方式
+                                th 长号
+                                th 短号
                             each person, index in people
                                 tr(data-toggle = 'modal', data-target = '#' + index)
                                     td= index
                                     td= person.name
-                                    td= person.id
+                                    td= person.nickname
                                     td= person.longNumber
+                                    td= person.shortNumber
             each person, index in people
                 div.modal.fade(id = index, role = 'dialog', aria-labeledby = 'Lable' + index)
                     .modal-dialog
