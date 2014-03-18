@@ -34,7 +34,7 @@ if ('development' == app.get('env')) {
 
 // mongoDB connection
 mongoose.connect('mongodb://' + db.user + ':' + db.password
-  + '@localhost/mstc');
+  + '@10.13.122.223/mstc');
 
 routes(app);
 
