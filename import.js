@@ -14,7 +14,7 @@ db.once('open', function() {
   var fs = require('fs');
   var csvFile;
 
-  fs.readFile("./Contacts.csv", 'utf-8',function(err, data) {
+  fs.readFile("./Contacts.csv", 'utf-8', function(err, data) {
     csvFile = data;
     var contactsArray = csvFile.split('\n');
     contactsArray.shift();
@@ -22,31 +22,24 @@ db.once('open', function() {
       var item = contactsArray[i];
       var json_ = item.split(',');
       var phoneNumbers = json_[5];
-
-      phoneNumbers = phoneNumbers.replace(/[^0-9]/g,'/');
-      phoneNumbers = phoneNumbers.split('/');
-
-      var longNum;
-      var shortNum;
-      if (phoneNumbers[0])
-        longNum = phoneNumbers[0];
-      else longNum = ' ';
-      if (phoneNumbers[1])
-        shortNum = phoneNumbers[1];
-      else 
-        shortNum = ' ';
-      console.log(shortNum);
+      phoneNumbers = phoneNumbers.split(/[^0-9]{1,}/);
+      var longNum = phoneNumbers[0];
+      var shortNum = phoneNumbers[1];
       contactsArray[i] = { 
         name: json_[0],
         sex: json_[1],
-        major: json_[2],
-        group: json_[3],
-        nickname: json_[4],
         longNumber: longNum,
         shortNumber: shortNum,
         email: json_[6],
         qq: json_[7],
-        enrollTime: json_[13]
+        nickname: json_[4],
+        major: json_[2],
+        group: json_[3],
+        title: json_[11],
+        studentType: json_[12],
+        enrollTime: json_[13],
+        blog: json_[14],
+        employer: json_[15]
       };
       console.log(contactsArray[i]);
     }
