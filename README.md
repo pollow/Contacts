@@ -17,6 +17,8 @@ Authored by [Gnnng], [MForever78] and [Pollow]
 
 ## 1. Print in console
 
+### Locate the printing position
+
 Please use `logger` to print variable or other information you need. In this way, you can easily locate the file which print the information you need.
 
 Assume that a file named `user.js` is in debugging, you want to print some inforamtion.
@@ -45,17 +47,94 @@ The console will print
 
 Now you know that all these lines are printed by `user.js`
 
-## 2. Contact format
+### Set the log level
+
+Thanks for the node module `log4js`, we can change our printing strategy while running app.js in various environments.
+
+You should use `app.set` to configure it as follows
+> Or you can configure it in specific situation which means multiple environments.
+
+```javascript
+//in app.js
+app.set('logLevel', logger.setLevel('TRACE'));
+```
+All the available log levels are the same as the loggers' name like `DEBUG`, `INFO`, etc.
+
+## 2. Multiple environment configuration
+
+By now, we have 3 different environments in all. They are `development`, `offline` and `production`
+
+### How to enable certain environment
+When you run the app.js, use certain **one** of three commands below.
+> Note: you don't have to explicitly enable `development` which is default running mode
+
+
+```bash
+NODE_ENV=development node app.js
+#or
+node app.js
+
+NODE_ENV=offline node app.js 
+
+NODE_ENV=production node app.js
+```
+
+### How to configure different environments
+
+Use `app.set` or `app.enable` to configure.
+
+```javascript
+// development environment only
+if ('development' == app.get('env')) {
+  app.use(express.errorHandler());
+  app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@'+db.address+'/mstc');
+  app.enable('nologin');
+}
+
+// offline environment only
+if ('offline' == app.get('env')) {
+  app.use(express.errorHandler());
+  app.set('dburl', 'mongodb://localhost/mstc');
+  app.enable('nologin');
+}
+
+if ('production' == app.get('env')) {
+  app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@localhost/mstc');
+
+  //TO-DO still in debug
+  app.use(errors.routeHandler);
+  app.use(errors.serverHandler);
+}
+```
+
+### Explanation for some statements
+
+#### No-login mode
+```javascript
+//enable this mode
+app.enable('nologin');
+//disable this mode
+app.disable('nologin');
+```
+
+#### Offline environment
+This "offline" environment is used when you have no network connection.
+It includes these feature
+
+1. Based on development environment
+2. Using local database without authorization
+
+## 3. Contact format
 
 Whenever you do anything with the contact (e.g. database, locals), just remeber to follow the format standard listed in the file `contactformat.md`. Or if you want to make some changes about the format strings, you can update this file first and then update the other code.
 
-## 3. Personal private information
+## 4. Personal private information
 
 Check all the files you commit and make sure no private information is commited and pushed.
 
 In addition, pay attention to vital adminstrator username and password.
 
-## 4. Before you push
+## 5. Before you push
 
 Please make sure your code is ready to run before you make a push on GitHub.
 
