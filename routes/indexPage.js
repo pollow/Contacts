@@ -5,6 +5,9 @@ var logger = require('logger').logger('indexPage');
 exports.index = function(req, res) {
   var game = 'game/2048/index.html';
 
+  if (req.app['nologin'])
+    return res.render('index', {game: game});
+
   if(req.session.name) {
     res.redirect('/main');
   } else {
@@ -13,10 +16,10 @@ exports.index = function(req, res) {
 };
 
 exports.main = function(req, res) {
-  // if(!req.session.name) {
-  //   res.redirect('/');
-  //   return ;
-  // }
+
+  if (req.app['nologin'] == false && !req.session.name)
+    return res.redirect('/');
+
   contactModel.find({}, "name nickname longNumber shortNumber", function(err, doc) {
     logger.info('Start pulling contacts.');
     if(err) {
@@ -25,18 +28,8 @@ exports.main = function(req, res) {
       logger.trace(err);
       return ;
     }
-
     logger.info('[Database Read] Success to find');
-
-    // var people = [];
-    // for (i in doc) {
-    //   var person = {};
-    //   person.name = doc[i].name;
-    //   person.nickname = doc[i].nickname;
-    //   person.longNumber = doc[i].longNumber;
-    //   people.push(person);
-    // }
-    logger.debug(doc);
+    // logger.debug(doc);
     res.render('main', {people: doc});
   });
 };

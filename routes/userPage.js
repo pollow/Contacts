@@ -3,30 +3,36 @@ var contactModel = require('../models').contactModel;
 var logModel = require('../models').logModel;
 var logger = require('logger').logger('userPage');
 
-exports.login = function(req, res) {
+exports.login = function(req, res, next) {
   var authData = {
     "username": req.body.username,
     "password": req.body.password
   };
 
-  request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
-
-    var person = JSON.parse(body); // transform the string to json 
-    var loginFlag = false;
-
+  mstcAuth(authData, req.session, function(err, loginFlag){
     if (err) {
-      logger.error(err);
-      logger.trace(err);
-      res.redirect('/');
-      return; // does it need something to return ?
+      return next(err);
     }
+    if (loginFlag) {
+      res.redirect('/main');
+    } else {
+      res.redirect('/');
+    }
+  });  
+};
+
+function mstcAuth(authData, session, callback) {
+  logger.debug('Posting data to server...');
+  request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
+    var loginFlag = false;
+    var person = JSON.parse(body); // transform the string to json 
 
     // use the responese code to decide
     if (response.statusCode == 200) { 
       if (person.success) {
-        req.session.name = person.name;
-        req.session.cookie.expires = false;
-        req.session.cookie.maxAge = 1000*60*30;
+        session.name = person.name;
+        session.cookie.expires = false;
+        session.cookie.maxAge = 1000*60*30;
         // logger.debug(req.session);
         // res.send('login success. Welcome you [' + person.name + ']' );
         loginFlag = true;
@@ -39,14 +45,11 @@ exports.login = function(req, res) {
       logger.warn('Error occured at auth server');
       loginFlag = false;
     }
-
-    if (loginFlag) {
-      res.redirect('/main');
-    } else {
-      res.redirect('/');
-    }
+    // err = 'this is error';
+    callback(err, loginFlag);
   });
-};
+}
+
 
 // function empty (mixed_var) {
 //   var key;

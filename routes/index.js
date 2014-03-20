@@ -3,6 +3,7 @@ var indexPage = require('./indexPage.js');
 var logger = require('logger').logger('index');
 
 module.exports = function(app) {
+
   // user
   app.post('/login', userPage.login);
   // app.post('/alert', userPage.alert);
@@ -16,9 +17,9 @@ module.exports = function(app) {
   // app.get('/log', indexPage.log);
 
   // deal with 404 page by redirecting to '/'
-  app.all('/:empty', function(req, res) {
-    logger.error('404 Error');
-    res.redirect('/');
-  })
+  // app.all('/:empty', function(req, res) {
+  //   logger.error('404 Error');
+  //   res.redirect('/');
+  // })
 };
 
