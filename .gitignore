@@ -5,3 +5,4 @@ Contacts.csv
 db.js
 *.sublime-workspace
 !node_modules/logger/
+codekit-config.json
