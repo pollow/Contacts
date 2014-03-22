@@ -10,7 +10,8 @@ var titleStr = {
 exports.index = function(req, res) {
   var game = 'game/2048/index.html';
 
-  if (req.app['nologin'])
+  logger.debug(req.app.settings);
+  if (req.app.settings.nologin)
     return res.render('index', {title: titleStr.index, game: game});
 
   if(req.session.name) {
@@ -22,7 +23,7 @@ exports.index = function(req, res) {
 
 exports.main = function(req, res) {
 
-  if (req.app['nologin'] == false && !req.session.name)
+  if (req.app.settings.nologin == false && !req.session.name)
     return res.redirect('/');
 
   contactModel.find({}, "name nickname longNumber shortNumber", function(err, doc) {
@@ -35,7 +36,7 @@ exports.main = function(req, res) {
     }
     logger.info('[Database Read] Success to find');
     // logger.debug(doc);
-    res.render('main', {title: titleStr.index, people: doc});
+    res.render('main', {title: titleStr.main, people: doc});
   });
 };
 

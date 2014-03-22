@@ -7,6 +7,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var app = express();
+var logSet = require('logger').setLevel('FATAL');  // do not change the order of these requires
 var routes = require('./routes/index');
 var mongoose = require('mongoose');
 var db = require('./db.js');
@@ -30,7 +31,6 @@ var journal = require('logger').logger('journal');
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.set('logLevel', logger.setLevel('TRACE'));
 app.use(express.favicon(path.join(__dirname,'public/images/favicon.ico')));
 app.use(log4js.connectLogger(journal, {level: 'INFO', format:':remote-addr :method :user-agent'}));
 // app.use(express.logger('dev'));
