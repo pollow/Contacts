@@ -4,14 +4,15 @@ html(lang = 'zh')
     body#main
         include includes/nav
         .jumbotron
-            h1 内部通讯录
-            h2 通过筛选器选择过滤条件，通过搜索栏直接搜索（支持正则表达式）
-            .row
-                .col-md-offset-8.col-md-3
-                    .input-group
-                        input.form-control(type = 'text')
-                        span.input-group-btn
-                            button.btn.btn-default(type = 'button') 搜索
+            .container
+                h1 内部通讯录
+                h2 通过筛选器选择过滤条件，通过搜索栏直接搜索（支持正则表达式）
+                .row
+                    .col-md-offset-9.col-md-3
+                        .input-group
+                            input.form-control(type = 'text')
+                            span.input-group-btn
+                                button.btn.btn-default(type = 'button', name = 'search') 搜索
 
         .container
             aside
