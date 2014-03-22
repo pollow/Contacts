@@ -1,17 +1,22 @@
 var contactModel = require('../models').contactModel; 
 var logModel = require('../models').logModel;
 var logger = require('logger').logger('indexPage');
+var titleStr = {
+  index: "MSTC ZJU Contact",
+  main: "Contact - 通讯录",
+  about: "Contact - 关于"
+}
 
 exports.index = function(req, res) {
   var game = 'game/2048/index.html';
 
   if (req.app['nologin'])
-    return res.render('index', {game: game});
+    return res.render('index', {title: titleStr.index, game: game});
 
   if(req.session.name) {
     res.redirect('/main');
   } else {
-    res.render('index', {game: game});
+    res.render('index', {title: titleStr.index, game: game});
   }
 };
 
@@ -30,10 +35,13 @@ exports.main = function(req, res) {
     }
     logger.info('[Database Read] Success to find');
     // logger.debug(doc);
-    res.render('main', {people: doc});
+    res.render('main', {title: titleStr.index, people: doc});
   });
 };
 
+exports.about = function(req, res) {
+  res.render('about', {title: titleStr.about})
+}
 // exports.list = function(req, res) {
 //   // auth here
 //   logger.info(req.session);
