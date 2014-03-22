@@ -6,8 +6,13 @@ var logger = require('logger').logger('userPage');
 exports.login = function(req, res, next) {
   var authData = {
     "username": req.body.username,
-    "password": req.body.password
+    "password": req.body.password,
+    "remember": req.body.remember
   };
+
+  logger.debug(req.session);
+  logger.debug(req.cookie);
+  logger.debug(authData.remember);
 
   mstcAuth(authData, req.session, function(err, loginFlag){
     if (err) {
@@ -21,6 +26,14 @@ exports.login = function(req, res, next) {
   });  
 };
 
+exports.logout = function(req, res, next) {
+  logger.debug(req.session);
+  req.session = null;
+  logger.debug(req.session);
+  res.clearCookie('connect.sid');
+  res.redirect('/');
+}
+
 function mstcAuth(authData, session, callback) {
   logger.debug('Posting data to server...');
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
@@ -30,9 +43,16 @@ function mstcAuth(authData, session, callback) {
     // use the responese code to decide
     if (response.statusCode == 200) { 
       if (person.success) {
+
+        var ahour = 3600000;
+
         session.name = person.name;
-        session.cookie.expires = false;
-        session.cookie.maxAge = 1000*60*30;
+        if (authData.remember == true) {
+          session.cookie.maxAge = ahour * 24 * 7;
+        } else {
+          session.cookie.maxAge = -1;
+        }
+
         // logger.debug(req.session);
         // res.send('login success. Welcome you [' + person.name + ']' );
         loginFlag = true;
@@ -40,7 +60,7 @@ function mstcAuth(authData, session, callback) {
       } else {
         logger.warn('Invalid username or password');
         loginFlag = false;  
-      }
+     }
     } else {
       logger.warn('Error occured at auth server');
       loginFlag = false;

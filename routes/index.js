@@ -6,6 +6,7 @@ module.exports = function(app) {
 
   // user
   app.post('/login', userPage.login);
+  app.get('/logout', userPage.logout);
   // app.post('/alert', userPage.alert);
   
   // index
