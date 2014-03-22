@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@'+db.address+'/mstc');
-  app.enable('nologin');
+  app.disable('nologin');
 }
 
 // offline environment only
@@ -59,6 +59,7 @@ if ('production' == app.get('env')) {
   app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@localhost/mstc');
 
   //TO-DO still in debug
+  app.disable('nologin');
   app.use(errors.routeHandler);
   app.use(errors.serverHandler);
 }
