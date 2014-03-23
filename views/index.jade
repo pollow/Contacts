@@ -5,7 +5,7 @@ html(lang = 'zh')
 
     //Comment for login test
 
-    //- var loggedin = true;
+    - var loggedin = true;
 
     body#index
         include includes/nav
@@ -38,7 +38,7 @@ html(lang = 'zh')
                 if loggedin
                     .row
                         .col-sm-offset-10.col-sm-2
-                            a.btn.btn-default.btn-block.btn-lg(href = 'main/') 进入通讯录
+                            a.btn.btn-default.btn-block.btn-lg(href = 'main') 进入通讯录
         .container.game
             iframe(width='500', height='400', scrolling='no', frameborder='no', src=game)
 
