@@ -94,16 +94,14 @@ html(lang = 'zh')
             .row
                 .col-md-offset-3.col-md-9
                     .table-responsive
-                        table.table.table-striped.table-hover
+                        table.main-table.table.table-striped.table-hover
                             tr
-                                th #
                                 th 姓名
                                 th 常用ID
                                 th 长号
                                 th 短号
                             each person, index in people
                                 tr(data-toggle = 'modal', data-target = '#' + index)
-                                    td= index
                                     td= person.name
                                     td= person.nickname
                                     td= person.longNumber
