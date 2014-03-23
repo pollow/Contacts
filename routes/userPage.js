@@ -10,9 +10,9 @@ exports.login = function(req, res, next) {
     "remember": req.body.remember
   };
 
-  logger.debug(req.session);
-  logger.debug(req.cookie);
-  logger.debug(authData.remember);
+  // logger.debug(req.session);
+  // logger.debug(req.cookie);
+  // logger.debug(authData.remember);
 
   mstcAuth(authData, req.session, function(err, loginFlag){
     if (err) {
@@ -39,7 +39,6 @@ function mstcAuth(authData, session, callback) {
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
     var loginFlag = false;
     var person = JSON.parse(body); // transform the string to json 
-
     // use the responese code to decide
     if (response.statusCode == 200) { 
       if (person.success) {
@@ -50,7 +49,7 @@ function mstcAuth(authData, session, callback) {
         if (authData.remember == true) {
           session.cookie.maxAge = ahour * 24 * 7;
         } else {
-          session.cookie.maxAge = -1;
+          session.cookie.maxAge = ahour * 3;
         }
 
         // logger.debug(req.session);
