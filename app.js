@@ -31,7 +31,7 @@ var journal = require('logger').logger('journal');
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.favicon(path.join(__dirname,'public/images/favicon.ico')));
+app.use(express.favicon(path.join(__dirname,'public/img/favicon.png')));
 app.use(log4js.connectLogger(journal, {level: 'INFO', format:':remote-addr :method :user-agent'}));
 // app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@'+db.address+'/mstc');
-  app.disable('nologin');
+  app.enable('nologin');
 }
 
 // offline environment only

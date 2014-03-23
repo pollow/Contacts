@@ -11,3 +11,19 @@ $("form").on("submit",function() {
         $nameField.val($name);
     }
 });
+
+/*
+    Contact filter
+*/
+
+$(":checkbox").on("click", function() {
+    var $field = $("input:checked");
+    var $filterArr = new Array();
+    $field.each(function(){
+        //alert($(this).val());
+        $filterArr.push($(this).val());
+    });
+    for(var index = 0; index < $filterArr.length; index++){
+        
+    }
+});

@@ -266,6 +266,7 @@ a.list-group-item {
 */
 
 .modal-body {
+    padding: 0 20px;
     h5 {
         font-weight: bold;
         padding: 10px;
@@ -274,13 +275,20 @@ a.list-group-item {
 
     table {
         tr {
-            padding: 10px;
-            line-height: 30px;
-            th {
+            > th {
                 text-align: right;
-                min-width: 130px;
+                min-width: 180px;
+            }
+            > th,
+            > td {
+                padding: 10px 30px;
+                line-height: 10px;
             }
         }
+    }
+
+    .basic-table tr:last-child td::before{
+        content: '@';
     }
 }
 

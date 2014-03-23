@@ -115,51 +115,40 @@ html(lang = 'zh')
                                 h4.modal-title(id = 'Label' + index)= person.name
                             .modal-body
                                 h5 基本信息
-                                table
+                                table.basic-table
                                     tr
                                         th 性别
-                                        td 
+                                        td= person.gender
                                     tr
                                         th 专业
-                                        td 
+                                        td= person.prof
                                     tr
                                         th 所在校区
-                                        td
+                                        td= person.campus
                                     tr
                                         th Group
-                                        td 
+                                        td= person.group
                                     tr
                                         th 常用ID
-                                        td 
+                                        td= person.nickname
                                 h5 联系方式
                                 table
                                     tr
                                         th 长号
-                                        td 
+                                        td= person.longNumber
                                     tr
                                         th 短号
-                                        td
+                                        td= person.shortNumber
                                     tr
                                         th 邮箱
-                                        td
+                                        td= person.email
                                     tr
                                         th QQ
-                                        td
-                                    tr
-                                        th 主页
-                                        td
-                                    tr 
-                                        th 人人
-                                        td
-                                    tr 
-                                        th 新浪微博
-                                        td
-                                    tr 
-                                        th Twitter
-                                        td
-                                    tr
-                                        th Facebook
-                                        td
+                                        td= person.qq
+                                    //- each filed in person.custom
+                                    //-     tr
+                                    //-         th= filed.filed
+                                    //-         td= filed.value
                             .modal-footer
                                 button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
 
