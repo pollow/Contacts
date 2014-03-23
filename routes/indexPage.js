@@ -15,9 +15,9 @@ exports.index = function(req, res) {
     return res.render('index', {title: titleStr.index, game: game});
 
   if(req.session.name) {
-    res.redirect('/main');
+    res.render('index', {title: titleStr.index, game: game, loggedin: true });
   } else {
-    res.render('index', {title: titleStr.index, game: game});
+    res.render('index', {title: titleStr.index, game: game, loggedin: false});
   }
 };
 
@@ -36,7 +36,7 @@ exports.main = function(req, res) {
     }
     logger.info('[Database Read] Success to find');
     // logger.debug(doc);
-    res.render('main', {title: titleStr.main, people: doc});
+    res.render('main', {title: titleStr.main, people: doc, loggedin: true});
   });
 };
 
