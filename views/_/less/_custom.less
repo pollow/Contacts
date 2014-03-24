@@ -28,6 +28,7 @@
 @light-gray:                    #f7f6fa;
 @filterbox-bg:                  #fff;
 @filterbox-border:              #ddd;
+@table-bg:						#f9f9f9;
 
 //Size
 
@@ -253,6 +254,15 @@ a.list-group-item {
     content: '@';
 }
 
+.main-table {
+	> thead > tr > th {
+		background-color: @table-bg;
+	}
+	tr.strip {
+		background-color: @table-bg;
+	}
+}
+
 /*
     Game
 */
@@ -312,10 +322,14 @@ footer {
 
 //body padding
 
-body{
+body {
     padding-top: @navbar-height;
 }
 
 /*
     Others
 */
+
+.main-content {
+	min-width: 500px;
+}

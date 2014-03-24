@@ -6,15 +6,15 @@ html(lang = 'zh')
         .jumbotron
             .container
                 h1 内部通讯录
-                h2 通过筛选器选择过滤条件，通过搜索栏直接搜索（支持正则表达式）
+                h2 通过筛选器选择过滤条件，通过搜索栏直接搜索
                 .row
                     .col-md-offset-9.col-md-3
                         .input-group
-                            input.form-control(type = 'text')
+                            input.form-control(type = 'text', name = 'search')
                             span.input-group-btn
-                                button.btn.btn-default(type = 'button', name = 'search') 搜索
+                                button.btn.btn-default(name = 'searchSubmit') 搜索
 
-        .container
+        .container.main-content
             aside
                 .list-group.col-md-3(data-spy = 'affix', data-offset-top = '300')
                     a.list-group-item.list-group-brand MSTC ZJU Contact 筛选器
@@ -23,89 +23,91 @@ html(lang = 'zh')
                     #gender.collapse.filterbox
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'male')
+                                input(type = 'checkbox', value = 'male', checked)
                                 |  男
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'female')
+                                input(type = 'checkbox', value = 'female', checked)
                                 |  女
                     a.list-group-item(data-toggle = 'collapse', data-target = '#grade') 年级
                     #grade.collapse.filterbox
                         .checkbox
                             label
-                               input(type = 'checkbox', value = 'one')
+                               input(type = 'checkbox', value = 'one', checked)
                                |  大一
                         .checkbox
                             label
-                               input(type = 'checkbox', value = 'two')
+                               input(type = 'checkbox', value = 'two', checked)
                                |  大二
                         .checkbox
                             label
-                               input(type = 'checkbox', value = 'three')
+                               input(type = 'checkbox', value = 'three', checked)
                                |  大三
                         .checkbox
                             label
-                               input(type = 'checkbox', value = 'four')
+                               input(type = 'checkbox', value = 'four', checked)
                                |  大四
                         .checkbox
                             label
-                               input(type = 'checkbox', value = 'master')
+                               input(type = 'checkbox', value = 'master', checked)
                                |  研究生
                         .checkbox
                             label
-                               input(type = 'checkbox', value = 'work')
+                               input(type = 'checkbox', value = 'work', checked)
                                |  工作
                     a.list-group-item(data-toggle = 'collapse', data-target = '#group') Group
                     #group.collapse.filterbox
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'TG')
+                                input(type = 'checkbox', value = 'TG', checked)
                                 |  TG
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'OG')
+                                input(type = 'checkbox', value = 'OG', checked)
                                 |  OG
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'CG')
+                                input(type = 'checkbox', value = 'CG', checked)
                                 |  CG
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'PG')
+                                input(type = 'checkbox', value = 'PG', checked)
                                 |  PG
                     a.list-group-item(data-toggle = 'collapse', data-target = '#campus') 所在校区
                     #campus.collapse.filterbox
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'zijingang')
+                                input(type = 'checkbox', value = 'zijingang', checked)
                                 |  紫金港
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'yuquan')
+                                input(type = 'checkbox', value = 'yuquan', checked)
                                 |  玉泉
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'xixi')
+                                input(type = 'checkbox', value = 'xixi', checked)
                                 |  西溪
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'huajiachi')
+                                input(type = 'checkbox', value = 'huajiachi', checked)
                                 |  华家池
             .row
                 .col-md-offset-3.col-md-9
                     .table-responsive
-                        table.main-table.table.table-striped.table-hover
-                            tr
-                                th 姓名
-                                th 常用ID
-                                th 长号
-                                th 短号
-                            each person, index in people
-                                tr(data-toggle = 'modal', data-target = '#' + index)
-                                    td= person.name
-                                    td= person.nickname
-                                    td= person.longNumber
-                                    td= person.shortNumber
+                        table.main-table.table.table-hover
+                            thead
+                                tr
+                                    th 姓名
+                                    th 常用ID
+                                    th 长号
+                                    th 短号
+                            tbody
+                                each person, index in people
+                                    tr(data-toggle = 'modal', data-target = '#' + index)
+                                        td= person.name
+                                        td= person.nickname
+                                        td= person.longNumber
+                                        td= person.shortNumber
             each person, index in people
                 div.modal.fade(id = index, role = 'dialog', aria-labeledby = 'Lable' + index)
                     .modal-dialog
@@ -118,10 +120,10 @@ html(lang = 'zh')
                                 table.basic-table
                                     tr
                                         th 性别
-                                        td= person.gender
+                                        td= person.sex
                                     tr
                                         th 专业
-                                        td= person.prof
+                                        td= person.major
                                     tr
                                         th 所在校区
                                         td= person.campus
