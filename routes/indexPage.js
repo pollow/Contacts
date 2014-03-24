@@ -10,7 +10,7 @@ var titleStr = {
 exports.index = function(req, res) {
   var game = 'game/2048/index.html';
 
-  logger.debug(req.app.settings);
+  // logger.debug(req.app.settings);
   if (req.app.settings.nologin)
     return res.render('index', {title: titleStr.index, game: game});
 
