@@ -1,3 +1,3 @@
 /*
-    Remove the '@' in the username
-*/$("form").on("submit",function(){var e=$(this).find("input[name=username]"),t=e.val(),n=t.indexOf("@");if(n!==-1){t=t.substring(0,n);e.val(t)}});
+    Color main-table
+*/function color(){var e=0;$(".main-table > tbody > tr").each(function(){$(this).removeClass("strip");if(!$(this).hasClass("hidden")){console.log(e);e++%2&&$(this).addClass("strip")}})}$(document).ready(function(){color()});$("form").on("submit",function(){var e=$(this).find("input[name=username]"),t=e.val(),n=t.indexOf("@");if(n!==-1){t=t.substring(0,n);e.val(t)}});$("input[name=search]").keyup(function(){event.keyCode==13&&$("button[name=searchSubmit]").click()});$("button[name=searchSubmit]").on("click",function(){var e=$("input[name=search]").val(),t=!1;$("table.main-table > tbody > tr").each(function(n){t=!1;$(this).children().each(function(){$(this).text().indexOf(e)!=-1&&(t=!0)});t?$(this).removeClass("hidden"):$(this).addClass("hidden")});color()});

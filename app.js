@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
   app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@'+db.address+'/mstc');
-  app.enable('nologin');
+  app.disable('nologin');
 }
 
 // offline environment only
