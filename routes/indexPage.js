@@ -26,7 +26,7 @@ exports.main = function(req, res) {
   if (req.app.settings.nologin == false && !req.session.name)
     return res.redirect('/');
 
-  contactModel.find({}, "name nickname longNumber shortNumber", function(err, doc) {
+  contactModel.find({}, "name nickname longNumber shortNumber sex group email qq major campus", function(err, doc) {
     logger.info('Start pulling contacts.');
     if(err) {
       logger.error("[Database Error] Failed to find:");

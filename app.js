@@ -32,8 +32,10 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon(path.join(__dirname,'public/img/favicon.png')));
-app.use(log4js.connectLogger(journal, {level: 'INFO', format:':remote-addr :method :user-agent'}));
-// app.use(express.logger('dev'));
+if ('production' == app.get('env')) {
+  // app.use(log4js.connectLogger(journal, {level: 'INFO', format:':remote-addr :method :user-agent'})); //previous version
+  app.use(log4js.connectLogger(journal, {level: 'INFO', format:':method :url'})); // debug mode
+}
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('ilovemstc'));
@@ -56,6 +58,7 @@ if ('offline' == app.get('env')) {
 }
 
 if ('production' == app.get('env')) {
+
   app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@localhost/mstc');
 
   //TO-DO still in debug
