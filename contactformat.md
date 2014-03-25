@@ -25,7 +25,8 @@ var format = {
   enrollTime: "入学时间",
   blog: "个人主页",
   employer: "就业去向",
-  custom: "自定义（Object）"
+  custom: "自定义(Object)",
+  everlogged: Boolean
 };
 
 ```
