@@ -24,7 +24,8 @@ var format = {
   studentType: "学业类别",
   enrollTime: "入学时间",
   blog: "个人主页",
-  employer: "就业去向"
+  employer: "就业去向",
+  custom: "自定义（Object）"
 };
 
 ```
