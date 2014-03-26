@@ -320,10 +320,27 @@ footer {
     padding: 10px 15px;
 }
 
+//Author
+
+a.author {
+    cursor: default;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 //body padding
 
 body {
     padding-top: @navbar-height;
+}
+
+/*
+    Alert
+*/
+
+.alert {
+    padding: 8px;
 }
 
 /*
@@ -337,4 +354,15 @@ body {
 .filterHidden {
   display: none !important;
   visibility: hidden !important;
+}
+
+/*
+    Temp
+*/
+
+.loginFailed {
+    color: #FFF;
+    p {
+        font-size: 8px;
+    }
 }

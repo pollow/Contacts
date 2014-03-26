@@ -75,26 +75,21 @@ function contactFilter() {
 
     selected = new Object();
     var type;
+    var flag = false;
+    var personId;
+    var properties = Array("sex", "grade", "group", "campus");
+    var property;
 
-
-    //Establish arrays
-    field.each(function() {
-        // console.log($(this).val());
-        type = $(this).parents(".filterbox").attr("id");
-        // console.log(type);
-        selected[type] = Array();
-    });
+    for (index in properties) {
+        property = properties[index];
+        selected[property] = Array();
+    }
 
     //Insert property to array
     field.each(function() {
         type = $(this).parents(".filterbox").attr("id");
         selected[type].push($(this).val());
     });
-
-    var flag = false;
-    var personId;
-    var properties = Array("sex", "grade", "group", "campus");
-    var property;
 
     // Examine each field. If the property doesn't match anything in any group, then hide it.
 
@@ -114,6 +109,7 @@ function contactFilter() {
                 // console.log("hello");
 
                 //Now you get the right cell, check if its value is selected
+
                 for (var index = 0; index < selected[property].length; index++){
                     value = selected[property][index];
 
@@ -198,3 +194,12 @@ $("button[name=searchSubmit]").on("click", function() {
 
     color();
 });
+
+/*
+    Name tooltip
+*/
+// $(".author").on("click", function() {
+//     $(this).tooltip('show');
+// });
+
+$(".author").tooltip();
