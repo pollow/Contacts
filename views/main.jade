@@ -18,12 +18,12 @@ html(lang = 'zh')
             aside
                 .list-group.col-md-3(data-spy = 'affix', data-offset-top = '300')
                     a.list-group-item.list-group-brand MSTC ZJU Contact 筛选器
-                    a.list-group-item.active(href = '#') 全部
-                    a.list-group-item(data-toggle = 'collapse', data-target = '#gender') 性别
-                    #gender.collapse.filterbox
+                    a#checkAll.list-group-item.active 全部
+                    a.list-group-item(data-toggle = 'collapse', data-target = '#sex') 性别
+                    #sex.collapse.filterbox
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'male', checked)
+                                input(type = 'checkbox', value = 'male', checked=true)
                                 |  男
                         .checkbox
                             label
@@ -109,7 +109,7 @@ html(lang = 'zh')
                                         td= person.longNumber
                                         td= person.shortNumber
             each person, index in people
-                div.modal.fade(id = index, role = 'dialog', aria-labeledby = 'Lable' + index)
+                div.modal.fade.nameCard(id = index, role = 'dialog', aria-labeledby = 'Lable' + index)
                     .modal-dialog
                         .modal-content
                             .modal-header
@@ -118,39 +118,44 @@ html(lang = 'zh')
                             .modal-body
                                 h5 基本信息
                                 table.basic-table
-                                    tr
-                                        th 性别
-                                        td= person.sex
-                                    tr
-                                        th 专业
-                                        td= person.major
-                                    tr
-                                        th 所在校区
-                                        td= person.campus
-                                    tr
-                                        th Group
-                                        td= person.group
-                                    tr
-                                        th 常用ID
-                                        td= person.nickname
+                                    tbody
+                                        tr
+                                            th 性别
+                                            td(name = 'sex')= person.sex
+                                        tr
+                                            th 专业
+                                            td(name = 'major')= person.major
+                                        tr
+                                            th 年级
+                                            td(name = 'grade')= person.grade
+                                        tr
+                                            th 所在校区
+                                            td(name = 'campus')= person.campus
+                                        tr
+                                            th Group
+                                            td(name = 'group')= person.group
+                                        tr
+                                            th 常用ID
+                                            td(name = 'nickname')= person.nickname
                                 h5 联系方式
                                 table
-                                    tr
-                                        th 长号
-                                        td= person.longNumber
-                                    tr
-                                        th 短号
-                                        td= person.shortNumber
-                                    tr
-                                        th 邮箱
-                                        td= person.email
-                                    tr
-                                        th QQ
-                                        td= person.qq
-                                    //- each filed in person.custom
-                                    //-     tr
-                                    //-         th= filed.filed
-                                    //-         td= filed.value
+                                    tbody
+                                        tr
+                                            th 长号
+                                            td= person.longNumber
+                                        tr
+                                            th 短号
+                                            td= person.shortNumber
+                                        tr
+                                            th 邮箱
+                                            td= person.email
+                                        tr
+                                            th QQ
+                                            td= person.qq
+                                        //- each filed in person.custom
+                                        //-     tr
+                                        //-         th= filed.filed
+                                        //-         td= filed.value
                             .modal-footer
                                 button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
 
