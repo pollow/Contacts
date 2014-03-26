@@ -37,7 +37,7 @@ exports.main = function(req, res) {
   if (req.app.settings.nologin == false && !req.session.name)
     return res.redirect('/');
 
-  contactModel.find({}, "name nickname longNumber shortNumber sex group email qq major campus", function(err, doc) {
+  contactModel.find({}, null, function(err, doc) {
     logger.info('Start pulling contacts.');
     if(err) {
       logger.error("[Database Error] Failed to find:");
@@ -46,14 +46,26 @@ exports.main = function(req, res) {
       return ;
     }
     logger.info('[Database Read] Success to find');
-    // logger.debug(doc);
-    res.render('main', {title: titleStr.main, people: doc, loggedin: true});
+    logger.debug(doc);
+    logger.debug(typeof doc);
+    res.render('main', {title: titleStr.main, people: doc, loggedin: 1, loginAS: findByUsername(doc, req.session.username)});
   });
 };
 
 exports.about = function(req, res) {
   res.render('about', {title: titleStr.about})
 }
+
+exports.update = function(req, res) {
+  
+}
+
+function findByUsername(source, username) {
+  for (var i = source.length - 1; i >= 0; i--) {
+    if (source[i].username == username) return source[i];
+  };
+}
+
 // exports.list = function(req, res) {
 //   // auth here
 //   logger.info(req.session);

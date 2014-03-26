@@ -14,12 +14,103 @@ exports.login = function(req, res, next) {
   // logger.debug(req.cookie);
   // logger.debug(authData.remember);
 
+  // When the mstcAuth end, if auth success, redirect to '/' with session contain username, name, and full doc.
   mstcAuth(authData, req.session, function(err, loginFlag){
     if (err) {
       return next(err);
     }
     if (loginFlag) {
-      res.redirect('/main');
+      contactModel.find(
+        {"name": req.session.name}, 
+        null, 
+        function(err, doc) {
+          if(err) {
+            logger.err("[Database] Query Error!");
+            // Handle Error here.
+          } else if(!doc) {
+            // Never logged in before and duplicate items.
+            contactModel.create({
+              "username": req.session.username,
+              "name": req.session.name,
+              "everLogged": true
+             }, function(err, doc) {
+              if(err) {
+                logger.err("[Database] Insertion Error!");
+                // Handle Error here.
+              } else {
+                session.doc = {
+                  "username": session.username,
+                  "name": session.name,
+                  "everLogged": true
+                }
+              }
+             });
+            res.redirect('/main');
+          } else {
+            logger.debug(doc);
+            var sDoc;
+            if ( doc.length == 1 ) {
+              if ( doc[0].username === undefined ) {
+                req.session.doc = doc[0];
+                req.session.doc.everLogged = true;
+                contactModel.findByIdAndUpdate(sDoc.ObjectId, 
+                  { $set : { "everLogged": true, "username": authData.username } },
+                  function(err, doc) {
+                    if (err) {
+                      logger.err("[Database] Query Error!");
+                      // Handle Error here.
+                    }
+                    logger.debug(doc);
+                    res.redirect('/main');
+                  }
+                );
+              }
+            } else {
+              for (var i = doc.length - 1; i >= 0; i--) {
+                if (doc[i].username == req.session.username) {
+                  sDoc = doc[i];
+                  break;
+                }
+              };
+              logger.debug(sDoc);
+              if (sDoc === undefined) {
+                contactModel.create({
+                  "username": req.session.username,
+                  "name": req.session.name,
+                  "everLogged": true
+                  }, function(err, doc) {
+                    if(err) {
+                      logger.err("[Database] Insertion Error!");
+                      // Handle Error here.
+                    } else {
+                      req.session.doc = {
+                        "username": authData.username,
+                        "name": req.session.name,
+                        "everLogged": true
+                      }
+                    }
+                    res.redirect('/main');
+                  }
+                );
+              } else {
+                req.session.doc = sDoc;
+                if ( !sDoc.everLogged ) {
+                  contactModel.findByIdAndUpdate(sDoc.ObjectId, 
+                    { $set : { "everLogged": True } },
+                    function(err, doc) {
+                      if (err) {
+                        logger.err("[Database] Query Error!");
+                        // Handle Error here.
+                      }
+                      logger.debug(doc);
+                      res.redirect('/main');
+                    }
+                  );
+                }
+              }
+            }
+          }
+        );
     } else {
       res.redirect('/');
     }
@@ -36,6 +127,9 @@ exports.logout = function(req, res, next) {
 
 function mstcAuth(authData, session, callback) {
   logger.debug('Posting data to server...');
+  
+  session.username = authData.username;
+  
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
     var loginFlag = false;
     var person = JSON.parse(body); // transform the string to json 
@@ -44,8 +138,8 @@ function mstcAuth(authData, session, callback) {
       if (person.success) {
 
         var ahour = 3600000;
-
         session.name = person.name;
+
         if (authData.remember == 'on') {
           session.cookie.maxAge = ahour * 24 * 7;
         } else {

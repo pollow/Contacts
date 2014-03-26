@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var contactSchema = new Schema({
+  username: String,
   name: String,
   sex: String,
   longNumber: String,
@@ -15,9 +16,9 @@ var contactSchema = new Schema({
   title: String,
   studentType: String,
   enrollTime: String,
-  blog: String,
   employer: String,
-  spam: {type: Boolean, default: false},
+  custom: String, // JSON String for Object as {attr: value}. Use JSON.stringify to convert a object.
+  everLogged: Boolean,
   updated: {type:Number, default: Date.now()}
 });
 
