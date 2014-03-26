@@ -46,10 +46,10 @@ function mstcAuth(authData, session, callback) {
         var ahour = 3600000;
 
         session.name = person.name;
-        if (authData.remember == true) {
+        if (authData.remember == 'on') {
           session.cookie.maxAge = ahour * 24 * 7;
         } else {
-          session.cookie.maxAge = ahour * 3;
+          session.cookie.maxAge = ahour * 0.5;
         }
 
         // logger.debug(req.session);
@@ -57,6 +57,7 @@ function mstcAuth(authData, session, callback) {
         loginFlag = true;
         
       } else {
+        session.times =+ 1;
         logger.warn('Invalid username or password');
         loginFlag = false;  
      }
