@@ -12,13 +12,24 @@ exports.index = function(req, res) {
 
   // logger.debug(req.app.settings);
   if (req.app.settings.nologin)
-    return res.render('index', {title: titleStr.index, game: game});
+    return res.render('index', {title: titleStr.index, game: game });
+
+  if (req.session.times == undefined) req.session.times = 0;
 
   if(req.session.name) {
-    res.render('index', {title: titleStr.index, game: game, loggedin: true });
+    res.render('index', {title: titleStr.index, game: game, loggedin: 1 });
+    logger.debug(1);
   } else {
-    res.render('index', {title: titleStr.index, game: game, loggedin: false});
+    if (req.session.times == 0) {
+      res.render('index', {title: titleStr.index, game: game, loggedin: 0});
+      logger.debug(0);
+    }
+    else {
+      res.render('index', {title: titleStr.index, game: game, loggedin: -1});
+      logger.debug(-1);
+    }
   }
+  logger.debug(req.session.times)
 };
 
 exports.main = function(req, res) {

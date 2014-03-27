@@ -57,6 +57,7 @@ function mstcAuth(authData, session, callback) {
         loginFlag = true;
         
       } else {
+        session.times =+ 1;
         logger.warn('Invalid username or password');
         loginFlag = false;  
      }
