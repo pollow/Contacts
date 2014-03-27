@@ -33,9 +33,11 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon(path.join(__dirname,'public/img/favicon.png')));
 if ('production' == app.get('env')) {
-  // app.use(log4js.connectLogger(journal, {level: 'INFO', format:':remote-addr :method :user-agent'})); //previous version
-  app.use(log4js.connectLogger(journal, {level: 'INFO', format:':method :url'})); // debug mode
+  app.use(log4js.connectLogger(journal, {level: 'auto', format:':status :method :url'})); //previous version
+  // app.use(log4js.connectLogger(journal, {level: 'INFO', format:':method :url'})); // debug mode
+  // app.use(express.logger('dev'));
 }
+
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('ilovemstc'));
@@ -67,21 +69,6 @@ if ('production' == app.get('env')) {
   app.use(errors.serverHandler);
 }
 
-////////////////// for test only - do not call these functions
-// function routesErrorHandler(err, req, res, next) {
-//   logger.error(err);
-//   logger.trace(err);
-//   next(err);
-// }
-
-// function serverErrorHandler(err, req, res, next) {
-//   logger.info('I got the error');
-//   res.send('internal error');
-// }
-
-////////////
-
-
 /*
 
   Running code
@@ -105,6 +92,6 @@ routes(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   logger.info('Express server listening on port ' + app.get('port'));
-  logger.info('Server running mode ' + app.get('env'));  
+  logger.info('Server running mode: ' + app.get('env'));  
 });
 

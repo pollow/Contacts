@@ -6,3 +6,4 @@ db.js
 *.sublime-workspace
 !node_modules/logger/
 codekit-config.json
+public/file/*
