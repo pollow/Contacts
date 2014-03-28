@@ -171,7 +171,7 @@ html(lang = 'zh')
                             .modal-footer
                                 if (loginAs == person._id)
                                     button.btn.btn-primary(type = 'button', name = 'change', data-id = '' + person._id) 修改
-                                button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
+                                button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true', name = 'close') 关闭
         
         form#export(action = '/export', method = 'post', role = 'form')                            
 

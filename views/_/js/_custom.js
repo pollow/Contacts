@@ -9,6 +9,14 @@ $(document).ready(function() {
 });
 
 /*
+    Active nav list
+*/
+
+$("#main").each( function () {
+    $(".navbar-nav #list-main").addClass("active");
+});
+
+/*
     Color main-table
 */
 
@@ -244,7 +252,7 @@ function changeBox( ObjectId ) {
             property = properties[pIndex];
             $(this).find("[name=" + property + "]").val(person[property]);
         }
-        $(this).modal("show");
+        $(this).modal('toggle');
     });
 
 }
@@ -258,18 +266,36 @@ $("button[name=update]").on("click", function() {
     Namecard Change
 */
 
+$(".nameCard button[name=change]").on('mousedown', function(){
+    $(this).parents(".nameCard").modal("hide");
+});
+
+$(".nameCard button[name=change]").on('mouseup', function(){
+    var ObjectId = $(this).attr("data-id");
+    setTimeout(function(){changeBox(ObjectId);}, 500);
+});
+
+/*
 $(".nameCard button[name=change]").on("click", function() {
     var ObjectId = $(this).attr("data-id");
-    $(this).parents(".nameCard").modal("hide");
-    changeBox(ObjectId);
+    // $(this).parents(".nameCard").modal("hide");
+    $(this).parents(".nameCard").find("button[name=close]").click( function () {
+        // changeBox(ObjectId);
+    });
+    $(this).parents(".nameCard").find("button[name=close]").on("click", function() {
+        changeBox(ObjectId);
+    })
+
+    // changeBox(ObjectId);
 });
+*/
 
 /*
     Export
 */
 
 $("#csv, #xlsx").on("click", function() {
-    console.log("hello");
+    // console.log("hello");
     var form = $("form#export");
     var index = 0;
     var str = '<input name = "type" value = "' + $(this).attr("id") + '">';
@@ -277,11 +303,14 @@ $("#csv, #xlsx").on("click", function() {
     // console.log(form);
     // console.log($(this).attr("id"));
     $(".main-table tbody tr").each( function() {
-        var objectId = $(this).attr("data-id");
-        var str = '<input name = "' + index + '" value = "' + objectId + '">';
-        index++;
-        form.append(str);
+        if (!($(this).hasClass("hidden") || $(this).hasClass("filterHidden"))) {
+            var objectId = $(this).attr("data-id");
+            var str = '<input name = "' + index + '" value = "' + objectId + '">';
+            index++;
+            form.append(str);
+        }
     });
     form.submit();
+    form.find("input").remove();
 });
 
