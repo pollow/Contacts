@@ -1,5 +1,5 @@
 var request = require('request');
-// var should = require('should');
+var should = require('should');
 var waiting = 0;
 describe('Available routes', function() {
   [

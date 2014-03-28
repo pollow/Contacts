@@ -48,6 +48,7 @@ exports.main = function(req, res) {
     }
     logger.info('[Database Read] Success to find');
     // logger.debug(doc);
+    logger.debug(typeof doc[0]._id.toString());
     res.render('main', {title: titleStr.main, people: doc, loggedin: true});
   });
 };

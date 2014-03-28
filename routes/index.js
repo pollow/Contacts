@@ -18,11 +18,7 @@ module.exports = function(app) {
   // app.get('/test', indexPage.test);
   // app.get('/loginsuccess', indexPage.loginsuccess);
   // app.get('/log', indexPage.log);
-  app.get('/export', exportPage.export);
-  app.post('/update', function(req, res, next){
-    logger.debug(req.body);
-    res.send("success");
-  })
+  app.post('/export', exportPage.export);
 
   // TEST
   app.get('/error', function(req, res, next){
