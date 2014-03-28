@@ -1,5 +1,5 @@
 var assert = require("assert");
-// var should = require('should');
+var should = require('should');
 
 describe('THIS IS A DEMO', function(){
   describe('Array', function(){
