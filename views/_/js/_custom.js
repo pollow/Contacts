@@ -277,10 +277,12 @@ $("#csv, #xlsx").on("click", function() {
     // console.log(form);
     // console.log($(this).attr("id"));
     $(".main-table tbody tr").each( function() {
-        var objectId = $(this).attr("data-id");
-        var str = '<input name = "' + index + '" value = "' + objectId + '">';
-        index++;
-        form.append(str);
+        if (!($(this).hasClass("hidden") || $(this).hasClass("filterHidden"))) {
+            var objectId = $(this).attr("data-id");
+            var str = '<input name = "' + index + '" value = "' + objectId + '">';
+            index++;
+            form.append(str);
+        }
     });
     form.submit();
 });
