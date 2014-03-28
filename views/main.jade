@@ -1,8 +1,15 @@
 doctype html
 html(lang = 'zh')
+
+    - var firstLogin = true
+    - var loginAs = '5328115df476956831f1917b'
+
     include includes/head
     body#main
         include includes/nav
+        if firstLogin
+            #flag= loginAs
+        #who= loginAs
         .jumbotron
             .container
                 h1 内部通讯录
@@ -18,12 +25,12 @@ html(lang = 'zh')
             aside
                 .list-group.col-md-3(data-spy = 'affix', data-offset-top = '300')
                     a.list-group-item.list-group-brand MSTC ZJU Contact 筛选器
-                    a.list-group-item.active(href = '#') 全部
-                    a.list-group-item(data-toggle = 'collapse', data-target = '#gender') 性别
-                    #gender.collapse.filterbox
+                    a#checkAll.list-group-item.active 全部
+                    a.list-group-item(data-toggle = 'collapse', data-target = '#sex') 性别
+                    #sex.collapse.filterbox
                         .checkbox
                             label
-                                input(type = 'checkbox', value = 'male', checked)
+                                input(type = 'checkbox', value = 'male', checked=true)
                                 |  男
                         .checkbox
                             label
@@ -91,6 +98,10 @@ html(lang = 'zh')
                             label
                                 input(type = 'checkbox', value = 'huajiachi', checked)
                                 |  华家池
+                        .checkbox
+                            label
+                                input(type = 'checkbox', value = 'zhijiang', checked)
+                                |  之江
             .row
                 .col-md-offset-3.col-md-9
                     .table-responsive
@@ -103,56 +114,65 @@ html(lang = 'zh')
                                     th 短号
                             tbody
                                 each person, index in people
-                                    tr(data-toggle = 'modal', data-target = '#' + index)
+                                    tr(data-toggle = 'modal', data-target = '#' + index, data-id = '' + person._id)
                                         td= person.name
                                         td= person.nickname
                                         td= person.longNumber
                                         td= person.shortNumber
             each person, index in people
-                div.modal.fade(id = index, role = 'dialog', aria-labeledby = 'Lable' + index)
+                .modal.fade.nameCard(id = index, role = 'dialog', aria-labeledby = 'Lable' + index)
                     .modal-dialog
-                        .modal-content
+                        .modal-content(id = person._id)
                             .modal-header
                                 button.close(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') &times;
                                 h4.modal-title(id = 'Label' + index)= person.name
                             .modal-body
                                 h5 基本信息
                                 table.basic-table
-                                    tr
-                                        th 性别
-                                        td= person.sex
-                                    tr
-                                        th 专业
-                                        td= person.major
-                                    tr
-                                        th 所在校区
-                                        td= person.campus
-                                    tr
-                                        th Group
-                                        td= person.group
-                                    tr
-                                        th 常用ID
-                                        td= person.nickname
+                                    tbody
+                                        tr
+                                            th 性别
+                                            td(name = 'sex')= person.sex
+                                        tr
+                                            th 专业
+                                            td(name = 'major')= person.major
+                                        tr
+                                            th 年级
+                                            td(name = 'grade')= person.grade
+                                        tr
+                                            th 所在校区
+                                            td(name = 'campus')= person.campus
+                                        tr
+                                            th Group
+                                            td(name = 'group')= person.group
+                                        tr
+                                            th 常用ID
+                                            td(name = 'nickname')= person.nickname
                                 h5 联系方式
                                 table
-                                    tr
-                                        th 长号
-                                        td= person.longNumber
-                                    tr
-                                        th 短号
-                                        td= person.shortNumber
-                                    tr
-                                        th 邮箱
-                                        td= person.email
-                                    tr
-                                        th QQ
-                                        td= person.qq
-                                    //- each filed in person.custom
-                                    //-     tr
-                                    //-         th= filed.filed
-                                    //-         td= filed.value
+                                    tbody
+                                        tr
+                                            th 长号
+                                            td(name = 'longNumber')= person.longNumber
+                                        tr
+                                            th 短号
+                                            td(name = 'shortNumber')= person.shortNumber
+                                        tr
+                                            th 邮箱
+                                            td(name = 'email')= person.email
+                                        tr
+                                            th QQ
+                                            td(name = 'qq')= person.qq
+                                        //- each filed in person.custom
+                                        //-     tr
+                                        //-         th= filed.filed
+                                        //-         td= filed.value
                             .modal-footer
+                                if (loginAs == person._id)
+                                    button.btn.btn-primary(type = 'button', name = 'change', data-id = '' + person._id) 修改
                                 button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭
+                            
 
+        include includes/changeBox
         include includes/footer
         include includes/js

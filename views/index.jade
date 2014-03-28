@@ -15,27 +15,31 @@ html(lang = 'zh')
                     .col-sm-8
                         h1 MSTC ZJU Contact
                         h2 浙江大学微软技术俱乐部</br>内部通讯录
-                    if !loggedin
+                    if (loggedin != 1)
                         .col-sm-4
                             form.form-horizontal(role = 'form', action = 'login', method = 'post')
                                 .form-group
                                     label.col-sm-3.control-label(for = 'inputEmail') 用户名
                                     .col-sm-9
-                                        input.form-control#inputEmail(name = 'username', type = 'text', placeholder = 'First name.Last name')
+                                        input.form-control#inputEmail(name = 'username', type = 'text', placeholder = 'First name. Last name')
                                 .form-group
                                     label.col-sm-3.control-label(for = 'inputPassword') 密码
                                     .col-sm-9
                                         input.form-control#inputPassword(name = 'password', type = 'password', placeholder = 'Password')
+                                if (loggedin == -1)
+                                    .form-group
+                                        .col-sm-offset-3.col-sm-9
+                                            .alert.alert-danger <span class = "glyphicon glyphicon-info-sign"> </sapn> 用户名密码真的输对了？
+                                .form-group
+                                    .col-sm-offset-3.col-sm-9
+                                        button.btn.btn-default.btn-block(type = 'submit') 登陆
                                 .form-group
                                     .col-sm-offset-3.col-sm-9
                                         .checkbox
                                             label
                                                 input(type = 'checkbox', name = 'remember')
                                                 span 记住我
-                                .form-group
-                                    .col-sm-offset-3.col-sm-9
-                                        button.btn.btn-default(type = 'submit') 登陆
-                if loggedin
+                if (loggedin == 1)
                     .row
                         .col-sm-offset-10.col-sm-2
                             a.btn.btn-default.btn-block.btn-lg(href = 'main') 进入通讯录

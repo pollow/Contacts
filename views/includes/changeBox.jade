@@ -1,0 +1,73 @@
+.modal.fade#changeBox(role = 'dialog', aria-labeledby = 'change', data-backdrop = 'static')
+    .modal-dialog
+        .modal-content
+            .modal-header
+                button.close(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') &times;
+                h4.modal-title(id = 'change')
+            .modal-body
+                if firstLogin
+                    .alert.alert-info 这是您首次登陆，请完善个人信息
+                form.form-horizontal(role = 'form', method = 'post', action = '/update')
+                    h5 基本信息
+                    input.hidden(name = '_id')
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'selectSex') 性别
+                        .col-sm-offset-2.col-sm-4
+                            select#selectSex.form-control(name = 'sex')
+                                option 男
+                                option 女
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputMajor') 专业
+                        .col-sm-offset-2.col-sm-4
+                            input#inputMajor.form-control(type = 'text', name = 'major')
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'selectClass') 学业类别
+                        .col-sm-offset-2.col-sm-4
+                            select#selectClass.form-control(name = 'studentType')
+                                option 本科生
+                                option 研究生
+                                option 博士
+                                option 成功毕业
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'selectYear') 入学年份
+                        .col-sm-offset-2.col-sm-4
+                            select#selectYear.form-control(name = 'enrollYear')
+                                - for (var i = 2014; i >= 2001; i--) {
+                                    option= i
+                                - }
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'selectCampus') 所在校区
+                        .col-sm-offset-2.col-sm-4
+                            select#selectCampus.form-control(name = 'campus')
+                                each val in ['紫金港', '玉泉', '西溪', '华家池', '之江']
+                                    option= val
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'selectGroup') Group
+                        .col-sm-offset-2.col-sm-4
+                            select#selectGroup.form-control(name = 'group')
+                                each val in ['TG', 'CG', 'OG', 'PG']
+                                    option(name = val)= val
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputNickname') 常用ID
+                        .col-sm-offset-2.col-sm-4
+                            input#inputNickname.form-control(type = 'text', name = 'nickname')
+                    h5 联系方式
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputLongnumber') 长号
+                        .col-sm-offset-2.col-sm-4
+                            input#inputLongnumber.form-control(type = 'text', name = 'longNumber')
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputShortnumber') 短号
+                        .col-sm-offset-2.col-sm-4
+                            input#inputShortnumber.form-control(type = 'text', name = 'shortNumber')
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputEmail') 邮箱
+                        .col-sm-offset-2.col-sm-4
+                            input#inputEmail.form-control(type = 'email', name = 'email')
+                    .form-group
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputQQ') QQ
+                        .col-sm-offset-2.col-sm-4
+                            input#inputQQ.form-control(type = 'text', name = 'qq')
+            .modal-footer
+                button.btn.btn-primary(type = 'button', name = 'update') 保存
+                button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true') 关闭

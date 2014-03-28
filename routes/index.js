@@ -1,5 +1,7 @@
 var userPage = require('./userPage.js');
 var indexPage = require('./indexPage.js');
+var exportPage = require('./exportPage.js');
+
 var logger = require('logger').logger('index');
 
 module.exports = function(app) {
@@ -18,11 +20,13 @@ module.exports = function(app) {
   // app.get('/test', indexPage.test);
   // app.get('/loginsuccess', indexPage.loginsuccess);
   // app.get('/log', indexPage.log);
+  app.post('/export', exportPage.export);
 
-  // deal with 404 page by redirecting to '/'
-  // app.all('/:empty', function(req, res) {
-  //   logger.error('404 Error');
-  //   res.redirect('/');
-  // })
+  // TEST
+  app.get('/error', function(req, res, next){
+    // res.send('a error');
+    var test = new Error('TEST 505');
+    next(test);
+  });
 };
 

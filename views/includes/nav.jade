@@ -10,7 +10,9 @@ nav.navbar.navbar-default.navbar-fixed-top(role = 'navigatioin')
                     a(href = 'http://mail.mstczju.org') 邮箱
                 li
                     a(href = '/about') 关于
-            if loggedin
+            if (loggedin == 1)
                 ul.nav.navbar-nav.navbar-right
                     li
-                        a(href= '/logout') 登出
+                        a(href = '/export') 导出
+                    li
+                        a(href = '/logout') 登出

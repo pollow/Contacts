@@ -303,6 +303,14 @@ a.list-group-item {
 }
 
 /*
+    Flag & Who
+*/
+
+#flag, #who{
+    display: none;
+}
+
+/*
     Footer
 */
 
@@ -320,6 +328,15 @@ footer {
     padding: 10px 15px;
 }
 
+//Author
+
+a.author {
+    cursor: default;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 //body padding
 
 body {
@@ -327,9 +344,33 @@ body {
 }
 
 /*
+    Login Failed Alert
+*/
+
+
+#index .alert {
+    padding: 6px;
+    margin: 0;
+}
+
+/*
+    Change box
+*/
+
+#changeBox .alert {
+    padding: 6px;
+    margin: 10px 0;
+}
+
+/*
     Others
 */
 
 .main-content {
-	min-width: 500px;
+	min-height: 500px;
+}
+
+.filterHidden {
+    display: none !important;
+    visibility: hidden !important;
 }

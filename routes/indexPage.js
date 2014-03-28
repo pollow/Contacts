@@ -37,7 +37,8 @@ exports.main = function(req, res) {
   if (req.app.settings.nologin == false && !req.session.authFlag)
     return res.redirect('/');
 
-  contactModel.find({}, null, function(err, doc) {
+  // contactModel.find({}, "name nickname longNumber shortNumber sex group email qq major campus", function(err, doc) {
+    contactModel.find({}, null, function(err, doc) {
     logger.info('Start pulling contacts.');
     if(err) {
       logger.error("[Database Error] Failed to find:");
@@ -47,8 +48,8 @@ exports.main = function(req, res) {
     }
     logger.info('[Database Read] Success to find');
     // logger.debug(doc);
-    // logger.debug(typeof doc);
-    res.render('main', {title: titleStr.main, people: doc, loggedin: 1, loginAS: findByUsername(doc, req.session.username)});
+    // logger.debug(typeof doc[0]._id.toString());
+    res.render('main', {title: titleStr.main, people: doc, loggedin: true});
   });
 };
 
