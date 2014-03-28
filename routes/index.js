@@ -12,6 +12,8 @@ module.exports = function(app) {
   // index
   app.get('/main', indexPage.main);
   app.get('/', indexPage.index);
+  app.post('/update', indexPage.update);
+  
   // app.get('/api/list', indexPage.list);
   // app.get('/test', indexPage.test);
   // app.get('/loginsuccess', indexPage.loginsuccess);

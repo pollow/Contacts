@@ -18,7 +18,7 @@ exports.login = function(req, res, next) {
   mstcAuth(authData, req.session, function(err, loginFlag){
     if (err) {
       return next(err);
-    }
+    } 
     if (loginFlag) {
       contactModel.find(
         {"name": req.session.name}, 
@@ -29,23 +29,26 @@ exports.login = function(req, res, next) {
             // Handle Error here.
           } else if(!doc) {
             // Never logged in before and duplicate items.
-            contactModel.create({
-              "username": req.session.username,
-              "name": req.session.name,
-              "everLogged": true
-             }, function(err, doc) {
-              if(err) {
-                logger.err("[Database] Insertion Error!");
-                // Handle Error here.
-              } else {
-                session.doc = {
-                  "username": session.username,
-                  "name": session.name,
-                  "everLogged": true
-                }
+            contactModel.create(
+              {
+                "username": req.session.username,
+                "name": req.session.name,
+                "everLogged": true
               }
-             });
-            res.redirect('/main');
+              , function(err, doc) {
+                if(err) {
+                  logger.err("[Database] Insertion Error!");
+                  // Handle Error here.
+                } else {
+                  session.doc = {
+                    "username": session.username,
+                    "name": session.name,
+                    "everLogged": true
+                  }
+                }
+                res.redirect('/main');
+              }
+            );
           } else {
             logger.debug(doc);
             var sDoc;
@@ -61,6 +64,27 @@ exports.login = function(req, res, next) {
                       // Handle Error here.
                     }
                     logger.debug(doc);
+                    res.redirect('/main');
+                  }
+                );
+              } else {
+                contactModel.create(
+                  {
+                    "username": req.session.username,
+                    "name": req.session.name,
+                    "everLogged": true
+                  }
+                  , function(err, doc) {
+                    if(err) {
+                      logger.err("[Database] Insertion Error!");
+                      // Handle Error here.
+                    } else {
+                      session.doc = {
+                        "username": session.username,
+                        "name": session.name,
+                        "everLogged": true
+                      }
+                    }
                     res.redirect('/main');
                   }
                 );
@@ -110,7 +134,8 @@ exports.login = function(req, res, next) {
               }
             }
           }
-        );
+        }
+      );
     } else {
       res.redirect('/');
     }

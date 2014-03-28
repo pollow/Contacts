@@ -57,7 +57,22 @@ exports.about = function(req, res) {
 }
 
 exports.update = function(req, res) {
-  
+  var newDoc = Object();
+  Object.keys(req.body).forEach(function(key, value) {
+    if( !!~( ["ObjectId, name"].indexOf(key) ) ) newDoc[key] = value;
+  })
+  contactModel.findByIdAndUpdate(
+    req.body.ObjectId,
+    { $set : newDoc }, function(err, doc) {
+      if(err) {
+        logger.error("[Database Error] Update Error!");
+        res.end(JSON.stringify( {"error": "true", "msg": "Database Error!"} ))
+        // handle error here.
+      } else {
+        res.end(JOSN.stringify(doc));
+      }
+    }
+  );
 }
 
 function findByUsername(source, username) {
