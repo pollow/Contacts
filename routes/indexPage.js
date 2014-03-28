@@ -33,8 +33,8 @@ exports.index = function(req, res) {
 };
 
 exports.main = function(req, res) {
-
-  if (req.app.settings.nologin == false && !req.session.name)
+  logger.debug("authFlag", req.session.authFlag);
+  if (req.app.settings.nologin == false && !req.session.authFlag)
     return res.redirect('/');
 
   contactModel.find({}, null, function(err, doc) {
@@ -46,8 +46,8 @@ exports.main = function(req, res) {
       return ;
     }
     logger.info('[Database Read] Success to find');
-    logger.debug(doc);
-    logger.debug(typeof doc);
+    // logger.debug(doc);
+    // logger.debug(typeof doc);
     res.render('main', {title: titleStr.main, people: doc, loggedin: 1, loginAS: findByUsername(doc, req.session.username)});
   });
 };
@@ -69,7 +69,20 @@ exports.update = function(req, res) {
         res.end(JSON.stringify( {"error": "true", "msg": "Database Error!"} ))
         // handle error here.
       } else {
-        res.end(JOSN.stringify(doc));
+        logger.info("Adding log.")
+        contactModel.FindOneAndUpdate(
+          { username: req.session.doc.username },
+          { $push : { logs: doc } },
+          function(err, doc) {
+            if (err) {
+              throw err;
+              // handle error here.
+            }
+            logger.debug(doc);
+            logger.info("Logged.")
+            res.end(JOSN.stringify(doc));
+          }
+        );
       }
     }
   );

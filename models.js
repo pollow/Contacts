@@ -27,7 +27,7 @@ exports.contactSchema = contactSchema;
 
 var logSchema = new Schema({
   // 姓名,[{unixtimestamp, log},...]
-  name: String,
+  username: String,
   logs: [contactSchema]
 });
 

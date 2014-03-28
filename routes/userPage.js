@@ -15,127 +15,97 @@ exports.login = function(req, res, next) {
   // logger.debug(authData.remember);
 
   // When the mstcAuth end, if auth success, redirect to '/' with session contain username, name, and full doc.
-  mstcAuth(authData, req.session, function(err, loginFlag){
+  mstcAuth(authData, function(err, name, authFlag){
     if (err) {
       return next(err);
-    } 
-    if (loginFlag) {
+    } else if (authFlag) {
+      req.session.authFlag = authFlag;
+      var ahour = 3600000;
+      if (authData.remember == 'on') {
+        req.session.cookie.maxAge = ahour * 24 * 7;
+      } else {
+        req.session.cookie.maxAge = ahour * 0.5;
+      }
+
       contactModel.find(
-        {"name": req.session.name}, 
-        null, 
-        function(err, doc) {
-          if(err) {
-            logger.err("[Database] Query Error!");
-            // Handle Error here.
-          } else if(!doc) {
-            // Never logged in before and duplicate items.
+      { name : name },
+      null,
+      function(err, doc) {
+        if ( err ) {
+          return next(err);
+        } else {
+          var sDoc;
+          for (var i = doc.length - 1; i >= 0; i--) {
+            if ( doc[i].username == authData.username || doc[i].username == undefined ) {
+              sDoc = doc[i];
+              break;
+            }
+          };
+          logger.debug(sDoc);
+          if ( sDoc === undefined ) {
             contactModel.create(
-              {
-                "username": req.session.username,
-                "name": req.session.name,
-                "everLogged": true
-              }
-              , function(err, doc) {
-                if(err) {
-                  logger.err("[Database] Insertion Error!");
-                  // Handle Error here.
-                } else {
-                  session.doc = {
-                    "username": session.username,
-                    "name": session.name,
-                    "everLogged": true
-                  }
-                }
-                res.redirect('/main');
-              }
-            );
-          } else {
-            logger.debug(doc);
-            var sDoc;
-            if ( doc.length == 1 ) {
-              if ( doc[0].username === undefined ) {
-                req.session.doc = doc[0];
-                req.session.doc.everLogged = true;
-                contactModel.findByIdAndUpdate(sDoc.ObjectId, 
-                  { $set : { "everLogged": true, "username": authData.username } },
+            {
+              "username": req.session.username,
+              "name": req.session.name,
+            }
+            , function(err, doc) {
+              if(err) {
+                logger.err("[Database] Insertion Error!");
+                // Handle Error here.
+              } else {
+                req.session.doc = doc;
+                req.session.everLogged = false;
+                logger.info("Adding log.")
+                contactModel.FindOneAndUpdate(
+                  { username: req.session.doc.username },
+                  { $push : { logs: doc } },
                   function(err, doc) {
                     if (err) {
-                      logger.err("[Database] Query Error!");
-                      // Handle Error here.
+                      throw err;
+                      // handle error here.
                     }
                     logger.debug(doc);
-                    res.redirect('/main');
-                  }
-                );
-              } else {
-                contactModel.create(
-                  {
-                    "username": req.session.username,
-                    "name": req.session.name,
-                    "everLogged": true
-                  }
-                  , function(err, doc) {
-                    if(err) {
-                      logger.err("[Database] Insertion Error!");
-                      // Handle Error here.
-                    } else {
-                      session.doc = {
-                        "username": session.username,
-                        "name": session.name,
-                        "everLogged": true
-                      }
-                    }
-                    res.redirect('/main');
+                    logger.info("Logged.")
+                    res.end(JOSN.stringify(doc));
                   }
                 );
               }
-            } else {
-              for (var i = doc.length - 1; i >= 0; i--) {
-                if (doc[i].username == req.session.username) {
-                  sDoc = doc[i];
-                  break;
-                }
-              };
-              logger.debug(sDoc);
-              if (sDoc === undefined) {
-                contactModel.create({
-                  "username": req.session.username,
-                  "name": req.session.name,
-                  "everLogged": true
-                  }, function(err, doc) {
-                    if(err) {
-                      logger.err("[Database] Insertion Error!");
-                      // Handle Error here.
-                    } else {
-                      req.session.doc = {
-                        "username": authData.username,
-                        "name": req.session.name,
-                        "everLogged": true
-                      }
-                    }
-                    res.redirect('/main');
-                  }
-                );
-              } else {
-                req.session.doc = sDoc;
-                if ( !sDoc.everLogged ) {
-                  contactModel.findByIdAndUpdate(sDoc.ObjectId, 
-                    { $set : { "everLogged": True } },
-                    function(err, doc) {
-                      if (err) {
-                        logger.err("[Database] Query Error!");
-                        // Handle Error here.
-                      }
-                      logger.debug(doc);
-                      res.redirect('/main');
-                    }
-                  );
-                }
+              return res.redirect('/main');
+            });
+          } else if ( sDoc.username === undefined ) {
+            contactModel.findByIdAndUpdate(sDoc._id, 
+            { $set : { username: authData.username } },
+            function(err, doc) {
+              if (err) {
+                logger.err("[Database] Query Error!");
+                // Handle Error here.
               }
-            }
+              logger.debug(doc);
+              req.session.doc = doc;
+              req.session.everLogged = false;
+              logger.info("Adding log.")
+              contactModel.FindOneAndUpdate(
+                { username: req.session.doc.username },
+                { $push : { logs: doc } },
+                function(err, doc) {
+                  if (err) {
+                    throw err;
+                    // handle error here.
+                  }
+                  logger.debug(doc);
+                  logger.info("Logged.")
+                  res.end(JOSN.stringify(doc));
+                }
+              );
+              return res.redirect('/main');
+            });
+          } else {
+            req.session.doc = sDoc;
+            req.session.everLogged = true;
+            return res.redirect('/main');
           }
         }
-      );
+      });
     } else {
       res.redirect('/');
     }
@@ -150,33 +120,21 @@ exports.logout = function(req, res, next) {
   res.redirect('/');
 }
 
-function mstcAuth(authData, session, callback) {
+function mstcAuth(authData, callback) {
   logger.debug('Posting data to server...');
-  
-  session.username = authData.username;
   
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
     var loginFlag = false;
     var person = JSON.parse(body); // transform the string to json 
+    logger.debug(person);
     // use the responese code to decide
     if (response.statusCode == 200) { 
       if (person.success) {
-
-        var ahour = 3600000;
-        session.name = person.name;
-
-        if (authData.remember == 'on') {
-          session.cookie.maxAge = ahour * 24 * 7;
-        } else {
-          session.cookie.maxAge = ahour * 0.5;
-        }
-
         // logger.debug(req.session);
         // res.send('login success. Welcome you [' + person.name + ']' );
         loginFlag = true;
         
       } else {
-        session.times =+ 1;
         logger.warn('Invalid username or password');
         loginFlag = false;  
      }
@@ -185,7 +143,7 @@ function mstcAuth(authData, session, callback) {
       loginFlag = false;
     }
     // err = 'this is error';
-    callback(err, loginFlag);
+    callback(err, person.name, loginFlag);
   });
 }
 
@@ -260,3 +218,123 @@ function mstcAuth(authData, session, callback) {
 
 //   });
 // };
+
+      // contactModel.find(
+      //   {"name": req.session.name}, 
+      //   null, 
+      //   function(err, doc) {
+      //     if(err) {
+      //       logger.err("[Database] Query Error!");
+      //       // Handle Error here.
+      //     } else if(!doc) {
+      //       // Never logged in before and duplicate items.
+      //       contactModel.create(
+      //         {
+      //           "username": req.session.username,
+      //           "name": req.session.name,
+      //           "everLogged": true
+      //         }
+      //         , function(err, doc) {
+      //           if(err) {
+      //             logger.err("[Database] Insertion Error!");
+      //             // Handle Error here.
+      //           } else {
+      //             session.doc = {
+      //               "username": session.username,
+      //               "name": session.name,
+      //               "everLogged": false
+      //             }
+      //           }
+      //           res.redirect('/main');
+      //         }
+      //       );
+      //     } else {
+      //       logger.debug(doc);
+      //       var sDoc;
+      //       if ( doc.length == 1 ) {
+      //         if ( doc[0].username === undefined ) {
+      //           req.session.doc = doc[0];
+      //           req.session.doc.everLogged = true;
+      //           contactModel.findByIdAndUpdate(sDoc.ObjectId, 
+      //             { $set : { "everLogged": true, "username": authData.username } },
+      //             function(err, doc) {
+      //               if (err) {
+      //                 logger.err("[Database] Query Error!");
+      //                 // Handle Error here.
+      //               }
+      //               logger.debug(doc);
+      //               res.redirect('/main');
+      //             }
+      //             // TODO Session assignment
+      //           );
+      //         } else if( doc[0].username !== req.session.username ) {
+                // contactModel.create(
+                //   {
+                //     "username": req.session.username,
+                //     "name": req.session.name,
+                //     "everLogged": true
+                //   }
+                //   , function(err, doc) {
+                //     if(err) {
+                //       logger.err("[Database] Insertion Error!");
+                //       // Handle Error here.
+                //     } else {
+                //       session.doc = {
+                //         "username": session.username,
+                //         "name": session.name,
+                //         "everLogged": true
+                //       }
+                //     }
+                //     res.redirect('/main');
+      //             }
+      //           );
+      //         } else if (doc[0].username === req.session.username ) {
+      //           session.doc = doc[0];
+      //         }
+      //       } else {
+      //         for (var i = doc.length - 1; i >= 0; i--) {
+      //           if (doc[i].username == req.session.username) {
+      //             sDoc = doc[i];
+      //             break;
+      //           }
+      //         }
+      //         logger.debug(sDoc);
+      //         if (sDoc === undefined) {
+      //           contactModel.create({
+      //             "username": req.session.username,
+      //             "name": req.session.name,
+      //             "everLogged": true
+      //             }, function(err, doc) {
+      //               if(err) {
+      //                 logger.err("[Database] Insertion Error!");
+      //                 // Handle Error here.
+      //               } else {
+      //                 req.session.doc = {
+      //                   "username": authData.username,
+      //                   "name": req.session.name,
+      //                   "everLogged": true
+      //                 }
+      //               }
+      //               res.redirect('/main');
+      //             }
+      //           );
+      //         } else {
+      //           req.session.doc = sDoc;
+      //           if ( !sDoc.everLogged ) {
+                  // contactModel.findByIdAndUpdate(sDoc.ObjectId, 
+                  //   { $set : { "everLogged": True } },
+                  //   function(err, doc) {
+                  //     if (err) {
+                  //       logger.err("[Database] Query Error!");
+                  //       // Handle Error here.
+                  //     }
+                  //     logger.debug(doc);
+                  //     res.redirect('/main');
+      //               }
+      //             );
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // );
