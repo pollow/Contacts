@@ -244,7 +244,7 @@ function changeBox( ObjectId ) {
             property = properties[pIndex];
             $(this).find("[name=" + property + "]").val(person[property]);
         }
-        $(this).modal("show");
+        $(this).modal('toggle');
     });
 
 }
@@ -258,11 +258,29 @@ $("button[name=update]").on("click", function() {
     Namecard Change
 */
 
+$(".nameCard button[name=change]").on('mousedown', function(){
+    $(this).parents(".nameCard").modal("hide");
+});
+
+$(".nameCard button[name=change]").on('mouseup', function(){
+    var ObjectId = $(this).attr("data-id");
+    setTimeout(function(){changeBox(ObjectId);}, 500);
+});
+
+/*
 $(".nameCard button[name=change]").on("click", function() {
     var ObjectId = $(this).attr("data-id");
-    $(this).parents(".nameCard").modal("hide");
-    changeBox(ObjectId);
+    // $(this).parents(".nameCard").modal("hide");
+    $(this).parents(".nameCard").find("button[name=close]").click( function () {
+        // changeBox(ObjectId);
+    });
+    $(this).parents(".nameCard").find("button[name=close]").on("click", function() {
+        changeBox(ObjectId);
+    })
+
+    // changeBox(ObjectId);
 });
+*/
 
 /*
     Export
