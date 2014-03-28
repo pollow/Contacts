@@ -16,11 +16,12 @@ exports.index = function(req, res) {
 
   if (req.session.times == undefined) req.session.times = 0;
 
-  if(req.session.name) {
+  if(req.session.authFlag) {
     res.render('index', {title: titleStr.index, game: game, loggedin: 1 });
     logger.debug(1);
+    
   } else {
-    if (req.session.times == 0) {
+    if (req.session.times > 0) {
       res.render('index', {title: titleStr.index, game: game, loggedin: 0});
       logger.debug(0);
     }
@@ -49,7 +50,7 @@ exports.main = function(req, res) {
     logger.info('[Database Read] Success to find');
     // logger.debug(doc);
     // logger.debug(typeof doc[0]._id.toString());
-    logger.debug("session is", req.session);
+    // logger.debug("session is", req.session);
     res.render('main', {
       title: titleStr.main, 
       people: doc, 
@@ -102,6 +103,7 @@ exports.update = function(req, res) {
   //   logger.debug('key is', key, 'value is', value);
   //   if ()
   // })
+
   logger.debug('new doc is', newDoc);
   // res.redirect('/main');
   contactModel.findByIdAndUpdate(

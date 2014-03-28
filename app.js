@@ -36,8 +36,9 @@ if ('production' == app.get('env')) {
   app.use(log4js.connectLogger(journal, {level: 'auto', format:':status :method :url'})); //previous version
   // app.use(log4js.connectLogger(journal, {level: 'INFO', format:':method :url'})); // debug mode
   // app.use(express.logger('dev'));
+} else {
+  app.use(express.logger('dev'));
 }
-
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('ilovemstc'));

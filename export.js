@@ -64,7 +64,7 @@ exports.csv = exportToCsv;
 
 function exportToXlsx(data, callback){
   var buffer;
-  logger.debug("get the data " + data);
+  // logger.debug("get the data " + data);
   try {
     rows = jsonToSheets(data);
     buffer = xlsx.build({worksheets: [
@@ -94,7 +94,7 @@ function exportToCsv(data, callback) {
   for(var i = 0; i < rows.length; i++) {
     buffer += rows[i].join(',') + '\n';
   }
-  logger.debug(buffer);
+  // logger.debug(buffer);
   var timestamp = new Date().getTime();
   var filepath = path.join(fileDir, timestamp + '.csv');
   fs.writeFile(filepath, buffer, function(err) {
@@ -117,13 +117,15 @@ function jsonToSheets(data) {
   rows.push(head);
   for(var i = 0; i < data.length; i++) {
     var row = new Array();
-    for(var j = 0; j < headLines.length; j++) {
-      if(data[i][headLines[j]])
-        row.push(data[i][headLines[j]]);
-      else
-        row.push(" ");
+    if (typeof data[i] == 'object') {
+      for(var j = 0; j < headLines.length; j++) {
+        if(data[i][headLines[j]])
+          row.push(data[i][headLines[j]]);
+        else
+          row.push(" ");
+      }
+      rows.push(row);
     }
-    rows.push(row);
   }
   // headLines.forEach(function(attr){
   //   head.push(format[attr]);

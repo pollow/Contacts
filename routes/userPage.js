@@ -125,7 +125,6 @@ exports.logout = function(req, res, next) {
 
 function mstcAuth(authData, callback) {
   logger.debug('Posting data to server...');
-  
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
     var loginFlag = false;
     var person = JSON.parse(body); // transform the string to json 
