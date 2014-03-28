@@ -269,7 +269,7 @@ $(".nameCard button[name=change]").on("click", function() {
 */
 
 $("#csv, #xlsx").on("click", function() {
-    console.log("hello");
+    // console.log("hello");
     var form = $("form#export");
     var index = 0;
     var str = '<input name = "type" value = "' + $(this).attr("id") + '">';
