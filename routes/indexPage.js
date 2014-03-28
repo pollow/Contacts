@@ -70,9 +70,9 @@ exports.update = function(req, res) {
         // handle error here.
       } else {
         logger.info("Adding log.")
-        contactModel.FindOneAndUpdate(
+        logModel.findOneAndUpdate(
           { username: req.session.doc.username },
-          { $push : { logs: doc } },
+          { $push : { logs: JSON.stringify(doc) } },
           function(err, doc) {
             if (err) {
               throw err;

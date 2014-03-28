@@ -42,11 +42,13 @@ exports.login = function(req, res, next) {
             }
           };
           logger.debug(sDoc);
+          logger.debug(doc);
+          logger.debug(req.session);
           if ( sDoc === undefined ) {
             contactModel.create(
             {
-              "username": req.session.username,
-              "name": req.session.name,
+              "username": authData.username+'a',
+              "name": name,
             }
             , function(err, doc) {
               if(err) {
@@ -56,19 +58,20 @@ exports.login = function(req, res, next) {
                 req.session.doc = doc;
                 req.session.everLogged = false;
                 logger.info("Adding log.")
-                contactModel.FindOneAndUpdate(
-                  { username: req.session.doc.username },
-                  { $push : { logs: doc } },
-                  function(err, doc) {
-                    if (err) {
-                      throw err;
-                      // handle error here.
-                    }
-                    logger.debug(doc);
+                logger.debug("New Log", doc);
+                logModel.create(
+                {
+                  username : authData.username+'a',
+                  logs : [ JSON.stringify(doc) ]
+                }, function(err, doc) {
+                  if(err) {
+                    logger.err("[Database] Insert log error.");
+                    // Handle Error here.
+                  } else {
+                    logger.debug("ALL LOGS", doc);
                     logger.info("Logged.")
-                    res.end(JOSN.stringify(doc));
                   }
-                );
+                });
               }
               return res.redirect('/main');
             });
@@ -84,19 +87,19 @@ exports.login = function(req, res, next) {
               req.session.doc = doc;
               req.session.everLogged = false;
               logger.info("Adding log.")
-              contactModel.FindOneAndUpdate(
-                { username: req.session.doc.username },
-                { $push : { logs: doc } },
-                function(err, doc) {
-                  if (err) {
-                    throw err;
-                    // handle error here.
+              logModel.create(
+                {
+                  username : authData.username+'a',
+                  logs : [JSON.stringify(doc)]
+                }, function(err, doc) {
+                  if(err) {
+                    logger.err("[Database] Insert log error.");
+                    // Handle Error here.
+                  } else {
+                    logger.debug("ALL LOGS", doc);
+                    logger.info("Logged.")
                   }
-                  logger.debug(doc);
-                  logger.info("Logged.")
-                  res.end(JOSN.stringify(doc));
-                }
-              );
+                });
               return res.redirect('/main');
             });
           } else {

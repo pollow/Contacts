@@ -28,7 +28,7 @@ exports.contactSchema = contactSchema;
 var logSchema = new Schema({
   // 姓名,[{unixtimestamp, log},...]
   username: String,
-  logs: [contactSchema]
+  logs: [String]
 });
 
 exports.logModel = mongoose.model('log', logSchema);
