@@ -47,7 +47,7 @@ exports.login = function(req, res, next) {
           if ( sDoc === undefined ) {
             contactModel.create(
             {
-              "username": authData.username+'a',
+              "username": authData.username,
               "name": name,
             }
             , function(err, doc) {

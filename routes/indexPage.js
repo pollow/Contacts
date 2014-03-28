@@ -49,7 +49,14 @@ exports.main = function(req, res) {
     logger.info('[Database Read] Success to find');
     // logger.debug(doc);
     // logger.debug(typeof doc[0]._id.toString());
-    res.render('main', {title: titleStr.main, people: doc, loggedin: true});
+    logger.debug("session is", req.session);
+    res.render('main', {
+      title: titleStr.main, 
+      people: doc, 
+      loggedin: 1,
+      firstLogin: !req.session.everLogged,
+      loginAs: req.session.doc._id
+    });
   });
 };
 
@@ -57,19 +64,55 @@ exports.about = function(req, res) {
   res.render('about', {title: titleStr.about})
 }
 
+/// we need move indexPage.update to userPage.update !!!
+
+var validAttr = [
+  "sex",
+  "longNumber",
+  "shortNumber",
+  "email",
+  "qq",
+  "nickname",
+  "campus",
+  "major",
+  "group",
+  "studentType",
+  "enrollTime",
+];
+
 exports.update = function(req, res) {
+  logger.debug('the update form data is', req.body);
+
+  // need to check authFlag
+  if (!req.session.authFlag)
+    return res.redirect('/main');
+
+  // the _id is not identified with session._id
+  if (!req.body._id || req.session.doc._id != req.body._id) {
+    logger.fatal('SOMEONE ATTEMPTS TO UPDATE WITHOUT PERMISSION')
+    return res.redirect('/main');
+  }
+
   var newDoc = Object();
-  Object.keys(req.body).forEach(function(key, value) {
-    if( !!~( ["ObjectId, name"].indexOf(key) ) ) newDoc[key] = value;
-  })
+  validAttr.forEach(function(attr){
+    if (req.body[attr])
+      newDoc[attr] = req.body[attr];
+  });
+  // Object.keys(req.body).forEach(function(key, value) {
+  //   logger.debug('key is', key, 'value is', value);
+  //   if ()
+  // })
+  logger.debug('new doc is', newDoc);
+  // res.redirect('/main');
   contactModel.findByIdAndUpdate(
-    req.body.ObjectId,
+    req.body._id,
     { $set : newDoc }, function(err, doc) {
       if(err) {
         logger.error("[Database Error] Update Error!");
-        res.end(JSON.stringify( {"error": "true", "msg": "Database Error!"} ))
+        // res.end(JSON.stringify( {"error": "true", "msg": "Database Error!"} ))
         // handle error here.
       } else {
+        // res.redirect('/main');
         logger.info("Adding log.")
         logModel.findOneAndUpdate(
           { username: req.session.doc.username },
@@ -81,10 +124,11 @@ exports.update = function(req, res) {
             }
             logger.debug(doc);
             logger.info("Logged.")
-            res.end(JOSN.stringify(doc));
+            // res.end(JOSN.stringify(doc));
           }
         );
       }
+      return res.redirect('/main');
     }
   );
 }

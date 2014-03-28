@@ -11,7 +11,9 @@ describe('Download file', function(){
 
     });
   });
-  // describe('should accept a file', function(){
+
+    // }).pipe(fs.createWriteStream('test.xlsx'));
+    // setTimeout(function(){  // describe('should accept a file', function(){
   //   request.get('http://localhost:3000/export', function(err, res, body){
   //     it('have no err', function(done) {
   //       err.should.not.exists();
@@ -21,8 +23,6 @@ describe('Download file', function(){
   //       done(err);
   //     })
   //   });
-    // }).pipe(fs.createWriteStream('test.xlsx'));
-    // setTimeout(function(){
     //   it('get a file', function(done){
     //     path.exists('test.xlsx', function(exists){
     //       exists.should.ok();
@@ -30,5 +30,5 @@ describe('Download file', function(){
     //     })
     //   })
     // }, 1000)
-  })
+  // })
 });

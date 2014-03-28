@@ -1,6 +1,24 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var headLines = [
+  "name",
+  "sex",
+  "longNumber",
+  "shortNumber",
+  "email",
+  "qq",
+  "nickname",
+  "campus",
+  "major",
+  "group",
+  "title",
+  "studentType",
+  "enrollTime",
+  "blog",
+  "employer"
+];
+
 var contactSchema = new Schema({
   username: String,
   name: String,
