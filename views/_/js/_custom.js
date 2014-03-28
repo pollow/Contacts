@@ -285,5 +285,6 @@ $("#csv, #xlsx").on("click", function() {
         }
     });
     form.submit();
+    form.find("input").remove();
 });
 
