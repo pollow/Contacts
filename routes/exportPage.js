@@ -22,8 +22,9 @@ var format = {
 
 exports.export = function (req, res, next) {
   var _ids = req.body._ids;
-  var extName = req.body.extName;
+  var extName = req.body.type;
   var supportExt = ['xlsx', 'csv'];
+  logger.debug(req.body);
   var data = [
     {
       name:"ggg"

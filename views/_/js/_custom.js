@@ -268,3 +268,20 @@ $(".nameCard button[name=change]").on("click", function() {
     Export
 */
 
+$("#csv, #xlsx").on("click", function() {
+    console.log("hello");
+    var form = $("form#export");
+    var index = 0;
+    var str = '<input name = "type" value = "' + $(this).attr("id") + '">';
+    form.append(str);
+    // console.log(form);
+    // console.log($(this).attr("id"));
+    $(".main-table tbody tr").each( function() {
+        var objectId = $(this).attr("data-id");
+        var str = '<input name = "' + index + '" value = "' + objectId + '">';
+        index++;
+        form.append(str);
+    });
+    form.submit();
+});
+

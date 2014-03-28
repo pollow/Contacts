@@ -118,6 +118,30 @@ body {
     }
 }
 
+//Dropdown
+
+.dropdown-menu {
+    min-width: 0;
+    width: @nav-lg-size;
+    > li > a {
+        cursor: pointer;
+    }
+
+}
+
+.navbar-default .navbar-nav {
+    > .open > a {
+        background-color: @dark-blue;
+        color: @white;
+
+        &:hover,
+        &:focus {
+            background-color: @dark-blue;
+            color: @white;
+        }
+    }
+}
+
 /*
     Jumbotron
 */
@@ -303,10 +327,10 @@ a.list-group-item {
 }
 
 /*
-    Flag & Who
+    To be hidden
 */
 
-#flag, #who{
+#flag, #who, #export{
     display: none;
 }
 

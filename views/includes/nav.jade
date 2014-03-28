@@ -13,6 +13,12 @@ nav.navbar.navbar-default.navbar-fixed-top(role = 'navigatioin')
             if (loggedin == 1)
                 ul.nav.navbar-nav.navbar-right
                     li
-                        a(href = '/export') 导出
+                        a.dropdown-toggle(data-toggle = 'dropdown', href = "#") 导出
+                        ul.dropdown-menu
+                            li
+                                a#csv CSV
+                                //- a(name = 'xls') XLS
+                            li
+                                a#xlsx XLSX
                     li
                         a(href = '/logout') 登出
