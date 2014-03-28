@@ -9,6 +9,14 @@ $(document).ready(function() {
 });
 
 /*
+    Active nav list
+*/
+
+$("#main").each( function () {
+    $(".navbar-nav #list-main").addClass("active");
+});
+
+/*
     Color main-table
 */
 
