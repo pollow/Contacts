@@ -20,7 +20,6 @@ module.exports = function(app) {
   // app.get('/log', indexPage.log);
   app.post('/export', exportPage.export);
 
-
   // TEST
   app.get('/error', function(req, res, next){
     // res.send('a error');

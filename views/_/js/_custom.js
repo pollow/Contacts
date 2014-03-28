@@ -5,6 +5,7 @@
 $(document).ready(function() {
     contactFilter();
     color();
+    firstLogin();
 });
 
 /*
@@ -29,7 +30,7 @@ function color() {
     Remove the '@' in the username
 */
 
-$("form").on("submit",function() {
+$("#index form").on("submit",function() {
     var $nameField = $(this).find("input[name=username]");
     var $name = $nameField.val();
     var $index = $name.indexOf('@');
@@ -69,11 +70,12 @@ function contactFilter() {
             zijingang : '紫金港',
             yuquan : '玉泉',
             xixi : '西溪',
-            huajiachi : '华家池'
+            huajiachi : '华家池',
+            zhijiang : '之江'
         }
     }
 
-    selected = new Object();
+    var selected = new Object();
     var type;
     var flag = false;
     var personId;
@@ -111,7 +113,7 @@ function contactFilter() {
                 //Now you get the right cell, check if its value is selected
 
                 for (var index = 0; index < selected[property].length; index++){
-                    value = selected[property][index];
+                    var value = selected[property][index];
 
                     // console.log(value);
                     // console.log(dict[property][value]);
@@ -198,8 +200,71 @@ $("button[name=searchSubmit]").on("click", function() {
 /*
     Name tooltip
 */
-// $(".author").on("click", function() {
-//     $(this).tooltip('show');
-// });
 
 $(".author").tooltip();
+
+/*
+    Handle first login
+*/
+
+function firstLogin () {
+    $("#flag").each( function() {
+        // console.log($(this).text());
+        changeBox($(this).text());
+    });
+}
+
+/*
+    Changebox
+*/
+
+function changeBox( ObjectId ) {
+
+    var person = new Array();
+    var property;
+    var properties = Array("sex", "major", "grade", "campus", "group", "nickname", "longNumber", "shortNumber", "email", "qq");
+
+    $("#" + ObjectId).each( function() {
+        // console.log("hello");
+        // console.log($(this));
+        person['name'] = $(this).find(".modal-title").text();
+        for (var pIndex in properties) {
+            // console.log(properties[property]);
+            property = properties[pIndex];
+            person[property] = $(this).find("td[name=" + property + "]").text();
+        }
+    });
+
+    $("#changeBox").each( function() {
+        // console.log(person);
+        $(this).find("input[name=_id]").val(ObjectId);
+        $(this).find(".modal-title").text(person['name']);
+        for (var pIndex in properties) {
+            // console.log(properties[property]);
+            property = properties[pIndex];
+            $(this).find("[name=" + property + "]").val(person[property]);
+        }
+        $(this).modal("show");
+    });
+
+}
+
+$("button[name=update]").on("click", function() {
+    console.log($("#changeBox form"));
+    $("#changeBox form").submit();
+});
+
+/*
+    Namecard Change
+*/
+
+$(".nameCard button[name=change]").on("click", function() {
+    var ObjectId = $(this).attr("data-id");
+    $(this).parents(".nameCard").modal("hide");
+    changeBox(ObjectId);
+});
+
+/*
+    Export
+*/
+
