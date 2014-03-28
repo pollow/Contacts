@@ -279,6 +279,7 @@ $("#csv, #xlsx").on("click", function() {
     $(".main-table tbody tr").each( function() {
         var objectId = $(this).attr("data-id");
         var str = '<input name = "' + index + '" value = "' + objectId + '">';
+        index++;
         form.append(str);
     });
     form.submit();
