@@ -315,3 +315,8 @@ $("#csv, #xlsx").on("click", function() {
     form.submit();
     form.find("input").remove();
 });
+
+//Only visiable in main page
+$("#main").each( function() {
+    $("#navExport").removeClass("hidden");
+} );
