@@ -14,7 +14,7 @@ var format = {
   campus: "校区",
   major: "专业",
   group: "部门",
-  title: "职位", // used to distinguish the leader and common memeber
+  title: "职位",
   studentType: "学业类别",
   enrollTime: "入学时间",
   blog: "个人主页",
@@ -39,47 +39,28 @@ var headLines = [
   "employer"
 ];
 
-// var headLines = [
-//   "姓名", 
-//   "性别", 
-//   "长号", 
-//   "短号", 
-//   "邮箱", 
-//   "QQ", 
-//   "常用ID", 
-//   "校区",
-//   "专业",
-//   "部门",
-//   "职位",
-//   "学业类别",
-//   "入学时间",
-//   "个人主页",
-//   "就业去向"
-// ];
-
 var fileDir = path.join(__dirname, 'public', 'file');
 
 exports.xlsx = exportToXlsx;
 exports.csv = exportToCsv;
 
 function exportToXlsx(data, callback){
-  var buffer;
   // logger.debug("get the data " + data);
   try {
-    rows = jsonToSheets(data);
-    buffer = xlsx.build({worksheets: [
+    var rows = jsonToSheets(data);
+    var buffer = xlsx.build({worksheets: [
       {"name":"通讯录", "data": rows}
     ]});
-  } catch(bufError) {
-   return callback(bufError);
+    var timestamp = new Date().getTime();
+    var filepath = path.join(fileDir, timestamp + '.xlsx');
+  } catch(err) {
+   return callback(err, false, null);
   }
   // logger.debug(rows);
-  var timestamp = new Date().getTime();
-  var filepath = path.join(fileDir, timestamp + '.xlsx');
   fs.writeFile(filepath, buffer, function(err) {
     var success = true;
     if (err) {
-      logger.fatal(err);
+      // logger.fatal(err);
       success = false;
     }
 
@@ -88,23 +69,28 @@ function exportToXlsx(data, callback){
 }
 
 function exportToCsv(data, callback) {
-  var buffer = '';
-  var rows = jsonToSheets(data);
-  
-  for(var i = 0; i < rows.length; i++) {
-    buffer += rows[i].join(',') + '\n';
+  try {
+    var rows = jsonToSheets(data);
+    // logger.debug(rows);
+    var BOM = Buffer([0xef, 0xbb, 0xbf]);
+    var buffer = '';
+    for(var i = 0; i < rows.length; i++) {
+      buffer += rows[i].join(',') + '\n';
+    }
+    // logger.debug(buffer);
+    var timestamp = new Date().getTime();
+    var filepath = path.join(fileDir, timestamp + '.csv');
+  } catch (err) {
+    return callback(err, false, null);
   }
-  // logger.debug(buffer);
-  var timestamp = new Date().getTime();
-  var filepath = path.join(fileDir, timestamp + '.csv');
-  fs.writeFile(filepath, buffer, function(err) {
+  fs.writeFile(filepath, Buffer.concat([BOM, Buffer(buffer)]), function(err) {
     var success = true;
     if (err) {
-      logger.fatal(err);
+      // logger.fatal(err);
       success = false;
     }
     callback(err, success, filepath);
-  }) 
+  })  
 }
 
 function jsonToSheets(data) {
@@ -127,19 +113,5 @@ function jsonToSheets(data) {
       rows.push(row);
     }
   }
-  // headLines.forEach(function(attr){
-  //   head.push(format[attr]);
-  // })
-  // rows.push(head);
-  // data.forEach(function(person){
-  //   var row = new Array();
-  //   headLines.forEach(function(attr){
-  //     if(person[attr])
-  //       row.push(person[attr]);
-  //     else
-  //       row.push(" ");
-  //   })
-  //   rows.push(row);
-  // });
   return rows;
 }

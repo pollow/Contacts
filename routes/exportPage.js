@@ -34,21 +34,23 @@ exports.export = function (req, res, next) {
   // if (!req.session.authFlag)
   //   return res.redirect('/');
 
-  //  searching in database
-  //  oids ----> data [person1, person2]
-
   var _ids = Array();
-  var arr = Object.keys(req.body);
-  for (var i = 0; i < arr.length; i++) {
-    if (req.body[arr[i]] && arr[i] != 'type') {
-      //TODO 没有好好过滤req.body里的信息，应该调用一个类似validObjectId之类的函数
-      _ids.push(req.body[arr[i]].toString());
-    }
-  };
+  try {
+    var arr = Object.keys(req.body);
+    for (var i = 0; i < arr.length; i++) {
+      if (req.body[arr[i]] && arr[i] != 'type') {
+        //if any invalid string occured, it would fail the export
+        _ids.push(req.body[arr[i]].toString());
+      }
+    };
+  } catch (err) {
+    return next(err);
+  }
   // logger.debug('ids are', _ids);
-  async.mapSeries(_ids, findById, function(err, result) {
+  async.map(_ids, findById, function(err, result) {
     if (err)
       return next(err);
+    result = result.filter(function(item){ return (item !== null)});
     exporting[extName](result, function(err, success, filepath){
       if (err)
         return next(err);
@@ -75,7 +77,7 @@ function findById(_id, callbackReturnResut) {
   // contactModel.findOne({_id: ObjectId(_id)}, null, function(err, doc){
   contactModel.findOne({_id: _id}, null, function(err, doc){
     if (err) {
-      logger.error(err);
+      // logger.error(err);
       // handle the err
       callbackReturnResut(err, null);
     } else {
