@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet"><!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script><![endif]-->
+  </head>
+  <body id="about">
+    <nav role="navigatioin" class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header"><a href="/" class="navbar-brand">MSTC ZJU Contact</a>
+          <button type="button" data-toggle="collapse" data-target="#mainNavbar" class="navbar-toggle">
+            <span class="sr-only">Main Navbar Toggle</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="mainNavbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li id="list-main"><a href="/main">通讯录</a></li>
+            <li><a href="http://mail.mstczju.org">邮箱</a></li>
+            <li><a href="/about">关于</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>.关于</h1>
+      </div>
+    </div>
+    <div class="container content">
+      <p>MSTC ZJU Contact 这个项目最开始是苏学姐提出来的，我们三个（@Gnnng, @Pollow, @MForever78）刚好凑齐一套前端后台开发，正好拿这个项目练一下级，所以就接了下来。</p>
+      <p>小项目的好处是可以尝试最新的技术，不用再一边吐槽一边不断安慰自己 PHP 是世界上最好的语言……于是我们后台使用了 nodejs 下的 express 框架，前端选择了简单易学的 ejs 模板语言。</p>
+      <p>最开始开发的时候我们发现最大的短板不是技术，而是设计。你让三个死程聚在一块写出什么高大上的网页？平时看网站的时候没有特别注意，但自己做起来以后就再也没有底气骂 12306 了。前端同学找了一个艺设的小伙伴帮忙才做出了网站第一版的设计图。相比之下后台开发就很顺利，基本上一直在等前端的工作。前后折腾了两周左右第一版就正式上线了。</p>
+      <p>第一版反响很好，上线后大家把整个网站的方方面面都吐槽了一遍。我们说，我们要重构！</p>
+      <p>连重构这种鬼话都能相信少年你真是图样，成坑简直是理所当然的事情。好吧其实也不是不想再写，真的是艺术细胞太少，网站怎样也高大上不起来。于是假期时，前端同学作为一个死程滚去学习了前端网站设计，把从设计风格理念到前端标准、常用工具各方面的技能都往上点了一点。春学期开始，在大家已经遗忘这个项目的时候，我们居然真的开始重构了。</p>
+      <p>第一版到第二版，代码相似度少于 20%，基本就是重头来写。后端同学重写了数据库模型，对登陆验证增加了安全措施，增加了导出通讯录的功能，对项目的开发环境和产品环境进行了配置和区分，完善了项目文档（是真的！）。其中一些琐碎的细节消耗了大量的精力，谁写谁知道……前端带了一身新点的技能，按照专业的 workflow，先 PS （居然会）出效果图，然后写成静态 HTML，再改写成动态 Jade 模板，使用 less 样式化，最后加上 Js 交互。在后台的强力驱动下，这个全设备响应式扁平化可筛选支持一键导出长得还挺好看的第二版重构成功！</p>
+      <p>在花了一个周末的时间完善和调试了最后的功能后，我们觉得它真的可以和大家见面了。这次我们都很喜欢这个版本，所以大家玩的时候轻一点，不要弄坏了哦 >.<。</p>
+      <p>最后为了对打扰大家表示抱歉，特奉上王道，请笑纳。</p><img src="img/about-us.png" alt="About us" class="center-block img-responsive">
+      <p>我们的项目托管在 Github 上面，有什么问题、建议和吐槽欢迎去项目主页和我们交流。欢迎 Star ，欢迎 Fork。</p>
+      <p>https://github.com/pollow/Contacts</p>
+    </div>
+    <script src="js/jQuery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/custom.js"></script>
+    <footer class="clearfix">
+      <div class="container">
+        <p class="text-center">Designed and built with all the love in the world by <a class="author" data-toggle="tooltip" data-placement="top" trigger="hover" title="Design & Front-end">@MForever78</a>, <a class="author" data-toggle="tooltip" data-placement="top" trigger="hover" title="Power & Back-end">@Gnnng</a> and <a class="author" data-toggle="tooltip" data-placement="top" trigger="hover" title="Power & Back-end">@Pollow</a>.</p>
+        <p class="text-center">Copyright 2013-2014 MSTC ZJU. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
