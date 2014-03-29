@@ -10,28 +10,24 @@ var titleStr = {
 
 exports.index = function(req, res) {
   var game = 'game/2048/index.html';
-
+  var loggedin = 0;
   // logger.debug(req.app.settings);
   if (req.app.settings.nologin)
     return res.render('index', {title: titleStr.index, game: game });
 
-  if (req.session.times == undefined) req.session.times = 0;
-
-  if(req.session.authFlag) {
-    res.render('index', {title: titleStr.index, game: game, loggedin: 1 });
-    logger.debug(1);
-    
-  } else {
-    if (req.session.times > 0) {
-      res.render('index', {title: titleStr.index, game: game, loggedin: 0});
-      logger.debug(0);
-    }
+  if (!req.session.authFlag) {
+    // undefined or false
+    if (req.session.authFlag === undefined)
+      loggedin = 0;
     else {
-      res.render('index', {title: titleStr.index, game: game, loggedin: -1});
-      logger.debug(-1);
+      loggedin = -1;
+      req.session.authFlag = undefined;
     }
+  } else {
+    loggedin = 1;
   }
-  logger.debug(req.session.times)
+
+  res.render('index', {title: titleStr.index, game: game, loggedin: loggedin });
 };
 
 exports.main = function(req, res) {
@@ -58,7 +54,7 @@ exports.main = function(req, res) {
       if (doc[i].enrollTime && doc[i].studentType) {
         doc[i].grade = '大一'
       } else {
-        doc[i].grade = '大二';
+        doc[i].grade = '';
       }
     };
     res.render('main', {

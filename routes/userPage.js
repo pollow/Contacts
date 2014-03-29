@@ -16,10 +16,10 @@ exports.login = function(req, res, next) {
 
   // When the mstcAuth end, if auth success, redirect to '/' with session contain username, name, and full doc.
   mstcAuth(authData, function(err, name, authFlag){
+    req.session.authFlag = authFlag;
     if (err) {
       return next(err);
     } else if (authFlag) {
-      req.session.authFlag = authFlag;
       var ahour = 3600000;
       if (authData.remember == 'on') {
         req.session.cookie.maxAge = ahour * 24 * 7;
@@ -116,11 +116,12 @@ exports.login = function(req, res, next) {
 };
 
 exports.logout = function(req, res, next) {
-  logger.debug(req.session);
-  req.session = null;
-  logger.debug(req.session);
-  res.clearCookie('connect.sid');
-  res.redirect('/');
+  logger.debug(req.sessionStore);
+  req.session.destroy(function(err){
+    logger.debug(req.sessionStore);
+    res.redirect('/');  
+  });
+  
 }
 
 function mstcAuth(authData, callback) {
