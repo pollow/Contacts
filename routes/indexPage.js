@@ -99,7 +99,7 @@ exports.update = function(req, res) {
     logger.fatal('SOMEONE ATTEMPTS TO UPDATE WITHOUT PERMISSION')
     return res.redirect('/main');
   }
-
+  req.session.everLogged = true;
   var newDoc = Object();
   validAttr.forEach(function(attr){
     if (req.body[attr])

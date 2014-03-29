@@ -31,7 +31,7 @@ exports.export = function (req, res, next) {
     extName = 'xlsx';
   
   // logger.debug(req.body);
-  // if (!req.session.name)
+  // if (!req.session.authFlag)
   //   return res.redirect('/');
 
   //  searching in database
