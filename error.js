@@ -12,7 +12,7 @@ exports.routeHandler = function(req, res, next) {
 
 
 exports.serverHandler = function(err, req, res, next) {
-  logger.trace(err); // report the err in the console;
+  logger.fatal(err); // report the err in the console;
   res.status(500)
   // res.send('500 server internal error');
   res.render('50X');
