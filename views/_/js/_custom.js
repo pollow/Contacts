@@ -274,7 +274,7 @@ $(".nameCard button[name=change]").on('click', function(){
     }
     setTimeout("callChangeBox()", 500);*/
     var foo = function() {changeBox(ObjectId);};
-    setTimeout(foo, 500);
+    setTimeout(foo, 600);
 });
 
 /*
