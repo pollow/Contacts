@@ -1,0 +1,16 @@
+doctype html
+
+html(lang = 'zh')
+    include includes/head
+
+    body#404
+        include includes/nav
+        .jumbotron
+            .container
+                h1.text-center Oops
+                h2.text-center 服务器生气了
+        .container
+            img.img-responsive.center-block(src = 'img/50X.png', alt = '50X error')
+
+        include includes/js
+        include includes/footer

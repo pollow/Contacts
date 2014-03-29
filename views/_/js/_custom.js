@@ -266,13 +266,15 @@ $("button[name=update]").on("click", function() {
     Namecard Change
 */
 
-$(".nameCard button[name=change]").on('mousedown', function(){
+$(".nameCard button[name=change]").on('click', function(){
     $(this).parents(".nameCard").modal("hide");
-});
-
-$(".nameCard button[name=change]").on('mouseup', function(){
     var ObjectId = $(this).attr("data-id");
-    setTimeout(function(){changeBox(ObjectId);}, 500);
+    /*function callChangeBox() {
+        changeBox(ObjectId);
+    }
+    setTimeout("callChangeBox()", 500);*/
+    var foo = function() {changeBox(ObjectId);};
+    setTimeout(foo, 500);
 });
 
 /*
@@ -313,4 +315,3 @@ $("#csv, #xlsx").on("click", function() {
     form.submit();
     form.find("input").remove();
 });
-
