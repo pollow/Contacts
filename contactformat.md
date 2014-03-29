@@ -23,7 +23,6 @@ var format = {
   title: "职位", // used to distinguish the leader and common memeber
   studentType: "学业类别",
   enrollTime: "入学时间",
-  blog: "个人主页",
   employer: "就业去向",
   custom: "自定义(Object)",
   everlogged: Boolean

@@ -1,6 +1,6 @@
 # dependencies
 node_modules/*
-Contacts.csv
+*.csv
 *.swp
 db.js
 *.sublime-workspace

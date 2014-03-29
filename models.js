@@ -1,7 +1,26 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var headLines = [
+  "name",
+  "sex",
+  "longNumber",
+  "shortNumber",
+  "email",
+  "qq",
+  "nickname",
+  "campus",
+  "major",
+  "group",
+  "title",
+  "studentType",
+  "enrollTime",
+  "blog",
+  "employer"
+];
+
 var contactSchema = new Schema({
+  username: String,
   name: String,
   sex: String,
   longNumber: String,
@@ -15,9 +34,9 @@ var contactSchema = new Schema({
   title: String,
   studentType: String,
   enrollTime: String,
-  blog: String,
   employer: String,
-  spam: {type: Boolean, default: false},
+  custom: String, // JSON String for Object as {attr: value}. Use JSON.stringify to convert a object.
+  everLogged: Boolean,
   updated: {type:Number, default: Date.now()}
 });
 
@@ -26,8 +45,8 @@ exports.contactSchema = contactSchema;
 
 var logSchema = new Schema({
   // 姓名,[{unixtimestamp, log},...]
-  name: String,
-  logs: [contactSchema]
+  username: String,
+  logs: [String]
 });
 
 exports.logModel = mongoose.model('log', logSchema);
