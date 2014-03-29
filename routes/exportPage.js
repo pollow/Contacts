@@ -31,8 +31,8 @@ exports.export = function (req, res, next) {
     extName = 'xlsx';
   
   // logger.debug(req.body);
-  // if (!req.session.authFlag)
-  //   return res.redirect('/');
+  if (!req.session.authFlag)
+    return res.redirect('/');
 
   var _ids = Array();
   try {
