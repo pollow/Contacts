@@ -1,6 +1,7 @@
 var contactModel = require('../models').contactModel; 
 var logModel = require('../models').logModel;
 var logger = require('logger').logger('indexPage');
+var async = require('async');
 var titleStr = {
   index: "MSTC ZJU Contact",
   main: "Contact - 通讯录",
@@ -51,6 +52,15 @@ exports.main = function(req, res) {
     // logger.debug(doc);
     // logger.debug(typeof doc[0]._id.toString());
     // logger.debug("session is", req.session);
+
+    //TODO no correct, just test
+    for (var i = 0; i < doc.length; i++) {
+      if (doc[i].enrollTime && doc[i].studentType) {
+        doc[i].grade = '大一'
+      } else {
+        doc[i].grade = '大二';
+      }
+    };
     res.render('main', {
       title: titleStr.main, 
       people: doc, 
