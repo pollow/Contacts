@@ -30,36 +30,51 @@ exports.index = function(req, res) {
   res.render('index', {title: titleStr.index, game: game, loggedin: loggedin });
 };
 
-exports.main = function(req, res) {
+exports.main = function(req, res, next) {
   logger.debug("authFlag", req.session.authFlag);
   if (req.app.settings.nologin == false && !req.session.authFlag)
     return res.redirect('/');
 
   // contactModel.find({}, "name nickname longNumber shortNumber sex group email qq major campus", function(err, doc) {
-    contactModel.find({}, null, function(err, doc) {
+  contactModel.find({}, null, function(err, docArr) {
     logger.info('Start pulling contacts.');
     if(err) {
       logger.error("[Database Error] Failed to find:");
-      logger.error(err);
-      logger.trace(err);
-      return ;
+      return next(err);
     }
-    logger.info('[Database Read] Success to find');
+    logger.info('[Database Read] Succeed to find');
     // logger.debug(doc);
     // logger.debug(typeof doc[0]._id.toString());
     // logger.debug("session is", req.session);
-
-    //TODO no correct, just test
-    for (var i = 0; i < doc.length; i++) {
-      if (doc[i].enrollTime && doc[i].studentType) {
-        doc[i].grade = '大一'
-      } else {
-        doc[i].grade = '';
-      }
-    };
+    try {
+      docArr = docArr.map(function(person){
+        if (person.enrollTime && person.studentType) {
+          if (person.studentType == '本科生') {
+            var year = new Date().getFullYear();
+            var month = new Date().getMonth();
+            var diff = year - person.enrollTime;
+            if (month < 8) {
+              diff--;
+            }
+            if (diff < 0) {
+              person.grade = '大一';
+            } else if (diff < 4) {
+              person.grade = ['大一', '大二', '大三', '大四'][diff];
+            } else {
+              person.grade = ['毕业']
+            }
+          } else if (person.studentType == '研究生') {
+            person.grade = '研究生';
+          }
+        }
+        return person;
+      })
+    } catch (err) {
+      return next(err);
+    }
     res.render('main', {
       title: titleStr.main, 
-      people: doc, 
+      people: docArr, 
       loggedin: 1,
       firstLogin: !req.session.everLogged,
       loginAs: req.session.doc._id
@@ -67,8 +82,8 @@ exports.main = function(req, res) {
   });
 };
 
-exports.about = function(req, res) {
-  res.render('about', {title: titleStr.about})
+exports.about = function(req, res, next) {
+  res.render('about', {title: titleStr.about});
 }
 
 /// we need move indexPage.update to userPage.update !!!

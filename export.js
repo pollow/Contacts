@@ -32,11 +32,11 @@ var headLines = [
   "campus",
   "major",
   "group",
-  "title",
+  // "title",
+  // "blog",
+  // "employer",
   "studentType",
   "enrollTime",
-  "blog",
-  "employer"
 ];
 
 var fileDir = path.join(__dirname, 'public', 'file');
@@ -108,7 +108,7 @@ function jsonToSheets(data) {
         if(data[i][headLines[j]])
           row.push(data[i][headLines[j]]);
         else
-          row.push(" ");
+          row.push("  ");
       }
       rows.push(row);
     }
