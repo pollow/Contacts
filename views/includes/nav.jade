@@ -2,7 +2,12 @@ nav.navbar.navbar-default.navbar-fixed-top(role = 'navigatioin')
     .container-fluid
         .navbar-header
             a.navbar-brand(href = '/') MSTC ZJU Contact
-        .collapse.navbar-collapse
+            button.navbar-toggle(type = 'button', data-toggle = 'collapse', data-target = '#mainNavbar')
+                <span class="sr-only">Main Navbar Toggle</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+        .collapse.navbar-collapse#mainNavbar
             ul.nav.navbar-nav
                 li#list-main
                     a(href = '/main') 通讯录
@@ -17,7 +22,8 @@ nav.navbar.navbar-default.navbar-fixed-top(role = 'navigatioin')
                         ul.dropdown-menu
                             li
                                 a#csv CSV
-                                //- a(name = 'xls') XLS
+                            //- li
+                                //- a#xls XLS
                             li
                                 a#xlsx XLSX
                     li

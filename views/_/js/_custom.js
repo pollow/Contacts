@@ -296,7 +296,7 @@ $(".nameCard button[name=change]").on("click", function() {
     Export
 */
 
-$("#csv, #xlsx").on("click", function() {
+$("#csv, #xlsx, #xls").on("click", function() {
     // console.log("hello");
     var form = $("form#export");
     var index = 0;

@@ -23,88 +23,88 @@ html(lang = 'zh')
                                 button.btn.btn-default(name = 'searchSubmit') 搜索
 
         .container.main-content
-            aside
-                .list-group.col-md-3(data-spy = 'affix', data-offset-top = '300')
-                    a.list-group-item.list-group-brand MSTC ZJU Contact 筛选器
-                    a#checkAll.list-group-item.active 全部
-                    a.list-group-item(data-toggle = 'collapse', data-target = '#sex') 性别
-                    #sex.collapse.filterbox
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'male', checked=true)
-                                |  男
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'female', checked)
-                                |  女
-                    a.list-group-item(data-toggle = 'collapse', data-target = '#grade') 年级
-                    #grade.collapse.filterbox
-                        .checkbox
-                            label
-                               input(type = 'checkbox', value = 'one', checked)
-                               |  大一
-                        .checkbox
-                            label
-                               input(type = 'checkbox', value = 'two', checked)
-                               |  大二
-                        .checkbox
-                            label
-                               input(type = 'checkbox', value = 'three', checked)
-                               |  大三
-                        .checkbox
-                            label
-                               input(type = 'checkbox', value = 'four', checked)
-                               |  大四
-                        .checkbox
-                            label
-                               input(type = 'checkbox', value = 'master', checked)
-                               |  研究生
-                        .checkbox
-                            label
-                               input(type = 'checkbox', value = 'work', checked)
-                               |  工作
-                    a.list-group-item(data-toggle = 'collapse', data-target = '#group') Group
-                    #group.collapse.filterbox
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'TG', checked)
-                                |  TG
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'OG', checked)
-                                |  OG
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'CG', checked)
-                                |  CG
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'PG', checked)
-                                |  PG
-                    a.list-group-item(data-toggle = 'collapse', data-target = '#campus') 所在校区
-                    #campus.collapse.filterbox
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'zijingang', checked)
-                                |  紫金港
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'yuquan', checked)
-                                |  玉泉
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'xixi', checked)
-                                |  西溪
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'huajiachi', checked)
-                                |  华家池
-                        .checkbox
-                            label
-                                input(type = 'checkbox', value = 'zhijiang', checked)
-                                |  之江
             .row
-                .col-md-offset-3.col-md-9
+                aside.col-md-3
+                    .list-group.visible-lg.visible-md(data-spy = 'affix', data-offset-top = '300')
+                        a.list-group-item.list-group-brand MSTC ZJU Contact 筛选器
+                        a#checkAll.list-group-item.active 全部
+                        a.list-group-item(data-toggle = 'collapse', data-target = '#sex') 性别
+                        #sex.collapse.filterbox
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'male', checked=true)
+                                    |  男
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'female', checked)
+                                    |  女
+                        a.list-group-item(data-toggle = 'collapse', data-target = '#grade') 年级
+                        #grade.collapse.filterbox
+                            .checkbox
+                                label
+                                   input(type = 'checkbox', value = 'one', checked)
+                                   |  大一
+                            .checkbox
+                                label
+                                   input(type = 'checkbox', value = 'two', checked)
+                                   |  大二
+                            .checkbox
+                                label
+                                   input(type = 'checkbox', value = 'three', checked)
+                                   |  大三
+                            .checkbox
+                                label
+                                   input(type = 'checkbox', value = 'four', checked)
+                                   |  大四
+                            .checkbox
+                                label
+                                   input(type = 'checkbox', value = 'master', checked)
+                                   |  研究生
+                            .checkbox
+                                label
+                                   input(type = 'checkbox', value = 'work', checked)
+                                   |  工作
+                        a.list-group-item(data-toggle = 'collapse', data-target = '#group') Group
+                        #group.collapse.filterbox
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'TG', checked)
+                                    |  TG
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'OG', checked)
+                                    |  OG
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'CG', checked)
+                                    |  CG
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'PG', checked)
+                                    |  PG
+                        a.list-group-item(data-toggle = 'collapse', data-target = '#campus') 所在校区
+                        #campus.collapse.filterbox
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'zijingang', checked)
+                                    |  紫金港
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'yuquan', checked)
+                                    |  玉泉
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'xixi', checked)
+                                    |  西溪
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'huajiachi', checked)
+                                    |  华家池
+                            .checkbox
+                                label
+                                    input(type = 'checkbox', value = 'zhijiang', checked)
+                                    |  之江
+                .col-md-9
                     .table-responsive
                         table.main-table.table.table-hover
                             thead
