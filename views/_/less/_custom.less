@@ -107,13 +107,30 @@ body {
             }
         }
     }
+
+    .navbar-toggle {
+        border-color: @light-blue;
+
+        .icon-bar {
+            background-color: @light-blue;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: @dark-blue;
+        }
+    }
+
+    .navbar-collapse {
+        border-color: @dark-blue;
+    }
 }
 
 //Size
 
 .nav {
     > li {
-        width: @nav-lg-size;
+        min-width: @nav-lg-size;
         text-align: center;
     }
 }
@@ -295,6 +312,11 @@ a.list-group-item {
     text-align: center;
 }
 
+#gameFrame {
+    width: 350px;
+    height: 400px;
+}
+
 /*
     Modal
 */
@@ -397,15 +419,4 @@ body {
 .filterHidden {
     display: none !important;
     visibility: hidden !important;
-}
-
-/*
-    50X
-*/
-#errorContainer {
-    position: relative;
-}
-
-#errorMessage {
-    position: absolute;
 }
