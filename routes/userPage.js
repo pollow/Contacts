@@ -110,6 +110,7 @@ exports.login = function(req, res, next) {
         }
       });
     } else {
+      req.session.times += 1;
       res.redirect('/');
     }
   });  
