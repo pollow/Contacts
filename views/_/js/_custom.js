@@ -230,7 +230,7 @@ function changeBox( ObjectId ) {
 
     var person = new Array();
     var property;
-    var properties = Array("sex", "major", "grade", "campus", "group", "nickname", "longNumber", "shortNumber", "email", "qq");
+    var properties = Array("sex", "major", "grade", "campus", "enrollTime", "group", "nickname", "longNumber", "shortNumber", "email", "qq");
 
     $("#" + ObjectId).each( function() {
         // console.log("hello");
