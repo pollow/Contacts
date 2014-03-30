@@ -61,7 +61,7 @@ exports.main = function(req, res, next) {
             } else if (diff < 4) {
               person.grade = ['大一', '大二', '大三', '大四'][diff];
             } else {
-              person.grade = ['毕业']
+              person.grade = '工作';
             }
           } else if (person.studentType == '研究生') {
             person.grade = '研究生';
@@ -72,6 +72,7 @@ exports.main = function(req, res, next) {
     } catch (err) {
       return next(err);
     }
+    logger.debug(docArr.filter(function(item) {return item.name=='李超亚'}));
     res.render('main', {
       title: titleStr.main, 
       people: docArr, 
