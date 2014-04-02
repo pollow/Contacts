@@ -18,7 +18,7 @@ exports.login = function(req, res, next) {
   mstcAuth(authData, function(err, name, authFlag){
     req.session.authFlag = authFlag;
     if (err) {
-      return next(err);
+      next(err);
     } else if (authFlag) {
       var ahour = 3600000;
       if (authData.remember == 'on') {
@@ -26,13 +26,13 @@ exports.login = function(req, res, next) {
       } else {
         req.session.cookie.maxAge = ahour * 0.5;
       }
-
+      logger.info('Who is in', name || authData.username);
       contactModel.find(
       { name : name },
       null,
       function(err, doc) {
-        if ( err ) {
-          return next(err);
+        if (err) {
+          next(err);
         } else {
           var sDoc;
           for (var i = doc.length - 1; i >= 0; i--) {
@@ -45,6 +45,7 @@ exports.login = function(req, res, next) {
           logger.debug(doc);
           logger.debug(req.session);
           if ( sDoc === undefined ) {
+            logger.info('New member to database')
             contactModel.create(
             {
               "username": authData.username,
@@ -52,7 +53,8 @@ exports.login = function(req, res, next) {
             }
             , function(err, doc) {
               if(err) {
-                logger.err("[Database] Insertion Error!");
+                logger.error("[Database] Insertion Error!");
+                next(err);
                 // Handle Error here.
               } else {
                 req.session.doc = doc;
@@ -61,11 +63,12 @@ exports.login = function(req, res, next) {
                 logger.debug("New Log", doc);
                 logModel.create(
                 {
-                  username : authData.username+'a',
+                  username : authData.username,
                   logs : [ JSON.stringify(doc) ]
                 }, function(err, doc) {
                   if(err) {
-                    logger.err("[Database] Insert log error.");
+                    logger.error("[Database] Insert log error.");
+                    next(err);
                     // Handle Error here.
                   } else {
                     logger.debug("ALL LOGS", doc);
@@ -76,11 +79,13 @@ exports.login = function(req, res, next) {
               return res.redirect('/main');
             });
           } else if ( sDoc.username === undefined ) {
+            logger.info('Old user was found and never login before')
             contactModel.findByIdAndUpdate(sDoc._id, 
             { $set : { username: authData.username } },
             function(err, doc) {
               if (err) {
-                logger.err("[Database] Query Error!");
+                logger.error("[Database] Query Error!");
+                next(err);
                 // Handle Error here.
               }
               logger.debug(doc);
@@ -93,7 +98,8 @@ exports.login = function(req, res, next) {
                   logs : [JSON.stringify(doc)]
                 }, function(err, doc) {
                   if(err) {
-                    logger.err("[Database] Insert log error.");
+                    logger.error("[Database] Insert log error.");
+                    next(err);
                     // Handle Error here.
                   } else {
                     logger.debug("ALL LOGS", doc);
@@ -103,6 +109,7 @@ exports.login = function(req, res, next) {
               return res.redirect('/main');
             });
           } else {
+            logger.info('User signed in before');
             req.session.doc = sDoc;
             req.session.everLogged = true;
             return res.redirect('/main');
@@ -110,6 +117,7 @@ exports.login = function(req, res, next) {
         }
       });
     } else {
+      logger.warn('Login failed', authData.username, ':', authData.password);
       res.redirect('/');
     }
   });  
@@ -117,6 +125,7 @@ exports.login = function(req, res, next) {
 
 exports.logout = function(req, res, next) {
   logger.debug(req.sessionStore);
+  logger.info('Who is out', req.session.doc.name || req.session.doc.username);
   req.session.destroy(function(err){
     logger.debug(req.sessionStore);
     res.redirect('/');  

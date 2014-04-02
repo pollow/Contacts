@@ -31,11 +31,9 @@ exports.index = function(req, res) {
 };
 
 exports.main = function(req, res, next) {
-  logger.debug("authFlag", req.session.authFlag);
+  // logger.debug("authFlag", req.session.authFlag);
   if (req.app.settings.nologin == false && !req.session.authFlag)
     return res.redirect('/');
-
-  // contactModel.find({}, "name nickname longNumber shortNumber sex group email qq major campus", function(err, doc) {
   contactModel.find({}, null, function(err, docArr) {
     logger.info('Start pulling contacts.');
     if(err) {
@@ -72,7 +70,6 @@ exports.main = function(req, res, next) {
     } catch (err) {
       return next(err);
     }
-    logger.debug(docArr.filter(function(item) {return item.name=='李超亚'}));
     res.render('main', {
       title: titleStr.main, 
       people: docArr, 
@@ -103,7 +100,7 @@ var validAttr = [
   "enrollTime",
 ];
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   logger.debug('the update form data is', req.body);
 
   // need to check authFlag
@@ -125,7 +122,7 @@ exports.update = function(req, res) {
   //   logger.debug('key is', key, 'value is', value);
   //   if ()
   // })
-
+  logger.info('Updating information', newDoc);
   logger.debug('new doc is', newDoc);
   // res.redirect('/main');
   contactModel.findByIdAndUpdate(
@@ -133,6 +130,7 @@ exports.update = function(req, res) {
     { $set : newDoc }, function(err, doc) {
       if(err) {
         logger.error("[Database Error] Update Error!");
+        next(err);
         // res.end(JSON.stringify( {"error": "true", "msg": "Database Error!"} ))
         // handle error here.
       } else {
@@ -143,7 +141,8 @@ exports.update = function(req, res) {
           { $push : { logs: JSON.stringify(doc) } },
           function(err, doc) {
             if (err) {
-              throw err;
+              next(err);
+              // throw err;
               // handle error here.
             }
             logger.debug(doc);

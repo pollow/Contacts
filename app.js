@@ -7,14 +7,14 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var app = express();
-var logSet = require('logger').setLevel('TRACE');  // do not change the order of these requires
+var logSet = require('logger').setLevel('INFO');  // do not change the order of these requires
 var routes = require('./routes/index');
 var mongoose = require('mongoose');
 var db = require('./db.js');
 var log4js = require('log4js');
 var errors = require('./error.js');
 var logger = require('logger').logger('app');
-var journal = require('logger').logger('journal');
+var journal = require('logger').logger('J');
 
 /*
   Configuration and Middleware
@@ -33,9 +33,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon(path.join(__dirname,'public/img/favicon.png')));
 if ('production' == app.get('env')) {
-  app.use(log4js.connectLogger(journal, {level: 'auto', format:':status :method :url'})); //previous version
-  // app.use(log4js.connectLogger(journal, {level: 'INFO', format:':method :url'})); // debug mode
-  // app.use(express.logger('dev'));
+  app.use(log4js.connectLogger(journal, {level: 'auto', format:':remote-addr :status :method :url'})); //previous version
 } else {
   app.use(express.logger('dev'));
 }
