@@ -11,7 +11,7 @@ function isMember(req, res, next) {
 		if (err) {
 			next(err);
 		}
-		if (staff._id) {
+		if (staff) {
 			res.send(new Boolean(true));
 		} else {
 			res.send(new Boolean(false));
