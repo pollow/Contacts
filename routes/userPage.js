@@ -24,7 +24,7 @@ exports.login = function(req, res, next) {
       if (authData.remember == 'on') {
         req.session.cookie.maxAge = ahour * 24 * 7;
       } else {
-        req.session.cookie.maxAge = ahour * 0.5;
+        req.session.cookie.maxAge = ahour;
       }
       logger.info('Who is in', name || authData.username);
       contactModel.find(
@@ -80,7 +80,7 @@ exports.login = function(req, res, next) {
             });
           } else if ( sDoc.username === undefined ) {
             logger.info('Old user was found and never login before')
-            contactModel.findByIdAndUpdate(sDoc._id, 
+            contactModel.findByIdAndUpdate(sDoc._id,
             { $set : { username: authData.username } },
             function(err, doc) {
               if (err) {
@@ -120,7 +120,7 @@ exports.login = function(req, res, next) {
       logger.warn('Login failed', authData.username, ':', authData.password);
       res.redirect('/');
     }
-  });  
+  });
 };
 
 exports.logout = function(req, res, next) {
@@ -128,27 +128,27 @@ exports.logout = function(req, res, next) {
   logger.info('Who is out', req.session.doc.name || req.session.doc.username);
   req.session.destroy(function(err){
     logger.debug(req.sessionStore);
-    res.redirect('/');  
+    res.redirect('/');
   });
-  
+
 }
 
 function mstcAuth(authData, callback) {
   logger.debug('Posting data to server...');
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
     var loginFlag = false;
-    var person = JSON.parse(body); // transform the string to json 
+    var person = JSON.parse(body); // transform the string to json
     logger.debug(person);
     // use the responese code to decide
-    if (response.statusCode == 200) { 
+    if (response.statusCode == 200) {
       if (person.success) {
         // logger.debug(req.session);
         // res.send('login success. Welcome you [' + person.name + ']' );
         loginFlag = true;
-        
+
       } else {
         logger.warn('Invalid username or password');
-        loginFlag = false;  
+        loginFlag = false;
      }
     } else {
       logger.warn('Error occured at auth server');
@@ -192,7 +192,7 @@ function mstcAuth(authData, callback) {
 //     id: req.body.id,
 //     contact: req.body.contact,
 //     email: req.body.email,
-//     QQ: req.body.QQ 
+//     QQ: req.body.QQ
 //   };
 
 //   contactModel.update( {name: req.body.name}, newContact, function(err, doc) {
@@ -205,7 +205,7 @@ function mstcAuth(authData, callback) {
 
 //     console.log("[Database] update successed:");
 //     console.log(doc);
-//     // add log here 
+//     // add log here
 //     res.redirect('/list');
 //   });
 //   contactModel.findOneAndUpdate( {name: req.body.name}, newContact, function(err, doc) {
@@ -232,8 +232,8 @@ function mstcAuth(authData, callback) {
 // };
 
       // contactModel.find(
-      //   {"name": req.session.name}, 
-      //   null, 
+      //   {"name": req.session.name},
+      //   null,
       //   function(err, doc) {
       //     if(err) {
       //       logger.err("[Database] Query Error!");
@@ -267,7 +267,7 @@ function mstcAuth(authData, callback) {
       //         if ( doc[0].username === undefined ) {
       //           req.session.doc = doc[0];
       //           req.session.doc.everLogged = true;
-      //           contactModel.findByIdAndUpdate(sDoc.ObjectId, 
+      //           contactModel.findByIdAndUpdate(sDoc.ObjectId,
       //             { $set : { "everLogged": true, "username": authData.username } },
       //             function(err, doc) {
       //               if (err) {
@@ -333,7 +333,7 @@ function mstcAuth(authData, callback) {
       //         } else {
       //           req.session.doc = sDoc;
       //           if ( !sDoc.everLogged ) {
-                  // contactModel.findByIdAndUpdate(sDoc.ObjectId, 
+                  // contactModel.findByIdAndUpdate(sDoc.ObjectId,
                   //   { $set : { "everLogged": True } },
                   //   function(err, doc) {
                   //     if (err) {
