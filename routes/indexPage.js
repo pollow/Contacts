@@ -87,6 +87,7 @@ exports.about = function(req, res, next) {
 /// we need move indexPage.update to userPage.update !!!
 
 var validAttr = [
+  "sid",
   "sex",
   "longNumber",
   "shortNumber",

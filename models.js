@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var headLines = [
+  "sid",
   "name",
   "sex",
   "longNumber",
@@ -20,6 +21,7 @@ var headLines = [
 ];
 
 var contactSchema = new Schema({
+  sid: String,
   username: String,
   name: String,
   sex: String,

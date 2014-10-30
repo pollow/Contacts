@@ -24,7 +24,7 @@ module.exports = function(app) {
   app.post('/export', exportPage.export);
 
   // api
-  app.get('/isMember', api.isMember);
+  app.get('/api/isMember', api.isMember);
 
   // TEST
   app.get('/error', function(req, res, next){
