@@ -177,21 +177,21 @@ $("#checkAll").on("click", function() {
     Search box
 */
 
+// $("input[name=search]").keyup(function() {
+//     if (event.keyCode == 13) {
+//         $("button[name=searchSubmit]").click();
+//     }
+// });
+
 $("input[name=search]").keyup(function() {
-    if (event.keyCode == 13) {
-        $("button[name=searchSubmit]").click();
-    }
-});
-
-$("button[name=searchSubmit]").on("click", function() {
     var keyword = $("input[name=search]").val();
-
+    var keyReg = new RegExp(keyword, "i");
     var flag = false;
 
     $("table.main-table > tbody > tr").each(function(index) {
         flag = false;
         $(this).children().each(function() {
-            if ($(this).text().indexOf(keyword) != -1) {
+            if (keyReg.test($(this).text())) {
                 flag = true;
             }
         });
