@@ -32,13 +32,15 @@ $("button[name=loginSubmit]").on("click",function(event) {
     
     event.preventDefault();
 
-    var form = $(this).parents('form')
+    var form = $(this).parents('form');
     var nameField = form.find("input[name=username]");
     var name = nameField.val();
     var index = name.indexOf('@');
     if (index !== -1){
-        nameField.val(name.substring(0, index));
+        name = name.substring(0, index);
     }
+
+    nameField.val(name.toLowerCase());
 
     form.submit();
 });
