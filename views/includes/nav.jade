@@ -12,7 +12,10 @@ nav.navbar.navbar-default.navbar-fixed-top(role = 'navigatioin')
                 li#list-main
                     a(href = '/main') 通讯录
                 li
-                    a(href = 'http://mail.mstczju.org') 邮箱
+                    a(href = '//mail.mstczju.org') 邮箱
+                if (loggedin == 1)
+                    li
+                        a(href = '/api') API
                 li
                     a(href = '/about') 关于
             if (loggedin == 1)

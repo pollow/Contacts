@@ -81,7 +81,11 @@ exports.main = function(req, res, next) {
 };
 
 exports.about = function(req, res, next) {
-  res.render('about', {title: titleStr.about});
+  var loggedin = 0;
+  if (req.session.authFlag) {
+    loggedin = 1;
+  }
+  res.render('about', {title: titleStr.about, loggedin: loggedin});
 }
 
 /// we need move indexPage.update to userPage.update !!!

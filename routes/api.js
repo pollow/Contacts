@@ -1,5 +1,12 @@
 var contactModel = require('../models').contactModel;
 
+function index(req, res, next) {
+	if (!req.session.authFlag) {
+		res.redirect('/404');
+	}
+	res.render('api', {title: 'Contact - API', loggedin: 1});
+}
+
 function isMember(req, res, next) {
 	var sid = req.query.sid;
 
@@ -12,11 +19,18 @@ function isMember(req, res, next) {
 			next(err);
 		}
 		if (staff) {
-			res.send(new Boolean(true));
+			res.json({
+				"sid": sid,
+				"isMember": true
+			});
 		} else {
-			res.send(new Boolean(false));
+			res.json({
+				"sid": sid,
+				"isMember": false
+			});
 		}
 	});
 }
 
 module.exports.isMember = isMember;
+module.exports.index = index;

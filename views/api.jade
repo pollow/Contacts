@@ -1,0 +1,74 @@
+doctype html
+
+html(lang = 'zh')
+	include includes/head
+
+	body#api
+		include includes/nav
+		.jumbotron
+			.container
+				h1 关于
+				h2 Contact 为了配合社团工作的需要，提供有限的 API 扩展，请勿滥用
+
+		.container.markdown-body
+			h2 查询社员
+			ul
+				li 描述
+					ul
+						li 根据学号查询某人是否已是社员
+				li 请求
+					ul
+						li 请求语法
+							ul
+								li
+									pre
+										code.
+											GET HTTP/1.1 
+											/isMember?sid=&lt;sid&gt;
+						li 请求参数
+						li
+							table
+								thead
+									tr
+										th 参数名称
+										th 必填
+										th 类型
+										th 说明
+								tbody
+									tr
+										td
+											code &lt;sid&gt;
+										td 是
+										td String
+										td 10 位学号
+						li 请求内容
+							ul
+								li 该请求的内容为对应学号是否已是社员。
+				li 响应
+					ul
+						li 头部信息
+						li
+							table
+								thead
+									tr
+										th 头部名称
+										th 必填
+										th 说明
+								tbody
+									tr
+										td Content-Type
+										td 是
+										td 如果正常，该值为 application/json 表示返回 JSON 格式的文本信息
+						li 响应内容
+							ul
+								li 如果请求成功，返回如下示例内容
+								li
+									pre
+										code.
+											{
+												"sid"		:	"3130100000",
+												"isMember"	:	false
+											}
+
+		include includes/footer
+		include includes/js
