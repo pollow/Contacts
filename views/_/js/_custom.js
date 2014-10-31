@@ -1,14 +1,4 @@
 /*
-    Init
-*/
-
-$(document).ready(function() {
-    contactFilter();
-    color();
-    firstLogin();
-});
-
-/*
     Active nav list
 */
 
@@ -38,14 +28,19 @@ function color() {
     Remove the '@' in the username
 */
 
-$("#index form").on("submit",function() {
-    var $nameField = $(this).find("input[name=username]");
-    var $name = $nameField.val();
-    var $index = $name.indexOf('@');
-    if ($index !== -1){
-        $name = $name.substring(0, $index);
-        $nameField.val($name);
+$("button[name=loginSubmit]").on("click",function(event) {
+    
+    event.preventDefault();
+
+    var form = $(this).parents('form')
+    var nameField = form.find("input[name=username]");
+    var name = nameField.val();
+    var index = name.indexOf('@');
+    if (index !== -1){
+        nameField.val(name.substring(0, index));
     }
+
+    form.submit();
 });
 
 /*
@@ -81,18 +76,18 @@ function contactFilter() {
             huajiachi : '华家池',
             zhijiang : '之江'
         }
-    }
+    };
 
-    var selected = new Object();
+    var selected = {};
     var type;
     var flag = false;
     var personId;
-    var properties = Array("sex", "grade", "group", "campus");
+    var properties = new Array("sex", "grade", "group", "campus");
     var property;
 
-    for (index in properties) {
+    for (var index in properties) {
         property = properties[index];
-        selected[property] = Array();
+        selected[property] = [];
     }
 
     //Insert property to array
@@ -108,7 +103,7 @@ function contactFilter() {
 
         personId = $(this).parents(".nameCard").attr("id");
 
-        for (pIndex in properties){
+        for (var pIndex in properties){
             flag = false;
             property = properties[pIndex];
             // console.log(property);
@@ -126,7 +121,7 @@ function contactFilter() {
                     // console.log(value);
                     // console.log(dict[property][value]);
 
-                    if (dict[property][value] == $(this).text() || $(this).text() == ""){
+                    if (dict[property][value] === $(this).text() || $(this).text() === ""){
                         flag = true;
                     }
                 }
@@ -188,7 +183,7 @@ $("input[name=search]").keyup(function() {
     var keyReg = new RegExp(keyword, "i");
     var flag = false;
 
-    $("table.main-table > tbody > tr").each(function(index) {
+    $("table.main-table > tbody > tr").each(function() {
         flag = false;
         $(this).children().each(function() {
             if (keyReg.test($(this).text())) {
@@ -212,30 +207,19 @@ $("input[name=search]").keyup(function() {
 $(".author").tooltip();
 
 /*
-    Handle first login
-*/
-
-function firstLogin () {
-    $("#flag").each( function() {
-        // console.log($(this).text());
-        changeBox($(this).text());
-    });
-}
-
-/*
     Changebox
 */
 
 function changeBox( ObjectId ) {
 
-    var person = new Array();
+    var person = [];
     var property;
-    var properties = Array("sid", "sex", "major", "grade", "campus", "enrollTime", "group", "nickname", "longNumber", "shortNumber", "email", "qq");
+    var properties = new Array("sid", "sex", "major", "grade", "campus", "enrollTime", "group", "nickname", "longNumber", "shortNumber", "email", "qq");
 
     $("#" + ObjectId).each( function() {
         // console.log("hello");
         // console.log($(this));
-        person['name'] = $(this).find(".modal-title").text();
+        person.name = $(this).find(".modal-title").text();
         for (var pIndex in properties) {
             // console.log(properties[property]);
             property = properties[pIndex];
@@ -246,7 +230,7 @@ function changeBox( ObjectId ) {
     $("#changeBox").each( function() {
         // console.log(person);
         $(this).find("input[name=_id]").val(ObjectId);
-        $(this).find(".modal-title").text(person['name']);
+        $(this).find(".modal-title").text(person.name);
         for (var pIndex in properties) {
             // console.log(properties[property]);
             property = properties[pIndex];
@@ -258,9 +242,19 @@ function changeBox( ObjectId ) {
 }
 
 $("button[name=update]").on("click", function() {
-    console.log($("#changeBox form"));
     $("#changeBox form").submit();
 });
+
+/*
+    Handle first login
+*/
+
+function firstLogin () {
+    $("#flag").each( function() {
+        // console.log($(this).text());
+        changeBox($(this).text());
+    });
+}
 
 /*
     Namecard Change
@@ -320,3 +314,13 @@ $("#csv, #xlsx, #xls").on("click", function() {
 $("#main").each( function() {
     $("#navExport").removeClass("hidden");
 } );
+
+/*
+    Init
+*/
+
+$(document).ready(function() {
+    contactFilter();
+    color();
+    firstLogin();
+});
