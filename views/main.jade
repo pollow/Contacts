@@ -175,7 +175,7 @@ html(lang = 'zh')
                                         //-         th= filed.filed
                                         //-         td= filed.value
                             .modal-footer
-                                if (loginAs == person._id)
+                                if (loginAs == person._id || admin)
                                     button.btn.btn-primary(type = 'button', name = 'change', data-id = '' + person._id) 修改
                                 button.btn.btn-default(type = 'button', data-dismiss = 'modal', aria-hidden = 'true', name = 'close') 关闭
         

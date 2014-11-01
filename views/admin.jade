@@ -1,0 +1,47 @@
+doctype html
+
+html(lang = 'zh')
+	include includes/head
+
+	body
+		include includes/nav
+		.jumbotron
+			.container
+				.row
+					.col-md-8
+						h1 MSTC ZJU Contact
+						h2 管理员登陆
+					if (loggedin != 1)
+						.col-md-4
+							form.form-horizontal(role = 'form', method = 'post', action = '/admin')
+								.form-group
+									label.col-md-3.control-label(for = 'inputEmail') 用户名
+									.col-md-9
+										input.form-control#inputEmail(name = 'username', type = 'text', placeholder = 'First name. Last name')
+								.form-group
+									label.col-md-3.control-label(for = 'inputPassword') 密码
+									.col-md-9
+										input.form-control#inputPassword(name = 'password', type = 'password', placeholder = 'Password')
+								if (loggedin == -1)
+									.form-group
+										.col-md-offset-3.col-md-9
+											.alert.alert-danger <span class = "glyphicon glyphicon-info-sign"> </sapn> 用户名密码真的输对了？
+								.form-group
+									.col-md-offset-3.col-md-9
+										button.btn.btn-default.btn-block(name = 'loginSubmit', type = 'submit') 登陆
+								.form-group
+									.col-md-offset-3.col-md-9
+										.checkbox
+											label
+												input(type = 'checkbox', name = 'remember')
+												span 记住我
+				if (loggedin == 1)
+					.row
+						.col-md-offset-10.col-md-2
+							a.btn.btn-default.btn-block.btn-lg(href = 'main') 进入通讯录
+
+		.container.markdown-body
+			h1.text-center(style = 'color: grey') 通讯录备份周期长，数据损坏或丢失很难修复，请谨慎操作。
+
+		include includes/footer
+		include includes/js

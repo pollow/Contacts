@@ -11,9 +11,9 @@
                     h5 基本信息
                     input.hidden(name = '_id')
                     .form-group
-                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputSid') 学号
+                        label.col-sm-offset-1.col-sm-2.control-label(for = 'inputSid') 学号（必填）
                         .col-sm-offset-2.col-sm-4
-                            input#inputSid.form-control(type = 'text', name = 'sid')
+                            input#inputSid.form-control(type = 'text', name = 'sid', required)
                     .form-group
                         label.col-sm-offset-1.col-sm-2.control-label(for = 'selectSex') 性别
                         .col-sm-offset-2.col-sm-4
