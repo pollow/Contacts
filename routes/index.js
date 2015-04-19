@@ -3,8 +3,6 @@ var indexPage = require('./indexPage.js');
 var exportPage = require('./exportPage.js');
 var api = require('./api.js');
 
-var logger = require('logger').logger('index');
-
 module.exports = function(app) {
 
   // user

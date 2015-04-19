@@ -1,6 +1,5 @@
 var xlsx = require('node-xlsx');
 var fs = require('fs');
-var logger = require('logger').logger('export');
 var path = require('path');
 
 var format = {
@@ -94,15 +93,15 @@ function exportToCsv(data, callback) {
 }
 
 function jsonToSheets(data) {
-  var rows = new Array();
-  var head = new Array();
+  var rows = [];
+  var head = [];
 
   for(var i = 0; i < headLines.length; i++) {
     head.push(format[headLines[i]]);
   };
   rows.push(head);
   for(var i = 0; i < data.length; i++) {
-    var row = new Array();
+    var row = [];
     if (typeof data[i] == 'object') {
       for(var j = 0; j < headLines.length; j++) {
         if(data[i][headLines[j]])

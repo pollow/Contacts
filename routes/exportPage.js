@@ -1,4 +1,3 @@
-var logger = require('logger').logger('exportPage');
 var exporting = require('../export.js');
 var filename = 'contact';
 var fs = require('fs');
@@ -64,7 +63,7 @@ exports.export = function (req, res, next) {
               if (err) {
                 next(err);
               } else {
-                logger.info('Successfully deleted temporary file');
+                // logger.info('Successfully deleted temporary file');
               }
             });
           }

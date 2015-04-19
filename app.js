@@ -4,26 +4,24 @@
   all the required module
 */
 var express = require('express');
-var http = require('http');
-var path = require('path');
 var app = express();
-var logSet = require('logger').setLevel('INFO');  // do not change the order of these requires
 var routes = require('./routes/index');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 var db = require('./db.js');
-var log4js = require('log4js');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var sessionOpt = require('./session.js');
 var errors = require('./error.js');
-var logger = require('logger').logger('app');
-var journal = require('logger').logger('J');
+var logger = require('morgan');
 
 /*
   Configuration and Middleware
 
   This part is all the config settings before running code
-  There are three main environment
+  There are two main environment
   1. development - for development
-  2. offline - in development but have no network
-  3. production - for product
+  2. production - for product
 
 */
 
@@ -31,31 +29,18 @@ var journal = require('logger').logger('J');
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.favicon(path.join(__dirname,'public/img/favicon.png')));
 if ('production' == app.get('env')) {
-  app.use(log4js.connectLogger(journal, {level: 'auto', format:':remote-addr :status :method :url'})); //previous version
+  app.use(logger('combined'));
 } else {
-  app.use(express.logger('dev'));
+  app.use(logger('dev'));
 }
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser('ilovemstc'));
-app.use(express.session());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // development environment only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
   app.set('dburl', 'mongodb://'+db.user+':'+db.password+'@'+db.address+'/mstc');
   app.disable('nologin');
-}
-
-// offline environment only
-if ('offline' == app.get('env')) {
-  app.use(express.errorHandler());
-  app.set('dburl', 'mongodb://localhost/mstc');
-  app.enable('nologin');
 }
 
 if ('production' == app.get('env')) {
@@ -64,8 +49,6 @@ if ('production' == app.get('env')) {
 
   //TO-DO still in debug
   app.disable('nologin');
-  app.use(errors.routeHandler);
-  app.use(errors.serverHandler);
 }
 
 /*
@@ -80,17 +63,21 @@ if (app.get('dburl')) {
 } else {
   throw new Error('Wrong NODE_ENV paramter');
 }
+
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  key: sessionOpt.key,
+  secret: sessionOpt.secret,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+
 routes(app);
+app.use(errors.routeHandler);
+app.use(errors.serverHandler);
 
-// logger.trace('trace');
-// logger.debug('debug');
-// logger.info('info');
-// logger.warn('warn');
-// logger.error('error');
-// logger.fatal('fatal');
-
-http.createServer(app).listen(app.get('port'), function(){
-  logger.info('Express server listening on port ' + app.get('port'));
-  logger.info('Server running mode: ' + app.get('env'));  
+app.listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+  console.log('Server running mode: ' + app.get('env'));
 });
 

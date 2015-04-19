@@ -1,7 +1,6 @@
 var request = require('request');
 var contactModel = require('../models').contactModel;
 var logModel = require('../models').logModel;
-var logger = require('logger').logger('userPage');
 
 exports.login = function(req, res, next) {
   var authData = {
@@ -20,13 +19,13 @@ exports.login = function(req, res, next) {
     if (err) {
       next(err);
     } else if (authFlag) {
-      var ahour = 3600000;
+      var aHour = 3600000;
       if (authData.remember == 'on') {
-        req.session.cookie.maxAge = ahour * 24 * 7;
+        req.session.cookie.maxAge = aHour * 24 * 7;
       } else {
-        req.session.cookie.maxAge = ahour;
+        req.session.cookie.maxAge = null;
       }
-      logger.info('Who is in', name || authData.username);
+      // logger.info('Who is in', name || authData.username);
       contactModel.find(
       { name : name },
       null,
@@ -41,11 +40,11 @@ exports.login = function(req, res, next) {
               break;
             }
           };
-          logger.debug(sDoc);
-          logger.debug(doc);
-          logger.debug(req.session);
+          // logger.debug(sDoc);
+          // logger.debug(doc);
+          // logger.debug(req.session);
           if ( sDoc === undefined ) {
-            logger.info('New member to database')
+            // logger.info('New member to database')
             contactModel.create(
             {
               "username": authData.username,
@@ -53,63 +52,63 @@ exports.login = function(req, res, next) {
             }
             , function(err, doc) {
               if(err) {
-                logger.error("[Database] Insertion Error!");
+                // logger.error("[Database] Insertion Error!");
                 next(err);
                 // Handle Error here.
               } else {
                 req.session.doc = doc;
                 req.session.everLogged = false;
-                logger.info("Adding log.")
-                logger.debug("New Log", doc);
+                // logger.info("Adding log.")
+                // logger.debug("New Log", doc);
                 logModel.create(
                 {
                   username : authData.username,
                   logs : [ JSON.stringify(doc) ]
                 }, function(err, doc) {
                   if(err) {
-                    logger.error("[Database] Insert log error.");
+                    // logger.error("[Database] Insert log error.");
                     next(err);
                     // Handle Error here.
                   } else {
-                    logger.debug("ALL LOGS", doc);
-                    logger.info("Logged.")
+                    // logger.debug("ALL LOGS", doc);
+                    // logger.info("Logged.")
                   }
                 });
               }
               return res.redirect('/main');
             });
           } else if ( sDoc.username === undefined ) {
-            logger.info('Old user was found and never login before')
+            // logger.info('Old user was found and never login before')
             contactModel.findByIdAndUpdate(sDoc._id,
             { $set : { username: authData.username } },
             function(err, doc) {
               if (err) {
-                logger.error("[Database] Query Error!");
+                // logger.error("[Database] Query Error!");
                 next(err);
                 // Handle Error here.
               }
-              logger.debug(doc);
+              // logger.debug(doc);
               req.session.doc = doc;
               req.session.everLogged = false;
-              logger.info("Adding log.")
+              // logger.info("Adding log.")
               logModel.create(
                 {
                   username : authData.username+'a',
                   logs : [JSON.stringify(doc)]
                 }, function(err, doc) {
                   if(err) {
-                    logger.error("[Database] Insert log error.");
+                    // logger.error("[Database] Insert log error.");
                     next(err);
                     // Handle Error here.
                   } else {
-                    logger.debug("ALL LOGS", doc);
-                    logger.info("Logged.")
+                    // logger.debug("ALL LOGS", doc);
+                    // logger.info("Logged.")
                   }
                 });
               return res.redirect('/main');
             });
           } else {
-            logger.info('User signed in before');
+            // logger.info('User signed in before');
             req.session.doc = sDoc;
             req.session.everLogged = true;
             return res.redirect('/main');
@@ -117,28 +116,28 @@ exports.login = function(req, res, next) {
         }
       });
     } else {
-      logger.warn('Login failed', authData.username, ':', authData.password);
+      // logger.warn('Login failed', authData.username, ':', authData.password);
       res.redirect('/');
     }
   });
 };
 
 exports.logout = function(req, res, next) {
-  logger.debug(req.sessionStore);
-  logger.info('Who is out', req.session.doc.name || req.session.doc.username);
+  // logger.debug(req.sessionStore);
+  // logger.info('Who is out', req.session.doc.name || req.session.doc.username);
   req.session.destroy(function(err){
-    logger.debug(req.sessionStore);
+    // logger.debug(req.sessionStore);
     res.redirect('/');
   });
 
 }
 
 function mstcAuth(authData, callback) {
-  logger.debug('Posting data to server...');
+  // logger.debug('Posting data to server...');
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
     var loginFlag = false;
     var person = JSON.parse(body); // transform the string to json
-    logger.debug(person);
+    // logger.debug(person);
     // use the responese code to decide
     if (response.statusCode == 200) {
       if (person.success) {
@@ -147,11 +146,11 @@ function mstcAuth(authData, callback) {
         loginFlag = true;
 
       } else {
-        logger.warn('Invalid username or password');
+        // logger.warn('Invalid username or password');
         loginFlag = false;
      }
     } else {
-      logger.warn('Error occured at auth server');
+      // logger.warn('Error occured at auth server');
       loginFlag = false;
     }
     // err = 'this is error';

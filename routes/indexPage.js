@@ -1,7 +1,5 @@
 var contactModel = require('../models').contactModel; 
 var logModel = require('../models').logModel;
-var logger = require('logger').logger('indexPage');
-var async = require('async');
 var titleStr = {
   index: "MSTC ZJU Contact",
   main: "Contact - 通讯录",
@@ -35,12 +33,9 @@ exports.main = function(req, res, next) {
   if (req.app.settings.nologin == false && !req.session.authFlag)
     return res.redirect('/');
   contactModel.find({}, null, function(err, docArr) {
-    logger.info('Start pulling contacts.');
     if(err) {
-      logger.error("[Database Error] Failed to find:");
       return next(err);
     }
-    logger.info('[Database Read] Succeed to find');
     // logger.debug(doc);
     // logger.debug(typeof doc[0]._id.toString());
     // logger.debug("session is", req.session);
@@ -106,7 +101,6 @@ var validAttr = [
 ];
 
 exports.update = function(req, res, next) {
-  logger.debug('the update form data is', req.body);
 
   // need to check authFlag
   if (!req.session.authFlag)
@@ -114,7 +108,6 @@ exports.update = function(req, res, next) {
 
   // the _id is not identified with session._id
   if (!req.body._id || req.session.doc._id != req.body._id) {
-    logger.fatal('SOMEONE ATTEMPTS TO UPDATE WITHOUT PERMISSION')
     return res.redirect('/main');
   }
   req.session.everLogged = true;
@@ -127,20 +120,16 @@ exports.update = function(req, res, next) {
   //   logger.debug('key is', key, 'value is', value);
   //   if ()
   // })
-  logger.info('Updating information', newDoc);
-  logger.debug('new doc is', newDoc);
   // res.redirect('/main');
   contactModel.findByIdAndUpdate(
     req.body._id,
     { $set : newDoc }, function(err, doc) {
       if(err) {
-        logger.error("[Database Error] Update Error!");
         next(err);
         // res.end(JSON.stringify( {"error": "true", "msg": "Database Error!"} ))
         // handle error here.
       } else {
         // res.redirect('/main');
-        logger.info("Adding log.")
         logModel.findOneAndUpdate(
           { username: req.session.doc.username },
           { $push : { logs: JSON.stringify(doc) } },
@@ -150,8 +139,6 @@ exports.update = function(req, res, next) {
               // throw err;
               // handle error here.
             }
-            logger.debug(doc);
-            logger.info("Logged.")
             // res.end(JOSN.stringify(doc));
           }
         );
