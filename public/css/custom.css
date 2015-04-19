@@ -261,10 +261,17 @@ body {
 */
 #about .content p {
   color: #2f2f2f;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 30px;
   padding: 10px;
   text-align: justify;
+}
+#about .content li {
+  font-size: 16px;
+  line-height: 1.5em;
+}
+#about .content p.version {
+  font-weight: bold;
 }
 #about .content img {
   margin: 40px auto;
