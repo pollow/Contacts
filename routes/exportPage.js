@@ -41,7 +41,7 @@ exports.export = function (req, res, next) {
         //if any invalid string occured, it would fail the export
         _ids.push(req.body[arr[i]].toString());
       }
-    };
+    }
   } catch (err) {
     return next(err);
   }

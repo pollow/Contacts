@@ -4,7 +4,7 @@ var titleStr = {
   index: "MSTC ZJU Contact",
   main: "Contact - 通讯录",
   about: "Contact - 关于"
-}
+};
 
 exports.index = function(req, res) {
   var game = 'game/2048/index.html';
@@ -81,7 +81,7 @@ exports.about = function(req, res, next) {
     loggedin = 1;
   }
   res.render('about', {title: titleStr.about, loggedin: loggedin});
-}
+};
 
 /// we need move indexPage.update to userPage.update !!!
 
@@ -146,12 +146,12 @@ exports.update = function(req, res, next) {
       return res.redirect('/main');
     }
   );
-}
+};
 
 function findByUsername(source, username) {
   for (var i = source.length - 1; i >= 0; i--) {
     if (source[i].username == username) return source[i];
-  };
+  }
 }
 
 // exports.list = function(req, res) {

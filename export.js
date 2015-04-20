@@ -98,7 +98,7 @@ function jsonToSheets(data) {
 
   for(var i = 0; i < headLines.length; i++) {
     head.push(format[headLines[i]]);
-  };
+  }
   rows.push(head);
   for(var i = 0; i < data.length; i++) {
     var row = [];

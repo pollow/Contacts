@@ -17,11 +17,11 @@ describe('THIS IS A DEMO', function(){
         var user = {
           name: 'gg',
           age: 12
-        }
+        };
         user.should.have.property('name', 'gg');
         user.age.should.below(13);
         user.should.not.have.property('school');
       })
     })
   })
-})
+});

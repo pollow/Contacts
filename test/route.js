@@ -49,4 +49,4 @@ describe('Internal error', function() {
       // done(err);
     })
   })
-})
+});

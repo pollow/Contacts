@@ -84,7 +84,7 @@ function contactFilter() {
     var type;
     var flag = false;
     var personId;
-    var properties = new Array("sex", "grade", "group", "campus");
+    var properties = ["sex", "grade", "group", "campus"];
     var property;
 
     for (var index in properties) {
@@ -216,7 +216,7 @@ function changeBox( ObjectId ) {
 
     var person = [];
     var property;
-    var properties = new Array("sid", "sex", "major", "grade", "campus", "enrollTime", "group", "nickname", "longNumber", "shortNumber", "email", "qq");
+    var properties = ["sid", "sex", "major", "grade", "campus", "enrollTime", "group", "nickname", "longNumber", "shortNumber", "email", "qq"];
 
     $("#" + ObjectId).each( function() {
         // console.log("hello");
