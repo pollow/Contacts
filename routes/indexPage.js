@@ -1,5 +1,4 @@
 var contactModel = require('../models').contactModel; 
-var logModel = require('../models').logModel;
 var titleStr = {
   index: "MSTC ZJU Contact",
   main: "Contact - 通讯录",
@@ -130,27 +129,8 @@ exports.update = function(req, res, next) {
         // handle error here.
       } else {
         // res.redirect('/main');
-        logModel.findOneAndUpdate(
-          { username: req.session.doc.username },
-          { $push : { logs: JSON.stringify(doc) } },
-          function(err, doc) {
-            if (err) {
-              next(err);
-              // throw err;
-              // handle error here.
-            }
-            // res.end(JOSN.stringify(doc));
-          }
-        );
       }
       return res.redirect('/main');
     }
   );
 };
-
-function findByUsername(source, username) {
-  for (var i = source.length - 1; i >= 0; i--) {
-    if (source[i].username == username) return source[i];
-  }
-}
-

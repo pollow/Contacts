@@ -1,6 +1,5 @@
 var request = require('request');
 var contactModel = require('../models').contactModel;
-var logModel = require('../models').logModel;
 
 exports.login = function(req, res, next) {
   var authData = {
@@ -60,20 +59,6 @@ exports.login = function(req, res, next) {
                 req.session.everLogged = false;
                 // logger.info("Adding log.")
                 // logger.debug("New Log", doc);
-                logModel.create(
-                {
-                  username : authData.username,
-                  logs : [ JSON.stringify(doc) ]
-                }, function(err, doc) {
-                  if(err) {
-                    // logger.error("[Database] Insert log error.");
-                    next(err);
-                    // Handle Error here.
-                  } else {
-                    // logger.debug("ALL LOGS", doc);
-                    // logger.info("Logged.")
-                  }
-                });
               }
               return res.redirect('/main');
             });
@@ -91,20 +76,6 @@ exports.login = function(req, res, next) {
               req.session.doc = doc;
               req.session.everLogged = false;
               // logger.info("Adding log.")
-              logModel.create(
-                {
-                  username : authData.username+'a',
-                  logs : [JSON.stringify(doc)]
-                }, function(err, doc) {
-                  if(err) {
-                    // logger.error("[Database] Insert log error.");
-                    next(err);
-                    // Handle Error here.
-                  } else {
-                    // logger.debug("ALL LOGS", doc);
-                    // logger.info("Logged.")
-                  }
-                });
               return res.redirect('/main');
             });
           } else {

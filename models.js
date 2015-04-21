@@ -1,25 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var headLines = [
-  "sid",
-  "name",
-  "sex",
-  "longNumber",
-  "shortNumber",
-  "email",
-  "qq",
-  "nickname",
-  "campus",
-  "major",
-  "group",
-  "title",
-  "studentType",
-  "enrollTime",
-  "blog",
-  "employer"
-];
-
 var contactSchema = new Schema({
   sid: String,
   username: String,
@@ -44,13 +25,4 @@ var contactSchema = new Schema({
 
 exports.contactModel = mongoose.model('contact', contactSchema);
 exports.contactSchema = contactSchema;
-
-var logSchema = new Schema({
-  // 姓名,[{unixtimestamp, log},...]
-  username: String,
-  logs: [String]
-});
-
-exports.logModel = mongoose.model('log', logSchema);
-exports.logSchema = logSchema;
 
