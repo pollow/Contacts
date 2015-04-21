@@ -31,11 +31,8 @@ var headLines = [
   "campus",
   "major",
   "group",
-  // "title",
-  // "blog",
-  // "employer",
   "studentType",
-  "enrollTime",
+  "enrollTime"
 ];
 
 var fileDir = path.join(__dirname, 'public', 'file');

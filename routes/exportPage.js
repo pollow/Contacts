@@ -4,24 +4,6 @@ var fs = require('fs');
 var contactModel = require('../models').contactModel;
 var async = require('async');
 
-var format = {
-  name: "姓名",
-  sex: "性别",
-  longNumber: "长号",
-  shortNumber: "短号",
-  email: "邮箱",
-  qq: "QQ",
-  nickname: "常用ID",
-  campus: "校区",
-  major: "专业",
-  group: "部门",
-  title: "职位", // used to distinguish the leader and common memeber
-  studentType: "学业类别",
-  enrollTime: "入学时间",
-  blog: "个人主页",
-  employer: "就业去向"
-};
-
 exports.export = function (req, res, next) {
   // var _ids = req.body._ids;
   var extName = req.body.type;
@@ -33,12 +15,12 @@ exports.export = function (req, res, next) {
   if (!req.session.authFlag)
     return res.redirect('/');
 
-  var _ids = Array();
+  var _ids = [];
   try {
     var arr = Object.keys(req.body);
     for (var i = 0; i < arr.length; i++) {
       if (req.body[arr[i]] && arr[i] != 'type') {
-        //if any invalid string occured, it would fail the export
+        //if any invalid string occurs, it would fail the export
         _ids.push(req.body[arr[i]].toString());
       }
     }
