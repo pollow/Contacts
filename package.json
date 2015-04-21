@@ -12,12 +12,14 @@
     "csvtojson": ">=0.3.21",
     "express": "^4.12.3",
     "express-session": "^1.11.1",
+    "file-stream-rotator": "0.0.6",
     "jade": "^1.9.2",
     "moment": "=2.10.2",
     "mongoose": ">=4.0",
     "morgan": "^1.5.2",
     "node-xlsx": "0.5.1",
-    "request": ">=2.55"
+    "request": ">=2.55",
+    "winston": "^1.0.0"
   },
   "devDependencies": {
     "should": "^6.0.1"

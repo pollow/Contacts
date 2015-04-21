@@ -13,7 +13,9 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var sessionOpt = require('./session.js');
 var errors = require('./error.js');
-var logger = require('morgan');
+var RequestLogger = require('morgan');
+var createRotatingStream = require('file-stream-rotator').getStream;
+var fs = require('fs');
 
 /*
   Configuration and Middleware
@@ -29,10 +31,21 @@ var logger = require('morgan');
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+
 if ('production' == app.get('env')) {
-  app.use(logger('combined'));
+  // used for output to log file
+  var logDirectory = __dirname + '../log';
+  var accessLogStream = createRotatingStream({
+    filename: logDirectory + '/access-%DATE%.log',
+    frequency: 'daily',
+    verbose: false
+  });
+  app.use(RequestLogger('combined'), {stream: accessLogStream});
+  // used for output to console
+  app.use(RequestLogger('combined'));
 } else {
-  app.use(logger('dev'));
+  app.use(RequestLogger('dev'));
 }
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,7 +68,7 @@ if ('production' == app.get('env')) {
 
   Running code
 
-  This is the acctually code while running
+  This is the actual code while running
 
 */
 if (app.get('dburl')) {
