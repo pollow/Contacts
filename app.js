@@ -53,6 +53,8 @@ if ('production' == app.get('env')) {
   app.use(requestLogger('combined'));
 } else {
   app.use(requestLogger('dev'));
+  behaviorLogger.remove(behaviorLogger.transports.Console)
+    .add(behaviorLogger.transports.Console, { colorize: true });
 }
 global.logger = behaviorLogger;
 app.use(express.static(__dirname + '/public'));
