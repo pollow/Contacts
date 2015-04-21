@@ -13,8 +13,9 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var sessionOpt = require('./session.js');
 var errors = require('./error.js');
-var RequestLogger = require('morgan');
+var requestLogger = require('morgan');
 var createRotatingStream = require('file-stream-rotator').getStream;
+var behaviorLogger = require('winston');
 var fs = require('fs');
 
 /*
@@ -41,12 +42,19 @@ if ('production' == app.get('env')) {
     frequency: 'daily',
     verbose: false
   });
-  app.use(RequestLogger('combined'), {stream: accessLogStream});
+  var behaviorLogStream = createRotatingStream({
+    filename: logDirectory + '/behavior-%DATE%.log',
+    frequency: 'daily',
+    verbose: false
+  });
+  behaviorLogger.add(behaviorLogger.transports.File, { stream: behaviorLogStream });
+  app.use(requestLogger('combined'), { stream: accessLogStream });
   // used for output to console
-  app.use(RequestLogger('combined'));
+  app.use(requestLogger('combined'));
 } else {
-  app.use(RequestLogger('dev'));
+  app.use(requestLogger('dev'));
 }
+global.logger = behaviorLogger;
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 

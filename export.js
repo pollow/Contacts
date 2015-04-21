@@ -41,7 +41,7 @@ exports.xlsx = exportToXlsx;
 exports.csv = exportToCsv;
 
 function exportToXlsx(data, callback){
-  // logger.debug("get the data " + data);
+  logger.info("[Export] Getting data: " + data);
   try {
     var rows = jsonToSheets(data);
     var buffer = xlsx.build({worksheets: [
@@ -52,11 +52,11 @@ function exportToXlsx(data, callback){
   } catch(err) {
    return callback(err, false, null);
   }
-  // logger.debug(rows);
   fs.writeFile(filepath, buffer, function(err) {
     var success = true;
     if (err) {
-      // logger.fatal(err);
+      logger.error("[Export] Write file failed:");
+      logger.error(err);
       success = false;
     }
 
@@ -67,13 +67,11 @@ function exportToXlsx(data, callback){
 function exportToCsv(data, callback) {
   try {
     var rows = jsonToSheets(data);
-    // logger.debug(rows);
     var BOM = Buffer([0xef, 0xbb, 0xbf]);
     var buffer = '';
     for(var i = 0; i < rows.length; i++) {
       buffer += rows[i].join(',') + '\n';
     }
-    // logger.debug(buffer);
     var timestamp = new Date().getTime();
     var filepath = path.join(fileDir, timestamp + '.csv');
   } catch (err) {
@@ -82,7 +80,8 @@ function exportToCsv(data, callback) {
   fs.writeFile(filepath, Buffer.concat([BOM, Buffer(buffer)]), function(err) {
     var success = true;
     if (err) {
-      // logger.fatal(err);
+      logger.error("[Export] Write file failed:");
+      logger.error(err);
       success = false;
     }
     callback(err, success, filepath);

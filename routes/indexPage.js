@@ -8,7 +8,6 @@ var titleStr = {
 exports.index = function(req, res) {
   var game = 'game/2048/index.html';
   var loggedin = 0;
-  // logger.debug(req.app.settings);
   if (req.app.settings.nologin)
     return res.render('index', {title: titleStr.index, game: game });
 
@@ -28,16 +27,15 @@ exports.index = function(req, res) {
 };
 
 exports.main = function(req, res, next) {
-  // logger.debug("authFlag", req.session.authFlag);
   if (req.app.settings.nologin == false && !req.session.authFlag)
     return res.redirect('/');
   contactModel.find({}, null, function(err, docArr) {
+    logger.info('[Database] Start pulling contacts...');
     if(err) {
+      logger.error('[Database] Fail to pull');
       return next(err);
     }
-    // logger.debug(doc);
-    // logger.debug(typeof doc[0]._id.toString());
-    // logger.debug("session is", req.session);
+    logger.info('[Database] Pull succeed')
     try {
       docArr = docArr.map(function(person){
         if (person.enrollTime && person.studentType) {
@@ -107,28 +105,25 @@ exports.update = function(req, res, next) {
 
   // the _id is not identified with session._id
   if (!req.body._id || req.session.doc._id != req.body._id) {
+    logger.warn("[Unauthorized] Possible attack detected");
+    logger.warn("[Unauthorized] Attacker: " + req.session.doc);
     return res.redirect('/main');
   }
   req.session.everLogged = true;
-  var newDoc = Object();
+  var newDoc = {};
   validAttr.forEach(function(attr){
     if (req.body[attr])
       newDoc[attr] = req.body[attr];
   });
-  // Object.keys(req.body).forEach(function(key, value) {
-  //   logger.debug('key is', key, 'value is', value);
-  //   if ()
-  // })
-  // res.redirect('/main');
+  logger.info("[Update] " + newDoc);
   contactModel.findByIdAndUpdate(
     req.body._id,
     { $set : newDoc }, function(err, doc) {
       if(err) {
+        logger.error("[Database] Update error");
         next(err);
-        // res.end(JSON.stringify( {"error": "true", "msg": "Database Error!"} ))
-        // handle error here.
       } else {
-        // res.redirect('/main');
+        logger.info("[Database] Update succeed");
       }
       return res.redirect('/main');
     }

@@ -5,16 +5,15 @@ var contactModel = require('../models').contactModel;
 var async = require('async');
 
 exports.export = function (req, res, next) {
-  // var _ids = req.body._ids;
   var extName = req.body.type;
   var supportExt = ['xlsx', 'csv'];
   if (supportExt.indexOf(extName) == -1) 
     extName = 'xlsx';
   
-  // logger.debug(req.body);
   if (!req.session.authFlag)
     return res.redirect('/');
 
+  logger.info("[Export] ", req.session.doc.username, "is trying to export");
   var _ids = [];
   try {
     var arr = Object.keys(req.body);
@@ -27,25 +26,30 @@ exports.export = function (req, res, next) {
   } catch (err) {
     return next(err);
   }
-  // logger.debug('ids are', _ids);
   async.map(_ids, findById, function(err, result) {
     if (err)
       return next(err);
     result = result.filter(function(item){ return (item !== null)});
     exporting[extName](result, function(err, success, filepath){
-      if (err)
+      if (err) {
+        logger.error("[Database] Export error");
+        logger.error(err);
         return next(err);
+      }
       else
         res.download(filepath, filename + '.' + extName, function(err){
-          // logger.debug('header sent is ' + res.headerSent );
           if (err) {
+            logger.error("[Export] File sending error:");
+            logger.error(err);
             next(err);
           } else {
             fs.unlink(filepath, function(err){
               if (err) {
+                logger.error("[Export] File unlink error:");
+                logger.error(err);
                 next(err);
               } else {
-                // logger.info('Successfully deleted temporary file');
+                logger.info('[Export] Successfully deleted temporary file');
               }
             });
           }
@@ -54,15 +58,14 @@ exports.export = function (req, res, next) {
   });
 };
 
-function findById(_id, callbackReturnResut) {
-  // contactModel.findOne({_id: ObjectId(_id)}, null, function(err, doc){
+function findById(_id, callbackReturnResult) {
   contactModel.findOne({_id: _id}, null, function(err, doc){
     if (err) {
       // logger.error(err);
       // handle the err
-      callbackReturnResut(err, null);
+      callbackReturnResult(err, null);
     } else {
-      callbackReturnResut(null, doc);
+      callbackReturnResult(null, doc);
     }
   })
 }

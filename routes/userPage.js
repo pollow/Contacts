@@ -8,10 +8,6 @@ exports.login = function(req, res, next) {
     "remember": req.body.remember
   };
 
-  // logger.debug(req.session);
-  // logger.debug(req.cookie);
-  // logger.debug(authData.remember);
-
   // When the mstcAuth end, if auth success, redirect to '/' with session contain username, name, and full doc.
   mstcAuth(authData, function(err, name, authFlag){
     req.session.authFlag = authFlag;
@@ -24,7 +20,7 @@ exports.login = function(req, res, next) {
       } else {
         req.session.cookie.maxAge = null;
       }
-      // logger.info('Who is in', name || authData.username);
+      logger.info('[Login]', name || authData.username);
       contactModel.find(
       { name : name },
       null,
@@ -39,11 +35,9 @@ exports.login = function(req, res, next) {
               break;
             }
           }
-          // logger.debug(sDoc);
-          // logger.debug(doc);
-          // logger.debug(req.session);
+          logger.info('[Database] Found ', sDoc);
           if ( sDoc === undefined ) {
-            // logger.info('New member to database')
+            logger.info('[Database] New member');
             contactModel.create(
             {
               "username": authData.username,
@@ -51,35 +45,32 @@ exports.login = function(req, res, next) {
             }
             , function(err, doc) {
               if(err) {
-                // logger.error("[Database] Insertion Error!");
+                logger.error("[Database] Insertion Error!");
                 next(err);
                 // Handle Error here.
               } else {
                 req.session.doc = doc;
                 req.session.everLogged = false;
-                // logger.info("Adding log.")
-                // logger.debug("New Log", doc);
+                logger.info("[Database] New Log: ", doc);
               }
               return res.redirect('/main');
             });
           } else if ( sDoc.username === undefined ) {
-            // logger.info('Old user was found and never login before')
+            logger.info('[Login] Old user was found first login');
             contactModel.findByIdAndUpdate(sDoc._id,
             { $set : { username: authData.username } },
             function(err, doc) {
               if (err) {
-                // logger.error("[Database] Query Error!");
+                logger.error("[Database] Query Error!");
                 next(err);
-                // Handle Error here.
               }
-              // logger.debug(doc);
+              logger.info('[Database] Added: ', doc);
               req.session.doc = doc;
               req.session.everLogged = false;
-              // logger.info("Adding log.")
               return res.redirect('/main');
             });
           } else {
-            // logger.info('User signed in before');
+            logger.info('[Login] User signed in before');
             req.session.doc = sDoc;
             req.session.everLogged = true;
             return res.redirect('/main');
@@ -87,36 +78,32 @@ exports.login = function(req, res, next) {
         }
       });
     } else {
-      // logger.warn('Login failed', authData.username, ':', authData.password);
+      logger.warn('[Login] Failed attempt ', authData.username, ':', authData.password);
       res.redirect('/');
     }
   });
 };
 
 exports.logout = function(req, res, next) {
-  // logger.debug(req.sessionStore);
-  // logger.info('Who is out', req.session.doc.name || req.session.doc.username);
+  logger.info('[Logout] ', req.session.doc.name || req.session.doc.username);
   req.session.destroy(function(err){
-    // logger.debug(req.sessionStore);
     res.redirect('/');
   });
 
 };
 
 function mstcAuth(authData, callback) {
-  // logger.debug('Posting data to server...');
+  logger.info('[MSTC auth] Posting data to server...');
   request.post('http://login.mstczju.org/plain', {form: authData }, function(err, response, body) {
     var loginFlag = false;
     var person = JSON.parse(body); // transform the string to json
-    // logger.debug(person);
     // use the response code to decide
     if (response.statusCode == 200) {
       loginFlag = !!person.success;
     } else {
-      // logger.warn('Error occured at auth server');
+      logger.warn('[MSTC auth] Error occurred at auth server');
       loginFlag = false;
     }
-    // err = 'this is error';
     callback(err, person.name, loginFlag);
   });
 }
