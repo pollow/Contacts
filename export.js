@@ -44,9 +44,9 @@ function exportToXlsx(data, callback){
   logger.info("[Export] Getting data: " + data);
   try {
     var rows = jsonToSheets(data);
-    var buffer = xlsx.build({worksheets: [
+    var buffer = xlsx.build([
       {"name":"通讯录", "data": rows}
-    ]});
+    ]);
     var timestamp = new Date().getTime();
     var filepath = path.join(fileDir, timestamp + '.xlsx');
   } catch(err) {
