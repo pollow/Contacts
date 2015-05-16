@@ -12,7 +12,7 @@
     "csvtojson": ">=0.3.21",
     "express": "^4.12.3",
     "express-session": "^1.11.1",
-    "file-stream-rotator": "0.0.6",
+    "file-stream-rotator": "git://github.com/joepie91/file-stream-rotator",
     "jade": "^1.9.2",
     "moment": "=2.10.2",
     "mongoose": ">=4.0",
