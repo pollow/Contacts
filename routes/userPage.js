@@ -35,7 +35,7 @@ exports.login = function(req, res, next) {
               break;
             }
           }
-          logger.info('[Database] Found ', sDoc);
+          logger.info('[Database] Found ', sDoc.username);
           if ( sDoc === undefined ) {
             logger.info('[Database] New member');
             contactModel.create(

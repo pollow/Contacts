@@ -14,7 +14,8 @@ var MongoStore = require('connect-mongo')(session);
 var sessionOpt = require('./session.js');
 var errors = require('./error.js');
 var requestLogger = require('morgan');
-var createRotatingStream = require('file-stream-rotator').getStream;
+var rotatingStream = require('file-stream-rotator');
+var createRotatingStream = rotatingStream.getStream;
 var behaviorLogger = require('winston');
 var fs = require('fs');
 
@@ -36,19 +37,17 @@ app.set('view engine', 'jade');
 
 if ('production' == app.get('env')) {
   // used for output to log file
-  var logDirectory = __dirname + '../log';
+  var logDirectory = __dirname + '/../log/';
   var accessLogStream = createRotatingStream({
-    filename: logDirectory + '/access-%DATE%.log',
+    filename: logDirectory + 'access-%DATE%.log',
     frequency: 'daily',
     verbose: false
   });
-  var behaviorLogStream = createRotatingStream({
-    filename: logDirectory + '/behavior-%DATE%.log',
-    frequency: 'daily',
-    verbose: false
+  behaviorLogger.add(behaviorLogger.transports.DailyRotateFile, {
+    dirname: logDirectory,
+    filename: 'behave'
   });
-  behaviorLogger.add(behaviorLogger.transports.File, { stream: behaviorLogStream });
-  app.use(requestLogger('combined'), { stream: accessLogStream });
+  app.use(requestLogger('combined', { stream: accessLogStream }));
   // used for output to console
   app.use(requestLogger('combined'));
 } else {
