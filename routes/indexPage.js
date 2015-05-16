@@ -30,12 +30,12 @@ exports.main = function(req, res, next) {
   if (req.app.settings.nologin == false && !req.session.authFlag)
     return res.redirect('/');
   contactModel.find({}, null, function(err, docArr) {
-    logger.info('[Database] Start pulling contacts...');
+    logger.info('[Database] ' + req.session.doc.username + ' starts pulling contacts...');
     if(err) {
       logger.error('[Database] Fail to pull');
       return next(err);
     }
-    logger.info('[Database] Pull succeed')
+    logger.info('[Database] Pull succeed');
     try {
       docArr = docArr.map(function(person){
         if (person.enrollTime && person.studentType) {
