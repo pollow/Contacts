@@ -34,8 +34,9 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
-
 if ('production' == app.get('env')) {
+  // trust proxy to get X-forward-for ip
+  app.set('trust proxy', 'loopback');
   // used for output to log file
   var logDirectory = __dirname + '/../log/';
   var accessLogStream = createRotatingStream({
