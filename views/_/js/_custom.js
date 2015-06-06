@@ -2,9 +2,7 @@
     Active nav list
 */
 
-$("#main").each( function () {
-    $(".navbar-nav #list-main").addClass("active");
-});
+$("#main .navbar-nav #list-main").addClass("active");
 
 /*
     Color main-table
@@ -29,7 +27,7 @@ function color() {
 */
 
 $("button[name=loginSubmit]").on("click",function(event) {
-    
+
     event.preventDefault();
 
     var form = $(this).parents('form');
@@ -119,37 +117,16 @@ function contactFilter() {
 
         personId = $(this).parents(".nameCard").attr("id");
 
-        for (var pIndex in properties){
-            flag = false;
-            property = properties[pIndex];
-            // console.log(property);
+        var flag = properties.all(function(property) {
+            var myProperty = $(this).find("td[name=" + property + "]").text();
 
-            // console.log($(this).find("td[name=" + property + "]").text());
-
-            $(this).find("td[name=" + property + "]").each(function() {
-                // console.log("hello");
-
-                //Now you get the right cell, check if its value is selected
-
-                for (var index = 0; index < selected[property].length; index++){
-                    var value = selected[property][index];
-
-                    // console.log(value);
-                    // console.log(dict[property][value]);
-
-                    if (dict[property][value] === $(this).text()){
-                        flag = true;
-                    }
-                }
+            return selected[property].some(function(elem) {
+                return elem === myProperty;
             });
-            //If the whole group meet nothing, break out
-            if (!flag){
-                break;
-            }
-        }
+        });
 
-        //If not meet the filter, hide it
-        if (!flag){
+       //If not meet the filter, hide it
+        if (!flag) {
             $("tr[data-target=#" + personId + "]").addClass('filterHidden');
         } else {
             $("tr[data-target=#" + personId + "]").removeClass('filterHidden');
@@ -160,11 +137,10 @@ function contactFilter() {
 
 $(":checkbox").on("click", function() {
 
-    //Clear the searchBox first
+    // Clear the searchBox first
     var searchBox = $("input[name=search]").val();
     if (searchBox) {
         $("input[name=search]").val("");
-        $("button[name=searchSubmit]").click();
     }
 
     if ($('input:checkbox:not(:checked)').length === 0) {
@@ -179,11 +155,11 @@ $(":checkbox").on("click", function() {
 
 
 $("#checkAll").on("click", function() {
-    // console.log("hello");
     $(this).addClass("active");
     $(":checkbox").each(function() {
         $(this).prop("checked", 'true');
     });
+
     contactFilter();
     color();
 });
@@ -201,14 +177,10 @@ $("#checkAll").on("click", function() {
 $("input[name=search]").keyup(function() {
     var keyword = $("input[name=search]").val();
     var keyReg = new RegExp(keyword, "i");
-    var flag = false;
 
     $("table.main-table > tbody > tr").each(function() {
-        flag = false;
-        $(this).children().each(function() {
-            if (keyReg.test($(this).text())) {
-                flag = true;
-            }
+        var flag = $(this).children().some(function(elem) {
+            return keyReg.test($(elem).text());
         });
         if (!flag) {
             $(this).addClass('hidden');
@@ -230,35 +202,20 @@ $(".author").tooltip();
     Changebox
 */
 
-function changeBox( ObjectId ) {
+function changeBox(ObjectId) {
 
-    var person = [];
-    var property;
     var properties = ["sid", "sex", "major", "grade", "campus", "enrollTime", "group", "nickname", "longNumber", "shortNumber", "email", "qq"];
 
-    $("#" + ObjectId).each( function() {
-        // console.log("hello");
-        // console.log($(this));
-        person.name = $(this).find(".modal-title").text();
-        for (var pIndex in properties) {
-            // console.log(properties[property]);
-            property = properties[pIndex];
-            person[property] = $(this).find("td[name=" + property + "]").text();
-        }
+    var myProperty = $("#" + ObjectId);
+    var changeBox = $("#changeBox");
+
+    changeBox.find("input[name=_id]").val(ObjectId);
+    changeBox.find(".modal-title").text(myProperty.find(".modal-title").text());
+    properties.forEach(function(property) {
+        changeBox.find("[name=" + property + "]").val(myProperty.find("td[name=" + property + "]").text());
     });
 
-    $("#changeBox").each( function() {
-        // console.log(person);
-        $(this).find("input[name=_id]").val(ObjectId);
-        $(this).find(".modal-title").text(person.name);
-        for (var pIndex in properties) {
-            // console.log(properties[property]);
-            property = properties[pIndex];
-            $(this).find("[name=" + property + "]").val(person[property]);
-        }
-        $(this).modal('toggle');
-    });
-
+    changeBox.modal('toggle');
 }
 
 $("button[name=update]").on("click", function() {
@@ -270,10 +227,7 @@ $("button[name=update]").on("click", function() {
 */
 
 function firstLogin () {
-    $("#flag").each( function() {
-        // console.log($(this).text());
-        changeBox($(this).text());
-    });
+    changeBox($("#flag").text());
 }
 
 /*
@@ -283,28 +237,9 @@ function firstLogin () {
 $(".nameCard button[name=change]").on('click', function(){
     $(this).parents(".nameCard").modal("hide");
     var ObjectId = $(this).attr("data-id");
-    /*function callChangeBox() {
-        changeBox(ObjectId);
-    }
-    setTimeout("callChangeBox()", 500);*/
     var foo = function() {changeBox(ObjectId);};
     setTimeout(foo, 600);
 });
-
-/*
-$(".nameCard button[name=change]").on("click", function() {
-    var ObjectId = $(this).attr("data-id");
-    // $(this).parents(".nameCard").modal("hide");
-    $(this).parents(".nameCard").find("button[name=close]").click( function () {
-        // changeBox(ObjectId);
-    });
-    $(this).parents(".nameCard").find("button[name=close]").on("click", function() {
-        changeBox(ObjectId);
-    })
-
-    // changeBox(ObjectId);
-});
-*/
 
 /*
     Export
@@ -330,10 +265,8 @@ $("#csv, #xlsx, #xls").on("click", function() {
     form.find("input").remove();
 });
 
-//Only visiable in main page
-$("#main").each( function() {
-    $("#navExport").removeClass("hidden");
-} );
+// Only visiable in main page
+$("#main #navExport").removeClass("hidden");
 
 /*
     Init
