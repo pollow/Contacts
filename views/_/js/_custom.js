@@ -50,6 +50,16 @@ $("button[name=loginSubmit]").on("click",function(event) {
 */
 
 function contactFilter() {
+    // Handle no filter condition
+    if ($('#checkAll').hasClass('active')) {
+        $("table.basic-table > tbody").each(function() {
+            var personId = $(this).parents(".nameCard").attr("id");
+            $('tr[data-target=#' + personId + ']').removeClass('filterHidden');
+        });
+        return;
+    }
+
+    // Handle filter conditions
     var field = $("input:checked");
 
     var dict = {
@@ -123,7 +133,7 @@ function contactFilter() {
                     // console.log(value);
                     // console.log(dict[property][value]);
 
-                    if (dict[property][value] === $(this).text() || $(this).text() === ""){
+                    if (dict[property][value] === $(this).text()){
                         flag = true;
                     }
                 }
@@ -153,10 +163,14 @@ $(":checkbox").on("click", function() {
         $("button[name=searchSubmit]").click();
     }
 
+    if ($('input:checkbox:not(:checked)').length === 0) {
+      $('#checkAll').addClass('active');
+    } else {
+      $("#checkAll").removeClass("active");
+    }
+
     contactFilter();
     color();
-
-    $("#checkAll").removeClass("active");
 });
 
 
