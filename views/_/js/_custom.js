@@ -65,7 +65,8 @@ function contactFilter() {
     var dict = {
         sex : {
             male : '男',
-            female : '女'
+            female : '女',
+            unknown : ''
         },
         grade : {
             one : '大一',
@@ -73,20 +74,23 @@ function contactFilter() {
             three : '大三',
             four : '大四',
             master : '研究生',
-            work : '工作'
+            work : '工作',
+            unknown : ''
         },
         group : {
             TG : 'TG',
             OG : 'OG',
             CG : 'CG',
-            PG : 'PG'
+            PG : 'PG',
+            unknown : ''
         },
         campus : {
             zijingang : '紫金港',
             yuquan : '玉泉',
             xixi : '西溪',
             huajiachi : '华家池',
-            zhijiang : '之江'
+            zhijiang : '之江',
+            unknown : ''
         }
     };
 
