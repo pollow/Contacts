@@ -115,9 +115,10 @@ function contactFilter() {
         //$(this) is someone's nameCard
 
         personId = $(this).parents(".nameCard").attr("id");
+        var self = $(this);
 
         var flag = properties.every(function(property) {
-            var myProperty = $(this).find("td[name=" + property + "]").text();
+            var myProperty = self.find("td[name=" + property + "]").text();
 
             return selected[property].some(function(value) {
                 return dict[property][value] === myProperty;
