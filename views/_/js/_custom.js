@@ -120,8 +120,8 @@ function contactFilter() {
         var flag = properties.all(function(property) {
             var myProperty = $(this).find("td[name=" + property + "]").text();
 
-            return selected[property].some(function(elem) {
-                return elem === myProperty;
+            return selected[property].some(function(value) {
+                return dict[property][value] === myProperty;
             });
         });
 
@@ -227,7 +227,9 @@ $("button[name=update]").on("click", function() {
 */
 
 function firstLogin () {
-    changeBox($("#flag").text());
+    if ($("#flag").length !== 0) {
+        changeBox($("#flag").text());
+    }
 }
 
 /*
