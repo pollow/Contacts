@@ -94,7 +94,6 @@ function contactFilter() {
 
     var selected = {};
     var type;
-    var flag = false;
     var personId;
     var properties = ["sex", "grade", "group", "campus"];
     var property;
@@ -117,7 +116,7 @@ function contactFilter() {
 
         personId = $(this).parents(".nameCard").attr("id");
 
-        var flag = properties.all(function(property) {
+        var flag = properties.every(function(property) {
             var myProperty = $(this).find("td[name=" + property + "]").text();
 
             return selected[property].some(function(value) {
