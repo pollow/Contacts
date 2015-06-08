@@ -2,7 +2,7 @@
     Active nav list
 */
 
-$("#main .navbar-nav #list-main").addClass("active");
+$("#main #list-main").addClass("active");
 
 /*
     Color main-table
@@ -179,9 +179,9 @@ $("input[name=search]").keyup(function() {
     var keyReg = new RegExp(keyword, "i");
 
     $("table.main-table > tbody > tr").each(function() {
-        var flag = $(this).children().some(function(elem) {
+        var flag = $(this).children().filter(function(index, elem) {
             return keyReg.test($(elem).text());
-        });
+        }).length > 0;
         if (!flag) {
             $(this).addClass('hidden');
         } else {
