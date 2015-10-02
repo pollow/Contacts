@@ -96,7 +96,7 @@ Whenever you do anything with the contact (e.g. database, locals), just remeber 
 
 Check all the files you commit and make sure no private information is commited and pushed.
 
-In addition, pay attention to vital adminstrator username and password.
+In addition, pay attention to vital administrator username and password.
 
 ## 5. Before you push
 
