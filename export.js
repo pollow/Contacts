@@ -4,6 +4,7 @@ var path = require('path');
 
 var format = {
   name: "姓名",
+  sid: "学号",
   sex: "性别",
   longNumber: "长号",
   shortNumber: "短号",
@@ -22,6 +23,7 @@ var format = {
 
 var headLines = [
   "name",
+  "sid",
   "sex",
   "longNumber",
   "shortNumber",
